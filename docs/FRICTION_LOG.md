@@ -55,3 +55,25 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
 - **Evidence:** `scripts/browser_qa.py`, CI browser job and `docs/DEMO_GUIDE.md`.
 - **Status:** worked around; CI run 34710345180 browser job PASS;
   desktop/mobile screenshots manually inspected.
+
+## F-003 — AWS Core installation does not expose AWS operations in this session
+
+- **Date:** 2026-09-12
+- **Area:** Tooling / AWS connection
+- **Task attempted:** Inspect account/model/credit readiness without a paid call.
+- **Environment:** ChatGPT Work cloud executor; AWS Core enabled by the owner.
+- **Steps:** Verify the plugin's installed/enabled state, inspect its declared
+  dependency and discover AWS API/MCP tools; check the official cloud CLI route.
+- **Expected:** An authenticated AWS operation surface or a usable sign-in path.
+- **Actual:** Plugin installation and Bedrock/SDK/billing skills are confirmed;
+  no AWS operation tools are exposed in this session. The CLI is absent and
+  downloading the official installer fails with `Proxy CONNECT aborted due to
+  timeout`. The earlier console page displays `Site Unavailable`.
+- **Severity:** blocker for live AWS verification only.
+- **Workaround:** Continue offline implementation and tests; keep real account,
+  credits and model access unverified. Do not infer an AWS service outage.
+- **Suggestion:** Display separate plugin-installed, transport-ready and
+  account-authenticated states, with a supported secure recovery action.
+- **Evidence:** [Issue #4](https://github.com/Elinfiny/HestiaRelay/issues/4),
+  cloud capability readbacks. No account identifiers or credentials published.
+- **Status:** open; plugin installation alone has not resolved account access.
