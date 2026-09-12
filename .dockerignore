@@ -1,0 +1,12 @@
+**
+!Dockerfile
+!requirements-proof.txt
+!LICENSE
+!src
+!src/hestiarelay
+!src/hestiarelay/*.py
+!src/hestiarelay/static
+!src/hestiarelay/static/*.html
+!src/hestiarelay/static/*.js
+!src/hestiarelay/static/*.css
+!src/hestiarelay/static/*.svg

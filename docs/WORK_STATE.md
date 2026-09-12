@@ -1,7 +1,8 @@
 # HestiaRelay work state
 
-Canonical main baseline and live-executed source:
-`56dd5ad6375a668645eec7d8018430479f308267` (CI 34717141533 SUCCESS).
+Canonical main baseline for Phase 3:
+`f48c902e5035b6fa33be0e36334afd414f1fbe7e` (CI 34718967183 SUCCESS).
+Live-executed source: `56dd5ad6375a668645eec7d8018430479f308267`.
 Resolve GitHub's `main` ref for the latest repository head. Issue #4 records
 this delivery's final merge SHA and post-merge CI after confirmation; a commit
 cannot contain its own SHA. Phase 1 delivery:
@@ -9,10 +10,15 @@ cannot contain its own SHA. Phase 1 delivery:
 
 ## Current phase
 
-**Phase 1 complete. Phase 2 real Bedrock proof and resource cleanup verified.**
-PR #9 preserves the evidence; Issue #4 closes only after final PR/main CI.
-Phase 3 begins with the reproducible container and clean-room judge package
+**Phase 1 and Phase 2 complete. Phase 3 container package under validation.**
+PR #9 preserves the live proof and cleanup evidence; Issue #4 is closed.
+Phase 3 continues with the reproducible container and clean-room judge package
 in Issue #10. No extra AWS spending or public deployment is authorized.
+
+Phase 2 delivery is now confirmed: PR #9 merged at
+`f48c902e5035b6fa33be0e36334afd414f1fbe7e`; post-merge CI 34718967183 SUCCESS,
+all three jobs. Issue #4 is closed after readback. This is the canonical main
+baseline for the Phase 3 container package.
 
 ## Completed gates
 
@@ -73,3 +79,9 @@ validate it in GitHub Actions with canonical API/MCP sessions, container restart
 consent and desktop/mobile browser checks. Preserve development boundaries,
 record image/source evidence and prepare one public-deployment design. This
 package needs no owner PC and no further AWS invocation.
+
+The container package is implemented on `feature/container-judge-proof`:
+allowlisted build context, non-root/read-only test runtime, persistent volume,
+MCP SDK plus Inspector 2.6.0, and reuse of the existing browser suite. Local
+Docker is unavailable in this cloud executor; GitHub Actions is the actual
+container validation gate. Results remain pending until that job succeeds.

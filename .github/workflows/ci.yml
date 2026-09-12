@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   validate:
     timeout-minutes: 10
@@ -76,3 +80,36 @@ jobs:
           python -m venv /tmp/hestiarelay-cfn-check
           /tmp/hestiarelay-cfn-check/bin/pip install cfn-lint==1.56.3
           /tmp/hestiarelay-cfn-check/bin/cfn-lint --region us-east-1 --template infra/bedrock-proof.json
+  container-judge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install validation clients
+        run: |
+          python -m pip install -e ".[dev]" playwright==1.62.0
+          python -m playwright install --with-deps chromium
+          npm install --prefix /tmp/hestiarelay-inspector --no-audit --no-fund @modelcontextprotocol/inspector@2.6.0
+      - name: Build the application image
+        run: |
+          mkdir -p qa-artifacts
+          docker build --pull --tag hestiarelay:judge .
+          docker image inspect python:3.12.14-slim-bookworm --format '{{json .RepoDigests}}' > qa-artifacts/base-image-digests.json
+          cp /tmp/hestiarelay-inspector/package-lock.json qa-artifacts/inspector-package-lock.json
+      - name: Verify the real container and clients
+        run: python scripts/container_qa.py --inspector /tmp/hestiarelay-inspector/node_modules/.bin/mcp-inspector
+      - name: Save container and browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-judge
+          path: qa-artifacts/
