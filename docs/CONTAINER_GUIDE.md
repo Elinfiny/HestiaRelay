@@ -29,10 +29,10 @@ assets, the dependency lock, Dockerfile and license. AWS configuration is empty
 by default, and EC2 metadata credential lookup is disabled.
 
 Python dependencies use the already validated `requirements-proof.txt`. The
-official Python base has an exact version tag; each CI run records its resolved
-repository digest and final image ID. A tag is not a content digest: use that
-recorded image identity when comparing runs, and do not assume byte-identical
-rebuilds after a registry changes a tag. Inspector 2.6.0 is pinned separately;
+official Python base is pinned by version and the content digest observed in the
+first CI build. Each run records that reference and its final image ID; build
+timestamps can still differ, so byte-identical rebuilds are not claimed.
+Inspector 2.6.0 is pinned separately;
 its resolved npm lock is included in the CI artifact.
 
 ## Cloud validation evidence

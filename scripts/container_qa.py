@@ -217,6 +217,7 @@ def main():
         "status": "PASS",
         "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "image_id": image["Id"],
+        "base_image_reference": Path("Dockerfile").read_text().splitlines()[0].split()[1],
         "image_user": image["Config"]["User"],
         "dependency_lock_sha256": hashlib.sha256(
             Path("requirements-proof.txt").read_bytes()

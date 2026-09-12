@@ -103,7 +103,7 @@ jobs:
         run: |
           mkdir -p qa-artifacts
           docker build --pull --tag hestiarelay:judge .
-          docker image inspect python:3.12.14-slim-bookworm --format '{{json .RepoDigests}}' > qa-artifacts/base-image-digests.json
+          cp Dockerfile qa-artifacts/Dockerfile
           cp /tmp/hestiarelay-inspector/package-lock.json qa-artifacts/inspector-package-lock.json
       - name: Verify the real container and clients
         run: python scripts/container_qa.py --inspector /tmp/hestiarelay-inspector/node_modules/.bin/mcp-inspector
