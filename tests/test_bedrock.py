@@ -16,9 +16,7 @@ class FakeBedrockClient:
                     "content": [
                         {
                             "text": (
-                                "1. Confirm preferences.\n"
-                                "2. Prepare checklist.\n"
-                                "3. Gate purchase."
+                                "1. Confirm preferences.\n2. Prepare checklist.\n3. Gate purchase."
                             )
                         }
                     ]

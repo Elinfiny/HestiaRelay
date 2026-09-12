@@ -55,3 +55,23 @@ The Streamable HTTP server is deployed with permissive host/origin settings or w
 - Storage of real household PII.
 
 These remain blocked until a later milestone proves the integration, consent UX, logging, and rollback model.
+
+## Simulator controls
+
+- JSON API validates UUID identities, rejects extra fields and non-boolean
+  approval values, and bounds request bodies. Text and model output render via
+  `textContent`, not HTML. Static assets are allowlisted and CSP forbids inline
+  scripts and third-party assets.
+- Host and Origin checks cover both JSON and MCP routes. They are development
+  boundaries, not user authentication. A trusted local caller can use MCP consent
+  tools; a public deployment must add authenticated user/household authorization.
+- SQLite transactions prevent concurrent updates from losing state. Session
+  creation and message request IDs provide idempotent recovery. There is no
+  public reset/delete API.
+- Changed goals/preferences invalidate pending approval scope. Approval cannot
+  reverse rejection, authorize a different ID, or trigger an external adapter.
+- Generated text is advisory and untrusted. UI labels distinguish it from the
+  authoritative state and consent ledger. Neither planner certifies food safety.
+- AWS prompts include only goal, preferences and checklist, excluding transcript
+  and consent ledger. Live AWS use still requires the owner's account/privacy
+  gate. Tests use fictional state and injected clients.

@@ -2,13 +2,16 @@ from __future__ import annotations
 
 import json
 
+import uvicorn
 from mcp.server import MCPServer
 from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 
 from hestiarelay.bedrock import BedrockPlanner
 from hestiarelay.engine import HouseholdEngine
+from hestiarelay.service import HouseholdService
 from hestiarelay.store import SQLiteStateStore
+from hestiarelay.web import LocalBoundary, register_web
 
 mcp = MCPServer(
     "HestiaRelay",
@@ -19,6 +22,7 @@ mcp = MCPServer(
 )
 engine = HouseholdEngine(SQLiteStateStore())
 planner = BedrockPlanner()
+service = HouseholdService(engine, planner)
 
 
 @mcp.tool()
@@ -54,7 +58,7 @@ def get_continuity_brief() -> str:
 @mcp.tool()
 def generate_household_plan() -> str:
     """Generate a bounded plan with Amazon Bedrock when configured, otherwise deterministic."""
-    result = planner.generate_plan(engine.get_state())
+    result = service.generate_plan()
     return result.model_dump_json(indent=2)
 
 
@@ -88,11 +92,29 @@ async def health(_: Request) -> Response:
     )
 
 
-app = mcp.streamable_http_app(json_response=True)
+@mcp.tool()
+def start_simulator_session(session_id: str) -> dict:
+    """Open a distinct simulated session; recover, never reset, household context."""
+    from uuid import UUID
+
+    return service.new_session(str(UUID(session_id)))
+
+
+@mcp.tool()
+def send_simulator_message(session_id: str, request_id: str, text: str) -> dict:
+    """Exercise the same guided three-session service as the browser UI."""
+    from hestiarelay.web import MessageInput
+
+    data = MessageInput(session_id=session_id, request_id=request_id, text=text)
+    return service.message(**data.model_dump(mode="json"))
+
+
+register_web(mcp, service)
+app = LocalBoundary(mcp.streamable_http_app(json_response=True))
 
 
 def main() -> None:
-    mcp.run(transport="streamable-http", json_response=True)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
 
 
 if __name__ == "__main__":

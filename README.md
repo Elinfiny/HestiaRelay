@@ -29,31 +29,44 @@ The goal is continuity, not another single-turn chatbot.
 - **Open Source target:** public repository with MIT license and hackathon-window contribution history
 - **Submission language:** English
 
-## Architecture
+## Run the three-session simulator
 
-```text
-Alexa+ / simulated voice + visual experience
-                    │
-                    ▼
-       MCP over Streamable HTTP
-                    │
-                    ▼
-             HestiaRelay core
-        ┌───────────┼────────────┐
-        ▼           ▼            ▼
- continuity      risk gate     tool plan
-   state                        + evidence
-        │           │            │
-        └───────────┼────────────┘
-                    ▼
-           AWS orchestration layer
-        Bedrock → AgentCore/Strands
-                    │
-                    ▼
-          allow-listed household tools
+```bash
+python -m pip install -e ".[dev]"
+python -m hestiarelay.server
 ```
 
-The bootstrap already contains a real MCP server surface, persistent local continuity state for development, explicit risk classification, consent-gated proposals, and an Amazon Bedrock runtime adapter. Cloud memory and the Alexa+ simulation are subsequent validated milestones.
+Open `http://127.0.0.1:8000/`. Click **Make a plan**, **Add what matters**, then
+**Bring it all together**. Each click starts a distinct session and sends only
+that session's new message. SQLite restores the goal, budget, guest constraints,
+checklist, transcript, planner provenance and proposal decisions. Reloading the
+browser or restarting the server with the same database preserves the thread.
+
+This is a **guided, text-based Alexa+ experience simulation**, not a live Alexa+
+connection or a general natural-language assistant. You can vary counts, dates,
+budgets and preferences using the supported example sentence patterns. Use
+fictional details only. Approval records consent for one exact proposal; no
+purchase, payment, message or external-account action is executed.
+
+## Implemented architecture
+
+```mermaid
+flowchart TD
+    UI[Browser simulator] --> API[Same-origin JSON API]
+    Client[MCP client] --> MCP[MCPServer / Streamable HTTP]
+    API --> Service[Shared household service]
+    MCP --> Service
+    Service --> State[SQLite state and session history]
+    Service --> Gate[Exact-proposal consent ledger]
+    Service --> Planner[Planner adapter]
+    Planner --> Local[Deterministic planner]
+    Planner --> Bedrock[Optional Bedrock converse]
+```
+
+The browser uses the same service and engine as MCP. The transport remains a
+real `MCPServer` at `/mcp`; the UI is not a mock of the backend. AgentCore and
+Strands are not integrated. Public deployment and multi-household authentication
+remain separate gates.
 
 ## MCP tools
 
@@ -62,9 +75,10 @@ The initial MCP server exposes bounded tools for:
 - starting or updating a household goal;
 - remembering a household preference;
 - retrieving a continuity brief across sessions;
-- generating a plan with Bedrock when configured, with deterministic fallback otherwise;
+- generating and persisting a plan with Bedrock when configured, with explicit deterministic fallback on configuration or AWS failure;
 - proposing a household action;
-- approving or rejecting sensitive proposals.
+- approving or rejecting sensitive proposals;
+- opening a simulator session and submitting a guided message through the same service as the UI.
 
 No tool accepts arbitrary shell commands. Purchase-like or external-account actions are proposals only until explicitly approved, and the bootstrap does not perform a real purchase.
 
@@ -130,7 +144,14 @@ ruff check .
 pytest --cov=hestiarelay --cov-report=term-missing
 ```
 
-GitHub Actions runs the same checks on pull requests.
+GitHub Actions runs these checks on PRs and main, plus Chromium at 1440×1000
+and 390×844. The browser suite clicks through the real simulator, tests consent
+and reload, and exports screenshots, traces and console-error evidence.
+`tests/test_mcp_http.py` exercises a real SDK client over TCP across separate
+sessions and an actual server-process restart. It prints negotiated protocol
+versions; a target alone is not interoperability evidence.
+
+See [demo and validation guide](docs/DEMO_GUIDE.md) for precise steps and limits.
 
 ## Evidence-first development
 
@@ -145,7 +166,7 @@ HestiaRelay keeps competition evidence in the repository from the start:
 
 ## Status
 
-**Bootstrap foundation.** The repository intentionally separates validated foundations from unproven AWS/Alexa+ claims. Features are documented as complete only after implementation and tests prove them.
+**Phase 1 candidate.** Simulator and behavioral tests implemented; final CI and visual review are recorded in [WORK_STATE](docs/WORK_STATE.md). Live Alexa+/AWS behavior remains unproven until the corresponding external gates pass.
 
 ## License
 
