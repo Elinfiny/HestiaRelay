@@ -1,0 +1,192 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "HestiaRelay one-build Bedrock proof. Creating this stack never starts a build.",
+  "Parameters": {
+    "SourceCommit": {
+      "Type": "String",
+      "AllowedPattern": "^[0-9a-f]{40}$",
+      "Description": "Reviewed immutable GitHub commit; never use a branch name."
+    },
+    "RequestSha256": {
+      "Type": "String",
+      "AllowedPattern": "^[0-9a-f]{64}$",
+      "Description": "Reviewed exact fictional Converse request fingerprint."
+    }
+  },
+  "Resources": {
+    "ProofLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/hestiarelay/${AWS::StackName}"
+        },
+        "RetentionInDays": 1
+      }
+    },
+    "ProofRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "MaxSessionDuration": 3600,
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "codebuild.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "StringEquals": {
+                  "aws:SourceAccount": {
+                    "Ref": "AWS::AccountId"
+                  }
+                },
+                "ArnEquals": {
+                  "aws:SourceArn": {
+                    "Fn::Sub": "arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:project/${AWS::StackName}-proof"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "OneModelAndOwnLogs",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "bedrock:InvokeModel"
+                  ],
+                  "Resource": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-micro-v1:0"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/hestiarelay/${AWS::StackName}:log-stream:*"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ProofProject": {
+      "Type": "AWS::CodeBuild::Project",
+      "Properties": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-proof"
+        },
+        "Description": "One explicitly approved HestiaRelay proof build; no triggers or automatic retries.",
+        "ServiceRole": {
+          "Fn::GetAtt": [
+            "ProofRole",
+            "Arn"
+          ]
+        },
+        "Artifacts": {
+          "Type": "NO_ARTIFACTS"
+        },
+        "TimeoutInMinutes": 10,
+        "QueuedTimeoutInMinutes": 5,
+        "ConcurrentBuildLimit": 1,
+        "AutoRetryLimit": 0,
+        "Environment": {
+          "Type": "LINUX_CONTAINER",
+          "ComputeType": "BUILD_GENERAL1_SMALL",
+          "Image": "aws/codebuild/standard:7.0-26.07.29",
+          "ImagePullCredentialsType": "CODEBUILD",
+          "PrivilegedMode": false,
+          "EnvironmentVariables": [
+            {
+              "Name": "HESTIA_EXECUTION_APPROVED",
+              "Value": "NO",
+              "Type": "PLAINTEXT"
+            },
+            {
+              "Name": "HESTIA_SOURCE_COMMIT",
+              "Value": {
+                "Ref": "SourceCommit"
+              },
+              "Type": "PLAINTEXT"
+            },
+            {
+              "Name": "HESTIA_REQUEST_SHA256",
+              "Value": {
+                "Ref": "RequestSha256"
+              },
+              "Type": "PLAINTEXT"
+            },
+            {
+              "Name": "HESTIA_PROJECT_NAME",
+              "Value": {
+                "Fn::Sub": "${AWS::StackName}-proof"
+              },
+              "Type": "PLAINTEXT"
+            },
+            {
+              "Name": "HESTIA_ROLE_ARN",
+              "Value": {
+                "Fn::GetAtt": [
+                  "ProofRole",
+                  "Arn"
+                ]
+              },
+              "Type": "PLAINTEXT"
+            }
+          ]
+        },
+        "Source": {
+          "Type": "NO_SOURCE",
+          "BuildSpec": "version: 0.2\nphases:\n  install:\n    runtime-versions:\n      python: \"3.12\"\n  build:\n    on-failure: ABORT\n    commands:\n      - test \"${HESTIA_EXECUTION_APPROVED}\" = \"YES\"\n      - git -c core.hooksPath=/dev/null clone --quiet https://github.com/Elinfiny/HestiaRelay.git /tmp/hestiarelay-source\n      - cd /tmp/hestiarelay-source\n      - git checkout --quiet --detach \"${HESTIA_SOURCE_COMMIT}\"\n      - bash scripts/run_cloud_proof.sh\n"
+        },
+        "LogsConfig": {
+          "CloudWatchLogs": {
+            "Status": "ENABLED",
+            "GroupName": {
+              "Ref": "ProofLogGroup"
+            },
+            "StreamName": "proof"
+          },
+          "S3Logs": {
+            "Status": "DISABLED"
+          }
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ProjectName": {
+      "Value": {
+        "Ref": "ProofProject"
+      },
+      "Description": "Only this project may be started after the execution gate."
+    },
+    "RoleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ProofRole",
+          "Arn"
+        ]
+      },
+      "Description": "Dedicated role; no account-wide Bedrock access."
+    },
+    "LogGroup": {
+      "Value": {
+        "Ref": "ProofLogGroup"
+      },
+      "Description": "Retrieve private fictional evidence before explicit cleanup."
+    }
+  }
+}

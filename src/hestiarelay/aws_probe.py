@@ -14,8 +14,9 @@ from hestiarelay.models import HouseholdGoal, HouseholdState, Preference
 
 
 class ObservedClient:
-    def __init__(self, client):
+    def __init__(self, client, expected_request_sha256=None):
         self.client = client
+        self.expected_request_sha256 = expected_request_sha256
         self.calls = 0
         self.response = {}
         self.request_sha256 = None
@@ -25,16 +26,32 @@ class ObservedClient:
             raise ValueError("Probe permits one Converse request only.")
         canonical_request = json.dumps(kwargs, sort_keys=True, separators=(",", ":"))
         self.request_sha256 = hashlib.sha256(canonical_request.encode()).hexdigest()
+        if self.expected_request_sha256 and self.request_sha256 != self.expected_request_sha256:
+            raise ValueError("Request differs from the reviewed proposal.")
         self.calls += 1
         self.response = self.client.converse(**kwargs)
         return self.response
 
 
-def run_probe(*, live=False, approved=False, model_id=None, region="us-east-1", client=None):
+def run_probe(
+    *,
+    live=False,
+    approved=False,
+    model_id=None,
+    region="us-east-1",
+    client=None,
+    expected_request_sha256=None,
+    include_response=False,
+):
     """`client` injection is for tests; mocked success is labeled separately."""
     state = HouseholdState(
         goal=HouseholdGoal(
-            title="Fictional dinner", when="Friday evening", people=6, budget_usd=120
+            goal_id="00000000-0000-4000-8000-000000000001",
+            created_at=datetime(2026, 9, 12, tzinfo=UTC),
+            title="Fictional dinner",
+            when="Friday evening",
+            people=6,
+            budget_usd=120,
         ),
         preferences=[Preference(person="Ana", note="Fictional guest: allergic to nuts")],
         checklist=["Verify ingredients and guest constraints", "Review the $120 budget"],
@@ -65,7 +82,9 @@ def run_probe(*, live=False, approved=False, model_id=None, region="us-east-1", 
     from botocore.exceptions import BotoCoreError, ClientError
 
     try:
-        observed = ObservedClient(client if injected else planner._client_or_create())
+        observed = ObservedClient(
+            client if injected else planner._client_or_create(), expected_request_sha256
+        )
     except (BotoCoreError, ClientError):
         return report | {"status": "BLOCKED", "mode": "live", "reason": "aws_client_unavailable"}
     planner._client = observed
@@ -106,7 +125,7 @@ def run_probe(*, live=False, approved=False, model_id=None, region="us-east-1", 
         status = (
             ("MOCK_PASS" if injected else "LIVE_CALL_PASS") if success else "EVIDENCE_INCOMPLETE"
         )
-    return report | {
+    result = report | {
         "status": status,
         "mode": "injected-test" if injected else "live",
         "converse_calls": observed.calls,
@@ -126,6 +145,10 @@ def run_probe(*, live=False, approved=False, model_id=None, region="us-east-1", 
         "response_text_sha256": hashlib.sha256(plan.text.encode()).hexdigest(),
         "region": region,
     }
+    # Only the fixed fictional probe can opt in. Normal reports remain redacted.
+    if include_response and invocation_succeeded:
+        result["response_text"] = plan.text
+    return result
 
 
 def main(argv=None):

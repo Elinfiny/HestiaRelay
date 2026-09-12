@@ -1,7 +1,9 @@
 # Phase 2: one-call AWS evidence gate
 
-The Phase 1 simulator works without AWS. This package prepares a controlled
-live proof; it does not prove that the account, credits or model are available.
+The Phase 1 simulator works without AWS. Account/model/credit metadata has now
+been verified read-only; live inference is still unproven. The prepared route is
+[one managed CodeBuild proof](CLOUD_PROOF_PROPOSAL.md), with a dedicated role and
+an exact source/request binding. Its financial/resource approval is pending.
 
 ## Prepared, no credentials needed
 
@@ -19,7 +21,8 @@ fictional canonical household data. Unit tests use injected clients and report
 The executor must verify the account and region through secure AWS access,
 promotional-credit status, an enabled Converse-compatible model, current price
 and an explicit one-call spending authorization. A request for credits is not
-proof of awarded credits. No model/region choice is finalized before this gate.
+proof of awarded credits. The reviewed selection is Nova Micro in `us-east-1`;
+recheck access before execution.
 
 Use temporary AWS credentials in the authorized cloud runtime. Do not paste
 keys into chat, commit credentials, grant AdministratorAccess, create a paid
@@ -65,8 +68,10 @@ an account was authenticated or that the output is safe.
 
 Preserve the stdout JSON with the exact source commit in the private operational
 evidence location chosen for the AWS account, then publish only reviewed,
-redacted evidence. This probe prints no credentials, account IDs, raw request
-IDs, prompt or response text. Mocked success, fallback, missing usage or missing
+redacted evidence. The default CLI report prints no credentials, account IDs,
+raw request IDs, prompt or response text. The managed runner opts in to the fixed
+fictional response in private logs for review; redact it before publication.
+Mocked success, fallback, missing usage or missing
 account/credit evidence cannot close Phase 2. A failed/ambiguous invocation is
 investigated before any new invocation; do not rerun unchanged automatically.
 

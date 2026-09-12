@@ -76,4 +76,8 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
   account-authenticated states, with a supported secure recovery action.
 - **Evidence:** [Issue #4](https://github.com/Elinfiny/HestiaRelay/issues/4),
   cloud capability readbacks. No account identifiers or credentials published.
-- **Status:** open; plugin installation alone has not resolved account access.
+- **Status:** resolved for AWS Core operations on 2026-09-12. On the later
+  continuation, operation tools became exposed; STS, Bedrock model availability,
+  Billing GetCredits and Price List reads succeeded. The original session
+  observations remain historical; no service outage or owner-side repair is
+  inferred. The managed cloud proof proposal now uses that authenticated route.
