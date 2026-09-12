@@ -2,8 +2,9 @@
 
 Read-only boundary audit against Phase 3 main
 `e13cef9d3d7a0cd346e4ce59c1810db2e6e3b247`.
-The deployment contract is in `JUDGE_DEPLOYMENT_DESIGN.md`; no access control is
-claimed implemented by this checkpoint.
+The deployment contract is in `JUDGE_DEPLOYMENT_DESIGN.md`. The audit below
+preceded implementation; `access.py`, `recovery.py` and the real TLS browser QA
+now implement the bounded package. See WORK_STATE for validation status.
 
 ## Existing integration points
 

@@ -11,6 +11,7 @@ from starlette.concurrency import run_in_threadpool
 from starlette.requests import Request
 from starlette.responses import FileResponse, JSONResponse
 
+from hestiarelay.access import ingress_headers
 from hestiarelay.service import HouseholdService
 
 STATIC = Path(__file__).parent / "static"
@@ -82,22 +83,16 @@ def register_web(mcp, service: HouseholdService):
 class LocalBoundary:
     """Protect custom routes as well as MCP. Public deployment is a later gate."""
 
-    def __init__(self, app):
+    def __init__(self, app, access=None):
         self.app = app
+        self.access = access
 
     async def __call__(self, scope, receive, send):
+        if scope["type"] == "websocket":
+            return await send({"type": "websocket.close", "code": 1008})
         if scope["type"] != "http":
             return await self.app(scope, receive, send)
-        headers = dict(scope["headers"])
-        host = headers.get(b"host", b"").decode()
-        hostname = host.split(":")[0]
-        origin = headers.get(b"origin")
-        allowed_origins = {f"http://{host}".encode(), f"https://{host}".encode()}
-        if hostname not in {"127.0.0.1", "localhost"} or (
-            origin is not None and origin not in allowed_origins
-        ):
-            response = JSONResponse({"error": "Host or Origin not allowed"}, status_code=403)
-            return await response(scope, receive, send)
+        headers = ingress_headers(scope)
 
         async def secured_send(message):
             if message["type"] == "http.response.start":
@@ -117,6 +112,26 @@ class LocalBoundary:
             await send(message)
 
         try:
+            if headers is None:
+                response = JSONResponse({"error": "Invalid request authority"}, status_code=403)
+            elif self.access:
+                response = await self.access.response(scope, receive)
+            else:
+                host = headers[b"host"].decode("ascii")
+                origin = headers.get(b"origin")
+                allowed = {f"http://{host}".encode(), f"https://{host}".encode()}
+                if host.split(":")[0] not in {"127.0.0.1", "localhost"} or (
+                    origin is not None and origin not in allowed
+                ):
+                    response = JSONResponse(
+                        {"error": "Host or Origin not allowed"}, status_code=403
+                    )
+                elif scope["path"] == "/auth/session" and scope["method"] == "GET":
+                    response = JSONResponse({"required": False, "authenticated": False})
+                else:
+                    response = None
+            if response is not None:
+                return await response(scope, receive, secured_send)
             await self.app(scope, receive, secured_send)
         except (OSError, json.JSONDecodeError):
             response = JSONResponse(

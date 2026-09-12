@@ -17,7 +17,8 @@ main CI 34710656387 SUCCESS; Issue #2 closed.
 **Phases 1–3 complete. Phase 4A started: authenticated judge access and recovery.**
 Issue #12 is the executable specification. Initial code-boundary audit and
 implementation sequence are recorded in `ACCESS_IMPLEMENTATION_NOTES.md`;
-authentication and backup/restore controls are not yet implemented.
+authentication and backup/restore controls are implemented on the feature branch;
+final browser/container CI and delivery gates remain open.
 No extra AWS spending or public deployment is authorized.
 
 ## Completed gates
@@ -104,5 +105,9 @@ single-fictional-household browser path, exact deployment Host/Origin and CSRF
 boundaries, and backup/restore checks described in
 [JUDGE_DEPLOYMENT_DESIGN.md](JUDGE_DEPLOYMENT_DESIGN.md). Preserve loopback defaults
 and real MCP; public MCP requires its own compatible authorization proof.
-The design and initial boundary audit are complete; implementation can proceed
-offline. A public endpoint still requires a concrete account/domain/cost proposal.
+Implementation is complete locally: Ruff PASS, 141 tests PASS, 98.11%
+application coverage. Exact state preservation on denial, CSRF/expiry/revocation,
+backup integrity, WAL consistency, digest selection and no-overwrite restore pass.
+The browser CI job now runs the real TLS login/continuity/recovery suite at both
+viewports. Local Chromium download timed out in this executor; browser PASS is
+not claimed until the cloud CI job succeeds. A public endpoint still requires a concrete account/domain/cost proposal.

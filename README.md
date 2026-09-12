@@ -87,6 +87,9 @@ No tool accepts arbitrary shell commands. Purchase-like or external-account acti
 For Docker and a cloud-runner verification path, see the
 [container judge guide](docs/CONTAINER_GUIDE.md). The container CI result is
 reported separately from the existing Python and AWS proof evidence.
+For optional authenticated judge mode and verified SQLite backup/restore, see
+the [judge access guide](docs/JUDGE_ACCESS_GUIDE.md). Local MCP remains available;
+remote MCP authorization and public hosting are separate gates.
 
 Requirements:
 

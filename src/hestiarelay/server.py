@@ -7,11 +7,14 @@ from mcp.server import MCPServer
 from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 
+from hestiarelay.access import AccessConfig, JudgeAccess
 from hestiarelay.bedrock import BedrockPlanner
 from hestiarelay.engine import HouseholdEngine
 from hestiarelay.service import HouseholdService
 from hestiarelay.store import SQLiteStateStore
 from hestiarelay.web import LocalBoundary, register_web
+
+access_config = AccessConfig.from_env()
 
 mcp = MCPServer(
     "HestiaRelay",
@@ -110,7 +113,10 @@ def send_simulator_message(session_id: str, request_id: str, text: str) -> dict:
 
 
 register_web(mcp, service)
-app = LocalBoundary(mcp.streamable_http_app(json_response=True))
+app = LocalBoundary(
+    mcp.streamable_http_app(json_response=True),
+    JudgeAccess(access_config) if access_config else None,
+)
 
 
 def main() -> None:

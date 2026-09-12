@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>HestiaRelay — Welcome back</title>
+  <link rel="icon" href="/static/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/login.js" defer></script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="/login"><img src="/static/mark.svg" alt="" width="38" height="38">Hestia<span>Relay</span></a><span class="environment">Private judge preview</span></header>
+<main class="login-main">
+  <section class="intro"><div><p class="eyebrow">PICK UP WHERE LIFE LEFT OFF</p><h1>Welcome back.</h1><p class="lede">One household. A thread worth keeping.</p></div></section>
+  <section class="panel login-panel" aria-labelledby="login-title">
+    <h2 id="login-title">Open the household demo</h2>
+    <p class="small">Use the access key provided for this fictional household.</p>
+    <form id="login-form">
+      <label for="access-key">Access key</label>
+      <input id="access-key" type="password" autocomplete="off" spellcheck="false" maxlength="128" required aria-describedby="login-help">
+      <p class="small" id="login-help">Your saved plan stays here when you sign out.</p>
+      <button class="primary" type="submit" id="login-submit" disabled>Continue to your household →</button>
+    </form>
+    <p id="login-status" role="status" aria-live="polite">Preparing secure sign-in…</p>
+  </section>
+  <footer><p>Alexa+ experience simulator · Fictional data only. No purchases or account changes.</p></footer>
+</main>
+</body>
+</html>
