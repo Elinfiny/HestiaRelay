@@ -51,3 +51,28 @@ jobs:
         with:
           name: browser-qa
           path: qa-artifacts/
+  cloud-proof-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-proof.txt
+      - name: Reproduce the pinned proof environment
+        run: python -m pip install -r requirements-proof.txt
+      - name: Validate cloud runner and offline gates
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m pip check
+          bash -n scripts/run_cloud_proof.sh
+          ruff check .
+          pytest --cov=hestiarelay --cov-report=term-missing
+      - name: Validate CloudFormation schema without AWS credentials
+        run: |
+          python -m venv /tmp/hestiarelay-cfn-check
+          /tmp/hestiarelay-cfn-check/bin/pip install cfn-lint==1.56.3
+          /tmp/hestiarelay-cfn-check/bin/cfn-lint --region us-east-1 --template infra/bedrock-proof.json

@@ -1,17 +1,15 @@
 # HestiaRelay work state
 
-Application source revision: `1cd5bb24b24be08e468e76c1863727cf2860d3c9`.
-Verified main baseline before this hardening package:
-`9aaf8730755e92984c3c157aa05e009cf43565ec` (CI 34711236792 SUCCESS).
+Canonical main baseline before the managed cloud proof package:
+`ec4083519314b724e90e398e1c35b3feeccb2647` (CI 34714932070 SUCCESS).
 Phase 1 delivery SHA: `c5739b76d54dc4dda140e2b373d5822a91413d29`.
-The source revision identifies the code tested for this package; a following
-documentation commit changes only this work state. Resolve GitHub's `main` ref
-for the current repository head and inspect its Actions run for post-merge CI.
-Issue #4 records the merge SHA and run after they are confirmed.
+Resolve GitHub's `main` ref for the current repository head and inspect its
+Actions run for post-merge CI. Issue #4 records each final merge SHA and run
+after confirmation; a commit cannot contain its own SHA.
 
 ## Current phase
 
-**Phase 1 COMPLETE. Phase 2 preparation COMPLETE; live AWS verification BLOCKED.**
+**Phase 1 COMPLETE. Phase 2 managed proof prepared; AWS execution approval pending.**
 PR #3 and PR #5 are merged. Issue #2 is closed after post-merge CI. Issue #4 is
 open because live AWS evidence has not been obtained.
 
@@ -21,7 +19,7 @@ open because live AWS evidence has not been obtained.
   Issue #2 audit completed before implementation.
 - Main CI 34710656387 passed after Phase 1; main CI 34711018273 passed after AWS
   preparation. Both validation and Chromium jobs succeeded.
-- Current application: Ruff PASS; 55 tests PASS; 98.87% application coverage.
+- Previous AWS preparation baseline: 55 tests PASS; 98.87% application coverage.
   Phase 1 alone had 46 tests and 98.95% coverage.
 - Real SDK/TCP MCP: protocol 2025-11-25 negotiated on three separate connections;
   explicit baseline request and actual server-process restart persistence PASS.
@@ -55,20 +53,38 @@ open because live AWS evidence has not been obtained.
 - Candidate and post-merge CI must pass validation and Chromium jobs. See the
   hardening PR and Issue #4 for the final run identities and confirmed outcomes.
 
-## Open blockers
+## Managed cloud proof package
 
-AWS account/sign-in state is UNKNOWN. AWS Core is verified installed and enabled;
-its Bedrock/SDK/billing skills are available. No AWS API/MCP operation tools are
-exposed in this session. The cloud CLI is absent, and its official installer
-download failed at the proxy CONNECT boundary. The console page displays
-`Site Unavailable`. These observations do not prove an AWS service outage.
-No secure login form or authenticated account readback is available. Do not ask
-for credentials in chat or treat a separate browser as authenticated here.
+- AWS Core operations now work: account identity, Nova Micro authorization and
+  active Bedrock-applicable credits verified read-only. Existing Free Tier/activity
+  credits do not establish that the requested hackathon award was granted.
+- Selected model `amazon.nova-micro-v1:0`, region `us-east-1`; current Bedrock and
+  CodeBuild prices verified with Price List. Private account and credit details
+  are excluded from this public record.
+- Template prepares three temporary resources; the build role can invoke only
+  that model and write its own logs. No automatic trigger or inference retry.
+- Exact source/request binding, stable fictional fixture, explicit approval,
+  assumed-role identity and repeated-attempt guards are implemented.
+- Local Ruff PASS; 83 tests PASS; 98.86% application coverage. Shell syntax,
+  cfn-lint 1.56.3 and read-only AWS ValidateTemplate PASS. Tests retain real MCP
+  interoperability/process restart, canonical continuity and exact consent.
+- CI now also validates a fresh pinned proof environment and template. PR and
+  post-merge runs must pass all three jobs; final identities are recorded in
+  Issue #4 after completion. No new manual browser inspection is claimed here.
 
-Model/region access, awarded promotional credits, current pricing and an exact
-one-call spending authorization remain unverified. No paid call, IAM grant,
-subscription, AWS resource or live workflow was created. Block only the live AWS
-lane. No owner technical relay or browser repair is requested.
+## Open gate
+
+AWS connector access is recovered; F-003 records the observed recovery. No
+owner PC, copied credentials or authentication repair is needed for this route.
+The one remaining execution gate is explicit approval for the temporary stack,
+scoped IAM role, one build/Converse attempt and cleanup of those new resources.
+See [the exact proposal](CLOUD_PROOF_PROPOSAL.md): estimated model plus 10-minute
+compute cost USD 0.050119, plus small logs/taxes; requested operational budget
+USD 0.10 before credits. This is not an AWS-enforced dollar cutoff.
+
+No stack, role, project, live build or Converse call has been created. Successful
+metadata reads and template validation do not establish successful deployment or
+inference. Keep Issue #4 open until authorized live evidence exists.
 
 ## Competition readiness
 
@@ -79,9 +95,11 @@ video and submission audit remain open. Devpost story/video fields untouched.
 
 ## Next executable package
 
-Resume Issue #4 when secure AWS account access is available: inspect the account
-and credits read-only, select one suitable enabled model and region, verify its
-price, prepare the exact minimum permissions and one-call cost proposal, then
-run the tested probe only after the external account/financial gate passes.
-Preserve real provenance/latency/usage, review the output and run regressions.
-Do not automatically retry an ambiguous or failed charged call.
+After the financial/resource approval, recheck the reviewed commit, applicable
+credits and exact project name, create only the approved stack, inspect it,
+start one idempotently identified build and preserve/review its real evidence.
+Publish a redacted report through a green PR, remove only the new temporary
+resources after verified evidence export, then assess Issue #4 completion.
+Judge-accessible deployment is the next product delivery package after this
+bounded proof; prepare its access, persistence and operating-cost design before
+any further deployment approval. Devpost story/video fields remain untouched.
