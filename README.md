@@ -166,7 +166,17 @@ HestiaRelay keeps competition evidence in the repository from the start:
 
 ## Status
 
-**Phase 1 complete.** PR #3 merged and main CI passed. The simulator, persistence, consent and MCP evidence are recorded in [WORK_STATE](docs/WORK_STATE.md). Phase 2 now prepares controlled AWS validation; [AWS_RUNBOOK](docs/AWS_RUNBOOK.md) documents the offline probe and live-account gate. Live Alexa+/AWS behavior remains unproven until those gates pass.
+**Phase 1 complete; live Bedrock proof verified.** One authorized Nova Micro
+Converse call ran through the real repository adapter in a dedicated CodeBuild
+role on 2026-09-12: 222 input tokens, 230 output tokens, 1,114.44 ms. All 83 tests
+passed in AWS with 98.86% application coverage. The temporary resources were
+removed after verified evidence export. See the [live evidence](docs/evidence/bedrock-20260912.json)
+and [original reviewed log](docs/evidence/bedrock-20260912.log.txt).
+
+The default simulator remains deterministic without AWS configuration. This
+proof does not establish a live Alexa+ connection or a public hosted service.
+[WORK_STATE](docs/WORK_STATE.md) tracks delivery gates and the next deployment
+package; [AWS_RUNBOOK](docs/AWS_RUNBOOK.md) preserves the controlled execution path.
 
 ## License
 

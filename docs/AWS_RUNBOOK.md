@@ -1,9 +1,16 @@
 # Phase 2: one-call AWS evidence gate
 
-The Phase 1 simulator works without AWS. Account/model/credit metadata has now
-been verified read-only; live inference is still unproven. The prepared route is
-[one managed CodeBuild proof](CLOUD_PROOF_PROPOSAL.md), with a dedicated role and
-an exact source/request binding. Its financial/resource approval is pending.
+The Phase 1 simulator works without AWS. The owner-approved managed proof
+succeeded on 2026-09-12 and its temporary resources were removed after evidence
+export. [Original report and reviewed output](evidence/bedrock-20260912.json)
+bind one real Nova Micro call to source commit
+`56dd5ad6375a668645eec7d8018430479f308267`. The original probe flags remain
+unchanged; account/credit verification, cost calculation, output review and
+cleanup are recorded separately in the evidence envelope.
+
+The [execution proposal](CLOUD_PROOF_PROPOSAL.md) is consumed. The instructions
+below describe the reproducible method; they do not authorize another call or
+build. New live usage requires an approved scope and cost boundary.
 
 ## Prepared, no credentials needed
 
