@@ -21,7 +21,8 @@ fictional canonical household data. Unit tests use injected clients and report
 The executor must verify the account and region through secure AWS access,
 promotional-credit status, an enabled Converse-compatible model, current price
 and an explicit one-call spending authorization. A request for credits is not
-proof of awarded credits. The reviewed selection is Nova Micro in `us-east-1`; recheck access before execution.
+proof of awarded credits. The reviewed selection is Nova Micro in `us-east-1`;
+recheck access before execution.
 
 Use temporary AWS credentials in the authorized cloud runtime. Do not paste
 keys into chat, commit credentials, grant AdministratorAccess, create a paid
@@ -67,9 +68,10 @@ an account was authenticated or that the output is safe.
 
 Preserve the stdout JSON with the exact source commit in the private operational
 evidence location chosen for the AWS account, then publish only reviewed,
-redacted evidence. The default CLI report prints no credentials, account IDs, raw request
-IDs, prompt or response text. The managed runner opts in to the fixed fictional
-response in private logs for review; redact that evidence before publication. Mocked success, fallback, missing usage or missing
+redacted evidence. The default CLI report prints no credentials, account IDs,
+raw request IDs, prompt or response text. The managed runner opts in to the fixed
+fictional response in private logs for review; redact it before publication.
+Mocked success, fallback, missing usage or missing
 account/credit evidence cannot close Phase 2. A failed/ambiguous invocation is
 investigated before any new invocation; do not rerun unchanged automatically.
 

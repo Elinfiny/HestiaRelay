@@ -106,6 +106,6 @@ The cloud proof runner executes the existing BedrockPlanner and aws_probe from
 an immutable public GitHub commit in a dedicated CodeBuild service role. Its
 source/request/role/approval guards are operational gates; they do not replace
 the household domain's exact-proposal consent. Creating the three-resource
-CloudFormation stack never starts a build. CI and ordinary simulator runs do
-not invoke AWS. See `CLOUD_PROOF_PROPOSAL.md` for scope, cost assumptions and
+CloudFormation stack never starts a build. CI and the default simulator
+configuration do not invoke AWS. See `CLOUD_PROOF_PROPOSAL.md` for scope, cost assumptions and
 evidence/cleanup acceptance. This package is not a public application deployment.
