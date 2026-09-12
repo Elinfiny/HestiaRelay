@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>HestiaRelay — Pick up where life left off</title>
+  <link rel="icon" href="/static/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conversation">Skip to conversation</a>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="HestiaRelay home"><img src="/static/mark.svg" alt="" width="38" height="38">Hestia<span>Relay</span></a>
+  <span class="environment"><span class="dot"></span> Alexa+ experience simulator</span>
+</header>
+<main>
+  <section class="intro" aria-labelledby="headline">
+    <div><p class="eyebrow">A LITTLE LESS TO REMEMBER</p><h1 id="headline">Life moves on.<br>Your plans come with you.</h1><p class="lede">One dinner. Three conversations. A home that keeps the thread.</p></div>
+    <div class="promise"><span class="thread-icon" aria-hidden="true">↗</span><p>Pick up where<br><strong>life left off.</strong></p><span class="small">Persistent context · Your decisions</span></div>
+  </section>
+  <nav class="journey" aria-label="Three-session demo">
+    <button class="step" id="demo-0"><span class="step-number">01</span><span><strong>Make a plan</strong><small>Six guests. Friday. $120.</small></span><span class="step-state">Start →</span></button>
+    <button class="step" id="demo-1"><span class="step-number">02</span><span><strong>Add what matters</strong><small>Ana’s nut allergy.</small></span><span class="step-state">Next session</span></button>
+    <button class="step" id="demo-2"><span class="step-number">03</span><span><strong>Bring it all together</strong><small>Are we ready for Friday?</small></span><span class="step-state">Next session</span></button>
+  </nav>
+  <p class="demo-hint">Each step opens a separate session. Only the new message is sent; saved context is recovered by the service.</p>
+  <div class="workspace">
+    <section class="conversation panel" id="conversation" aria-labelledby="conversation-title">
+      <div class="panel-heading"><div><p class="eyebrow">THE CONVERSATION</p><h2 id="conversation-title">Your household thread</h2></div><span id="session-badge" class="badge">No session yet</span></div>
+      <div id="transcript" class="transcript" aria-label="Persistent conversation history"></div>
+      <form id="composer">
+        <label for="message">Your next message</label>
+        <div class="input-row"><textarea id="message" name="message" rows="2" maxlength="500" placeholder="Try a session above, or enter a supported message." required></textarea><button type="submit" class="primary" id="send">Send <span aria-hidden="true">↗</span></button></div>
+        <div class="composer-footer"><span>Guided English demo · Text interaction</span><button type="button" id="new-session" class="text-button">Start another session +</button></div>
+      </form>
+      <p id="status" class="status" role="status" aria-live="polite" aria-atomic="true">Loading saved context…</p>
+      <p id="error" class="error" role="alert" hidden></p>
+    </section>
+    <aside class="context" aria-label="Persistent household context">
+      <section class="goal-card" aria-labelledby="goal-title"><div class="panel-heading"><p class="eyebrow">KEPT IN MEMORY</p><span id="goal-status" class="badge">Awaiting a plan</span></div><h2 id="goal-title">A little room for Friday.</h2><p id="goal-when">Start the first conversation to make it a plan.</p><div class="metrics"><div><strong id="people">—</strong><span>guests</span></div><div><strong id="budget">—</strong><span>budget · USD</span></div><div><strong id="spent">$0</strong><span>actually spent</span></div></div><p id="goal-evidence" class="small">No goal saved yet.</p></section>
+      <section class="panel compact" aria-labelledby="constraints-title"><p class="eyebrow">THE DETAILS THAT MATTER</p><h2 id="constraints-title">People & preferences</h2><div id="preferences"></div></section>
+      <section class="panel compact" aria-labelledby="checklist-title"><div class="panel-heading"><h2 id="checklist-title">Before everyone arrives</h2><span class="badge safe">SAFE · planning</span></div><ul id="checklist" class="checklist"></ul><p class="small">Preparation tasks are reminders to act, not claims of completed work.</p></section>
+    </aside>
+  </div>
+  <section class="lower-grid">
+    <div class="panel compact" aria-labelledby="plan-title"><div class="panel-heading"><div><p class="eyebrow">WHY THIS PLAN</p><h2 id="plan-title">A plan with a source</h2></div><span id="provenance" class="badge">Not generated</span></div><p id="planner-detail" class="small"></p><p class="small">Planner advice only. It cannot authorize actions or verify food safety.</p><p id="plan-text" class="plan-text">Your plan will appear after the first conversation.</p></div>
+    <div class="panel compact" aria-labelledby="consent-title"><div class="panel-heading"><div><p class="eyebrow">YOU HAVE THE FINAL SAY</p><h2 id="consent-title">Decisions, not surprises</h2></div><span aria-hidden="true" class="lock-symbol">◇</span></div><div id="proposals"></div></div>
+  </section>
+  <section class="panel compact timeline-panel" aria-labelledby="timeline-title"><p class="eyebrow">PROOF OF CONTINUITY</p><h2 id="timeline-title">Different sessions. The same thread.</h2><ol id="timeline" class="timeline"></ol></section>
+  <footer><p><strong>Simulation, clearly.</strong> No real Alexa+ connection. No purchases, messages, payments or account changes — even after approval. Use fictional household details only.</p><a href="https://github.com/Elinfiny/HestiaRelay">Open source · MIT ↗</a></footer>
+</main>
+</body>
+</html>

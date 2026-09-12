@@ -1,17 +1,26 @@
 # HestiaRelay work state
 
-Canonical main at Phase 1 start: `30ed49b10afddda76994724dfb4ca6942338f5cb`.
+Canonical main at this checkpoint: `30ed49b10afddda76994724dfb4ca6942338f5cb`.
+This is the last verified main, not a self-referential hash of this document.
 
-Phase: 1 — continuity simulator, in progress (Issue #2).
+Phase: 1 — Issue #2, implementation candidate on `feature/alexa-simulator-v1`.
 
-Completed gates: mandatory repository and issue reads; baseline SHA confirmed; main CI run 34708825312 successful; no open competing PR. Read-only consistency audit found AWS runtime errors need explicit fallback. Existing SQLite state lacks session history and planner provenance persistence.
+Completed: mandatory read-only audit; bootstrap main CI PASS; responsive simulator,
+shared MCP/API service, persisted session/turn/provenance records, explicit AWS
+fallback, transactional writes, exact consent and context-change checks.
+45 behavior/API tests passed with 98.94% application coverage before the new
+real-network MCP smoke was added. Ruff passed. Final full-suite results pending.
 
-Execution: one feature branch `feature/alexa-simulator-v1`; preserve main until tests, browser QA and diff audit pass. Baseline commit is the rollback reference. No external actions, AWS calls, deployment or Devpost changes authorized by this phase.
+In progress: real TCP MCP interoperability and process restart, GitHub Actions
+browser suite, manual screenshot review, final secret/scope/claims diff audit.
+No merge or Issue #2 closure yet. Main remains the recoverable baseline.
 
-Pending: implement shared service/API/UI, meaningful coverage >=90%, real MCP smoke, desktop/mobile QA, claims and secret audit, PR CI, merge and post-merge verification. No implementation changes applied at this checkpoint.
+Blockers: managed cloud browser cannot reach executor loopback; CI-owned Chromium
+is the prepared route for reproducible UI evidence and manual visual inspection.
+AWS credentials/account/model are unverified and do not block deterministic work.
 
-Blockers: none for Phase 1. Live AWS account/model configuration remains unverified and does not block simulation.
+Competition readiness: Phase 1 candidate only. No live Alexa+, Bedrock, AgentCore
+or Strands evidence. Devpost story and video fields untouched.
 
-Competition readiness: bootstrap only; no demonstrated live Alexa+, Bedrock, AgentCore or Strands.
-
-Next executable package: Issue #2, then prepare controlled AWS validation without making paid calls.
+Next executable package: complete PR gates, merge, verify main CI and close #2;
+then prepare the bounded live AWS validation package before requesting account access.

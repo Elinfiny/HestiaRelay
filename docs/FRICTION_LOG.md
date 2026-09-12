@@ -37,3 +37,20 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
 - **Actionable suggestion:** Provide an explicit create-repository action or a documented handoff path from connected GitHub identity to browser automation.
 - **Evidence:** Initial repository commit `d834190` and the bootstrap branch history.
 - **Status:** worked around
+
+## F-002 — Separate cloud browser cannot reach the development loopback
+
+- **Date:** 2026-09-12
+- **Area:** Tooling / browser QA
+- **Task attempted:** Open the running simulator at `http://127.0.0.1:8000/`.
+- **Environment:** Cloud executor with a separate managed Chrome browser.
+- **Steps:** Start the loopback server; navigate the managed browser to the URL.
+- **Expected:** Simulator page reachable for desktop/mobile QA.
+- **Actual:** `net::ERR_BLOCKED_BY_CLIENT`; Python HTTP tests can reach the server.
+- **Severity:** medium
+- **Workaround:** Run Chromium beside the real server in GitHub Actions; preserve
+  screenshots and traces for visual inspection. Do not expose the development
+  endpoint publicly or describe this as an Alexa+ service issue.
+- **Suggestion:** Provide an authenticated executor-to-browser preview route.
+- **Evidence:** `scripts/browser_qa.py`, CI browser job and `docs/DEMO_GUIDE.md`.
+- **Status:** workaround implemented; CI and image review pending.

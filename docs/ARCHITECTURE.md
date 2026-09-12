@@ -6,26 +6,12 @@ HestiaRelay is a persistent household continuity agent for Alexa+. It carries a 
 
 ## Trust boundaries
 
-```text
-User / Alexa+ simulation
-        │
-        ▼
-MCP Streamable HTTP endpoint
-        │
-        ▼
-HestiaRelay orchestration core
-   ┌────────┬───────────┬──────────────┐
-   ▼        ▼           ▼              ▼
-state    risk gate   plan adapter   proposal ledger
-   │                    │              │
-   │                    ▼              │
-   │              Amazon Bedrock       │
-   │                    │              │
-   └────────────────────┴──────────────┘
-                        │
-                        ▼
-             future AgentCore / Strands
-```
+The browser JSON API and MCP tools share `HouseholdService` and
+`HouseholdEngine`. All mutations enter a nested SQLite `BEGIN IMMEDIATE`
+transaction, so state, planner provenance and transcript commit together.
+Bedrock text is advisory output only; it cannot invoke a tool or authorize a
+proposal. No external side-effect adapter is present.
+
 
 ## Current validated foundation
 
@@ -83,3 +69,33 @@ The canonical demo remains:
 5. A proposed purchase is visibly consent-gated instead of silently executed.
 
 This demo directly proves continuity, orchestration, memory, and safety rather than a single-turn chat interaction.
+
+## Phase 1 additions
+
+`SessionRecord` preserves a unique session ID, sequence and recovered goal ID.
+`TurnRecord` stores only the new user message, response, goal ID and that turn's
+planner result. A repeated request ID with the same input is idempotent;
+conflicting reuse fails. New sessions never reset household state.
+
+Plans and preferences survive process recreation. Existing bootstrap SQLite
+JSON loads with defaults for the additive history fields. Planning is not task
+completion; the UI never marks food safety or purchases as complete.
+
+Approval and rejection are final for one action ID. Context hashes bind new
+proposals to the goal and preferences at proposal time. Approval after a context
+change fails; rejection is still allowed. Legacy proposals without a context
+hash cannot be approved and should be rejected and replaced.
+
+The simulator serves packaged static assets using the real MCP application's
+custom routes. `LocalBoundary` protects **all** HTTP routes with localhost Host
+checks and same-origin checks. It also sets CSP, no-store and nosniff headers.
+The entrypoint runs that wrapped application through Uvicorn on loopback.
+Only fictional single-household development data is in scope. No public hosting
+claim or multi-tenant authorization is implied.
+
+Bedrock failures (including credentials, access errors and malformed responses)
+produce `deterministic` provenance with a redacted `aws_unavailable` reason.
+Success records `amazon-bedrock`, model ID and timestamp. Mocked-client tests
+prove adapter behavior; they do not prove AWS account access. API timeouts and
+zero configured SDK retries bound ordinary service errors. Credential-provider
+resolution can add latency and requires a separate live-account check.

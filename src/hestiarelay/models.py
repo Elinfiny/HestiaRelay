@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from enum import StrEnum
-from typing import Any
+from typing import Any, Literal
 from uuid import uuid4
 
 from pydantic import BaseModel, Field
@@ -31,7 +31,7 @@ class HouseholdGoal(BaseModel):
     title: str = Field(min_length=3, max_length=240)
     when: str = Field(min_length=2, max_length=120)
     people: int = Field(ge=1, le=100)
-    budget_usd: float | None = Field(default=None, ge=0)
+    budget_usd: float | None = Field(default=None, ge=0, allow_inf_nan=False)
     status: GoalStatus = GoalStatus.ACTIVE
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
@@ -49,6 +49,34 @@ class ActionProposal(BaseModel):
     requires_confirmation: bool
     status: ProposalStatus = ProposalStatus.PENDING
     payload: dict[str, Any] = Field(default_factory=dict)
+    context_hash: str | None = None
+    execution: Literal["not_executed"] = "not_executed"
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+
+class PlanResult(BaseModel):
+    source: Literal["deterministic", "amazon-bedrock"]
+    text: str
+    used_aws: bool
+    model_id: str | None = None
+    fallback_reason: Literal["not_configured", "aws_unavailable"] | None = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+
+class SessionRecord(BaseModel):
+    session_id: str = Field(default_factory=lambda: str(uuid4()))
+    number: int
+    recovered_goal_id: str | None = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+
+class TurnRecord(BaseModel):
+    request_id: str
+    session_id: str
+    user_text: str
+    reply: str
+    goal_id: str | None
+    plan: PlanResult | None = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
@@ -57,11 +85,7 @@ class HouseholdState(BaseModel):
     preferences: list[Preference] = Field(default_factory=list)
     checklist: list[str] = Field(default_factory=list)
     proposals: list[ActionProposal] = Field(default_factory=list)
+    sessions: list[SessionRecord] = Field(default_factory=list)
+    turns: list[TurnRecord] = Field(default_factory=list)
+    plan: PlanResult | None = None
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
-
-
-class PlanResult(BaseModel):
-    source: str
-    text: str
-    used_aws: bool
-    model_id: str | None = None
