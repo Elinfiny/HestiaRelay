@@ -3,6 +3,13 @@ const $ = (id) => document.getElementById(id);
 let snapshot;
 let sessionId = sessionStorage.getItem("hestia-session");
 let busy = false;
+let csrfToken = null;
+let leaving = false;
+function signIn() {
+  if (leaving) return;
+  leaving = true; snapshot = null;
+  document.body.replaceChildren(); location.replace("/login");
+}
 const money = (value) => value == null ? "—" : new Intl.NumberFormat("en-US", {style:"currency", currency:"USD", maximumFractionDigits:2}).format(value);
 function element(tag, text, className) {
   const el = document.createElement(tag);
@@ -11,7 +18,8 @@ function element(tag, text, className) {
   return el;
 }
 async function api(path, body) {
-  const response = await fetch(path, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {});
+  const response = await fetch(path, body ? {method:"POST", headers:{"Content-Type":"application/json", ...(csrfToken ? {"X-CSRF-Token":csrfToken} : {})}, body:JSON.stringify(body)} : {});
+  if (response.status === 401) { signIn(); throw new Error("Sign in to continue."); }
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || "Request failed. Refresh to recover saved state.");
   return data;
@@ -23,10 +31,11 @@ async function act(work, announcement) {
   $("status").textContent = "Saving your thread…";
   renderDisabled();
   try { snapshot = await work(); render(); $("status").textContent = announcement; }
-  catch (error) { $("error").textContent = error.message; $("error").hidden = false; $("status").textContent = "No completion claimed. Your saved thread remains available."; }
+  catch (error) { if (leaving) return; $("error").textContent = error.message; $("error").hidden = false; $("status").textContent = "No completion claimed. Your saved thread remains available."; }
   finally { busy = false; renderDisabled(); }
 }
 function renderDisabled() {
+  if (leaving) return;
   document.querySelectorAll("button").forEach(button => { button.disabled = busy; });
   if (!snapshot) return;
   const texts = snapshot.state.turns.map(t => t.user_text);
@@ -148,4 +157,22 @@ $("composer").addEventListener("submit", event => {
     return data;
   }, "Message and context saved.");
 });
-act(() => api("/api/state"), "Saved household context loaded. Ready when you are.");
+async function checkAccess() {
+  const access = await api("/auth/session");
+  if (access.required && !access.authenticated) { signIn(); return false; }
+  csrfToken = access.csrf_token || null;
+  $("sign-out").hidden = !access.required;
+  return true;
+}
+$("sign-out").addEventListener("click", async () => {
+  try { await api("/auth/logout", {}); sessionStorage.removeItem("hestia-session"); signIn(); }
+  catch (error) { if (leaving) return; $("error").textContent = error.message; $("error").hidden = false; }
+});
+window.addEventListener("pageshow", event => { if (event.persisted) location.reload(); });
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") checkAccess().catch(() => signIn());
+});
+act(async () => {
+  if (!await checkAccess()) throw new Error("Sign in to continue.");
+  return api("/api/state");
+}, "Saved household context loaded. Ready when you are.");

@@ -75,3 +75,22 @@ These remain blocked until a later milestone proves the integration, consent UX,
 - AWS prompts include only goal, preferences and checklist, excluding transcript
   and consent ledger. Live AWS use still requires the owner's account/privacy
   gate. Tests use fictional state and injected clients.
+
+## Restricted judge mode
+
+- Optional outer authentication covers every household API read/write before the
+  shared service runs. Remote MCP is blocked in this mode; local MCP is preserved.
+- Exact HTTPS Host/Origin, raw-header duplicate rejection and rejection of proxy
+  identity assertions prevent the browser gate from trusting caller-supplied
+  forwarding data. TLS termination alone with an HTTP upstream is not supported.
+- Opaque Secure/HttpOnly/SameSite sessions and separate synchronizer CSRF tokens
+  protect login and mutation. Sessions expire, logout revokes the current token,
+  and process restart revokes all sessions. Only one worker is supported.
+- Generated high-entropy key files are owner-only, external to Git, never placed
+  in URLs or logs. QA excludes auth traces, cookies and key files from artifacts.
+- Snapshot publication is create-if-absent. Restore rejects mismatched digests,
+  unverified WAL state, incompatible schemas and missing/empty/corrupt sources.
+  This provides local fictional-state recovery, not encrypted remote backup.
+- Remaining public gates: domain/TLS proxy proof, infrastructure cost approval,
+  public abuse controls, independent dependency/image review and, if required,
+  standards-conformant remote MCP authorization. No public exposure is authorized.

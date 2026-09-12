@@ -65,6 +65,11 @@ restricted judge deployment design. Issue #10 records post-merge CI.
 
 ## Phase 4 — Product hardening
 
+Phase 4A runtime gates PASS (Issue #12): optional authenticated judge browser,
+TLS/Host/Origin/CSRF/session controls and verified SQLite backup/restore.
+CI 34721431414: 141 tests, 98.11% coverage, desktop/mobile TLS and existing
+MCP/container regressions green. Public hosting remains a separate gate.
+
 - failure/retry behavior;
 - consent regression tests;
 - accessibility;

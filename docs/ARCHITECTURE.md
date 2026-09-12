@@ -40,7 +40,7 @@ The service is intended to run over Streamable HTTP and meet or exceed the hacka
 
 ## Continuity model
 
-During development, SQLite proves cross-session state continuity without requiring cloud credentials. The cloud milestone will introduce AgentCore-backed memory while keeping the same typed domain boundary so local and cloud modes can be compared and tested.
+During development, SQLite proves cross-session state continuity without requiring cloud credentials. AgentCore-backed memory remains a conditional evaluation; current continuity is proven with SQLite and the same typed domain boundary.
 
 ## AWS integration strategy
 
@@ -109,3 +109,19 @@ the household domain's exact-proposal consent. Creating the three-resource
 CloudFormation stack never starts a build. CI and the default simulator
 configuration do not invoke AWS. See `CLOUD_PROOF_PROPOSAL.md` for scope, cost assumptions and
 evidence/cleanup acceptance. This package is not a public application deployment.
+
+## Restricted judge access and recovery
+
+`AccessConfig` selects local or judge mode before server initialization. The
+outer `LocalBoundary` rejects ambiguous raw headers on all HTTP routes. Optional
+`JudgeAccess` then enforces actual TLS, exact authority/origin, bounded opaque
+server-side sessions and login/mutation CSRF before the shared app can execute.
+Judge mode disables remote MCP; local mode keeps the proven real MCP transport.
+No separate UI data service, household authorization bypass or external adapter
+is introduced. One worker/one fictional household is the deployment contract.
+
+`recovery.snapshot` reads a SQLite transaction, backs it up consistently, checks
+integrity and the domain state, and publishes an owner-only new file atomically.
+Restoration verifies the selected file digest and uses those exact bytes.
+Authentication sessions are never part of the household backup. See
+`JUDGE_ACCESS_GUIDE.md` for operational and public-hosting limits.

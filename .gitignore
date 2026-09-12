@@ -19,3 +19,9 @@ venv/
 .idea/
 qa-artifacts/
 validation.txt
+
+# Runtime credentials and SQLite sidecars never belong in Git.
+*.key
+*.pem
+*.db-wal
+*.db-shm

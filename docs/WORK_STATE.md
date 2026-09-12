@@ -1,24 +1,26 @@
 # HestiaRelay work state
 
-Canonical main baseline for Phase 3:
-`f48c902e5035b6fa33be0e36334afd414f1fbe7e` (CI 34718967183 SUCCESS).
-Live-executed source: `56dd5ad6375a668645eec7d8018430479f308267`.
-Resolve GitHub's `main` ref for the latest repository head. Issue #10 records
-this delivery's final merge SHA and post-merge CI after confirmation; a commit
-cannot contain its own SHA. Phase 1 delivery:
-`c5739b76d54dc4dda140e2b373d5822a91413d29` (CI 34710656387 SUCCESS).
+Canonical main SHA: `e13cef9d3d7a0cd346e4ce59c1810db2e6e3b247`.
+Post-merge CI [34720181231](https://github.com/Elinfiny/HestiaRelay/actions/runs/34720181231)
+SUCCESS, all four jobs; main ref readback matches. PR #11 merged and Issue #10
+closed after confirmation. This Phase 4A checkpoint is on
+`feature/judge-access-v1`, not a direct main change.
+
+Live-executed AWS source: `56dd5ad6375a668645eec7d8018430479f308267`.
+Phase 2 evidence merge: `f48c902e5035b6fa33be0e36334afd414f1fbe7e`,
+main CI 34718967183 SUCCESS; Issue #4 closed.
+Phase 1 merge: `c5739b76d54dc4dda140e2b373d5822a91413d29`,
+main CI 34710656387 SUCCESS; Issue #2 closed.
 
 ## Current phase
 
-**Phase 1 and Phase 2 complete. Phase 3 implementation and execution gates PASS; final delivery CI pending.**
-PR #9 preserves the live proof and cleanup evidence; Issue #4 is closed.
-Phase 3 delivers the reproducible container and clean-room judge package
-in Issue #10. No extra AWS spending or public deployment is authorized.
-
-Phase 2 delivery is now confirmed: PR #9 merged at
-`f48c902e5035b6fa33be0e36334afd414f1fbe7e`; post-merge CI 34718967183 SUCCESS,
-all three jobs. Issue #4 is closed after readback. This is the canonical main
-baseline for the Phase 3 container package.
+**Phases 1–3 complete. Phase 4A started: authenticated judge access and recovery.**
+Issue #12 is the executable specification. Initial code-boundary audit and
+implementation sequence are recorded in `ACCESS_IMPLEMENTATION_NOTES.md`;
+authentication and backup/restore controls are implemented on the feature branch;
+all four runtime CI gates pass in run 34721431414; final documentation
+merge and post-merge delivery receipts are tracked in Issue #12.
+No extra AWS spending or public deployment is authorized.
 
 ## Completed gates
 
@@ -54,8 +56,9 @@ baseline for the Phase 3 container package.
 
 ## Delivery and remaining gates
 
-PR and post-merge CI must pass validate, browser, cloud-proof-package and
-container-judge jobs; Issue #10 records final run identities and closing readback. Public repository,
+Phase 3 PR CI 34720085807 and post-merge CI 34720181231 passed validate,
+browser, cloud-proof-package and container-judge; Issue #10 records the final
+merge and closure. Public repository,
 MIT license, domain boundaries and deterministic fallback remain intact.
 No second build/call is authorized by the consumed proof proposal.
 
@@ -73,6 +76,12 @@ measured real-user impact. Final video/submission audit remain open. Devpost
 story/video fields are untouched.
 
 ## Phase 3 evidence
+
+- Post-merge run 34720181231 executed the canonical main SHA above. Its image:
+  `sha256:ad44ebcb5ca2dce2baf5808895a7a1832863594dfb545054f890acb8cf2341a8`.
+  Container artifact 10306064051 has GitHub-reported ZIP digest
+  `05a32b0ec1b896b4cb2d876d19e8a913d9523018b9807a9509fb90a91151a87e`.
+  This later archive was not downloaded again; the reviewed archive is below.
 
 - CI 34719571606: all four jobs PASS at feature head
   `2c98e07b008107d95db015ef5b0bb1b16cbb0a36`. Actual PR merge checkout:
@@ -92,10 +101,30 @@ story/video fields are untouched.
 
 ## Next executable package
 
-Restricted judge access and release hardening: implement the authenticated
+[Issue #12](https://github.com/Elinfiny/HestiaRelay/issues/12): implement the authenticated
 single-fictional-household browser path, exact deployment Host/Origin and CSRF
 boundaries, and backup/restore checks described in
 [JUDGE_DEPLOYMENT_DESIGN.md](JUDGE_DEPLOYMENT_DESIGN.md). Preserve loopback defaults
 and real MCP; public MCP requires its own compatible authorization proof.
-The design and initial boundary audit are complete; implementation can proceed
-offline. A public endpoint still requires a concrete account/domain/cost proposal.
+Implementation is complete locally: Ruff PASS, 141 tests PASS, 98.11%
+application coverage. Exact state preservation on denial, CSRF/expiry/revocation,
+backup integrity, WAL consistency, digest selection and no-overwrite restore pass.
+The browser CI job passed the real TLS login/continuity/recovery suite at both
+viewports, including revocation during interaction. Normal flows have zero
+console errors; the deliberate denial records its expected HTTP 401 and zero
+uncaught JavaScript errors. The local Chromium download timed out, so the
+reviewed execution evidence comes from GitHub Actions. A public endpoint still requires a concrete account/domain/cost proposal.
+
+## Phase 4A verified evidence
+
+- Feature head `1041c0505dfd4c3ab890954935f52282ad69f2e2`; actual PR merge checkout
+  `45ff5f2f489abbd0af3dd4c6bd4b01818fe5ad3c`; CI 34721431414, four jobs PASS.
+- Browser artifact 10306905225 downloaded; SHA-256, ZIP CRC and safe paths PASS.
+  Durable evidence: [judge access](evidence/judge-access-20260912.json).
+- Login desktop/mobile and authenticated mobile continuity screenshots from
+  initial run 34721340043 visually reviewed. The follow-up changes only handle
+  mid-interaction revocation and add its real browser test.
+- Existing real MCP/Inspector and container restart suites remain green.
+- Scope/secret/claim review: application auth/recovery only; dependencies and
+  pinned image base unchanged. This is not a complete vulnerability-free image
+  attestation or public deployment review. Those gates remain explicit.

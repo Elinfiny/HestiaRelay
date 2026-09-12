@@ -1,0 +1,95 @@
+{
+  "workflow_run": 34721431414,
+  "workflow_url": "https://github.com/Elinfiny/HestiaRelay/actions/runs/34721431414",
+  "branch_head": "1041c0505dfd4c3ab890954935f52282ad69f2e2",
+  "test_merge": "45ff5f2f489abbd0af3dd4c6bd4b01818fe5ad3c",
+  "jobs": {
+    "validate": "PASS",
+    "browser": "PASS",
+    "cloud-proof-package": "PASS",
+    "container-judge": "PASS"
+  },
+  "tests": 141,
+  "application_coverage_percent": 98.11,
+  "browser": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "real_tls": true,
+      "certificate": "Ephemeral CI certificate; Chromium SPKI pinned; Python CA verified",
+      "login_logout_revoked_replay": "PASS",
+      "restart_revokes_auth": "PASS",
+      "mid_interaction_revocation": "PASS",
+      "expected_denial_console": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "denial_uncaught_exceptions": [],
+      "canonical_sessions": 3,
+      "approve_reject": "PASS",
+      "restored_full_snapshot": true,
+      "backup_state_sha256": "20554047020a7148ca1f6bdf9a3ce880d20242c2d871e7efca7581ee29ca4e05",
+      "restore_state_sha256": "20554047020a7148ca1f6bdf9a3ce880d20242c2d871e7efca7581ee29ca4e05",
+      "console_errors": [],
+      "failed_requests": [],
+      "horizontal_overflow": false,
+      "keyboard_focus": "send",
+      "secret_in_browser_storage": false,
+      "aws_calls": 0,
+      "public_endpoint": false
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "real_tls": true,
+      "certificate": "Ephemeral CI certificate; Chromium SPKI pinned; Python CA verified",
+      "login_logout_revoked_replay": "PASS",
+      "restart_revokes_auth": "PASS",
+      "mid_interaction_revocation": "PASS",
+      "expected_denial_console": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "denial_uncaught_exceptions": [],
+      "canonical_sessions": 3,
+      "approve_reject": "PASS",
+      "restored_full_snapshot": true,
+      "backup_state_sha256": "14b169c47d03ec29a88ea9433a65029b3c143b0aea220e478afe0fa5b4a4036a",
+      "restore_state_sha256": "14b169c47d03ec29a88ea9433a65029b3c143b0aea220e478afe0fa5b4a4036a",
+      "console_errors": [],
+      "failed_requests": [],
+      "horizontal_overflow": false,
+      "keyboard_focus": "send",
+      "secret_in_browser_storage": false,
+      "aws_calls": 0,
+      "public_endpoint": false
+    }
+  ],
+  "artifact": {
+    "id": 10306905225,
+    "sha256": "91fc40c4a5cce47ad80d78354463fdcc835d81a12c7cab50c701de3e47e02cf0",
+    "bytes": 4234491,
+    "download_digest_crc_paths": "PASS"
+  },
+  "visual_review": {
+    "run": 34721340043,
+    "artifact": 10306118324,
+    "images": [
+      "judge/desktop-login.png",
+      "judge/mobile-login.png",
+      "judge/mobile-continuity.png"
+    ],
+    "status": "PASS",
+    "scope": "Login and authenticated continuity layout reviewed. Later change only hardens revoked-session navigation; no layout change."
+  },
+  "limits": [
+    "One fictional household and one worker",
+    "Public hosting and domain trust not demonstrated",
+    "Remote MCP disabled in judge mode; local MCP verified",
+    "Snapshots unencrypted and local; no independent disaster recovery claim",
+    "Expected HTTP 401 recorded separately in deliberate revocation test; no uncaught JavaScript errors",
+    "No additional AWS calls or resources"
+  ]
+}
