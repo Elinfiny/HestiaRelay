@@ -1,32 +1,45 @@
 # HestiaRelay work state
 
-Canonical main at this checkpoint: `30ed49b10afddda76994724dfb4ca6942338f5cb`.
-This is the last verified main, not a self-referential hash of this document.
+Canonical validated Phase 1 main SHA: `c5739b76d54dc4dda140e2b373d5822a91413d29`.
+This is the last verified implementation baseline at this checkpoint; the current
+GitHub `main` ref is authoritative for later documentation/preparation commits.
 
-Phase: 1 — Issue #2, implementation candidate on `feature/alexa-simulator-v1`.
+Current phase: **Phase 1 COMPLETE; Phase 2 AWS proof preparation in progress (#4).**
 
-Completed: mandatory read-only audit; bootstrap main CI PASS; responsive simulator,
-shared MCP/API service, persisted session/turn/provenance records, explicit AWS
-fallback, transactional writes, exact consent and context-change checks.
-46 tests PASS; 98.95% application coverage; Ruff PASS. Real MCP/TCP smoke
-negotiated 2025-11-25 across three sessions and recovered state after restart.
-CI run 34710345180 passed validate and browser jobs at candidate 09c92c6.
-Chromium 1440×1000 and 390×844 passed with zero console errors, no overflow,
-keyboard focus, approve/reject, reload and fresh-context persistence. Initial
-and session-3 screenshots were manually inspected: coherent layout and readable
-controls, context and consent; no clipping or overlap identified.
+## Completed gates
 
-In progress: final evidence-manifest/documentation update and exact-head CI;
-final secret/scope/claims audit before merge.
-No merge or Issue #2 closure yet. Main remains the recoverable baseline.
+- PR #3 merged; Issue #2 closed after main CI confirmation.
+- Main CI run 34710656387: SUCCESS on c5739b7 (validation + Chromium).
+- Phase 1: Ruff, 46 tests, 98.95% coverage, canonical three-session continuity,
+  exact approval/rejection and stale-context protection PASS.
+- Real SDK/TCP MCP negotiated 2025-11-25 on three connections, plus explicit
+  baseline request; actual server restart persistence PASS.
+- Chromium 1440×1000 and 390×844: zero console errors/overflow; canonical clicks,
+  consent, reload, fresh browser context and keyboard focus PASS.
+- Initial/session-3 screenshots manually reviewed. No interactive managed-browser
+  run claimed; that browser could not reach executor loopback.
+- Final browser archive 10303640584: SHA-256
+  `6af74928430b7dd5abba8314d1e292d29bf203579e6e5ec180fba178cd90cf2c`,
+  CRC/safe paths and 7/7 manifest rows PASS.
+- Secret-pattern scan, changed-file scope and misleading-claim diff review PASS.
 
-Phase 1 blockers: none. Managed browser loopback access is unavailable; actual
-browser interactions ran in CI-owned Chromium, followed by manual screenshot
-inspection. This does not claim a manual interactive cloud-browser session.
-AWS credentials/account/model are unverified and do not block deterministic work.
+## Phase 2 preparation
 
-Competition readiness: Phase 1 candidate only. No live Alexa+, Bedrock, AgentCore
-or Strands evidence. Devpost story and video fields untouched.
+Branch: `feature/bedrock-evidence-prep`. Added opt-in one-call Bedrock evidence
+probe, default offline path, explicit mock labeling, redacted latency/usage
+reporting and AWS runbook. Local validation: Ruff PASS; 55 tests PASS; 98.87%
+application coverage. Offline probe: zero Converse calls, no live AWS proof,
+credits unverified and cost unknown. Preparation PR/CI is the next gate.
 
-Next executable package: complete PR gates, merge, verify main CI and close #2;
-then prepare the bounded live AWS validation package before requesting account access.
+## Open blockers and readiness
+
+Live AWS requires secure account access, verified model/region and credit/pricing
+status, and a bounded spending authorization. No AWS credentials, paid call,
+IAM grant, model subscription, cloud resource or live workflow was created.
+Competition readiness: functioning simulation and MCP evidence; live AWS,
+public judge deployment, user impact validation and final submission remain open.
+No live Alexa+, AgentCore or Strands integration. Devpost story/video untouched.
+
+Next executable package: merge the tested offline AWS preparation through PR/CI;
+verify the owner's AWS account read-only; select the exact model and one-call
+cost boundary; run the live probe only after the account/financial gate passes.

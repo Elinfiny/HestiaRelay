@@ -16,7 +16,7 @@ The roadmap is gate-driven. A later phase does not replace a validated earlier p
 
 **Gate:** CI green and bootstrap diff reviewed before merge.
 
-## Phase 1 — Alexa+ simulation MVP
+## Phase 1 — Alexa+ simulation MVP — COMPLETE
 
 Build a polished web simulation that demonstrates the intended Alexa+ interaction model:
 
@@ -28,9 +28,11 @@ Build a polished web simulation that demonstrates the intended Alexa+ interactio
 - consent card for sensitive proposals;
 - session restart / continuity demonstration.
 
-**Gate:** canonical three-session demo works locally without AWS credentials and on mobile/desktop.
+**Gate PASS:** canonical three-session demo, real MCP process-restart smoke,
+Chromium desktop/mobile and manual screenshot review. PR #3 merged; main CI
+34710656387 SUCCESS.
 
-## Phase 2 — Live AWS Builder integration
+## Phase 2 — Live AWS Builder integration — PREPARATION STARTED (#4)
 
 - Validate AWS promotional credits/account path.
 - Enable one appropriate Amazon Bedrock model.

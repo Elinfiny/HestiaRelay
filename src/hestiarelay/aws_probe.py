@@ -1,0 +1,121 @@
+"""Bounded, opt-in Bedrock evidence probe. Offline by default; fictional inputs only."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import time
+
+from hestiarelay.bedrock import BedrockPlanner
+from hestiarelay.models import HouseholdGoal, HouseholdState, Preference
+
+
+class ObservedClient:
+    def __init__(self, client):
+        self.client = client
+        self.calls = 0
+        self.response = {}
+
+    def converse(self, **kwargs):
+        if self.calls:
+            raise ValueError("Probe permits one Converse request only.")
+        self.calls += 1
+        self.response = self.client.converse(**kwargs)
+        return self.response
+
+
+def run_probe(*, live=False, approved=False, model_id=None, region="us-east-1", client=None):
+    """`client` injection is for tests; mocked success is labeled separately."""
+    state = HouseholdState(
+        goal=HouseholdGoal(
+            title="Fictional dinner", when="Friday evening", people=6, budget_usd=120
+        ),
+        preferences=[Preference(person="Ana", note="Fictional guest: allergic to nuts")],
+        checklist=["Verify ingredients and guest constraints", "Review the $120 budget"],
+    )
+    report = {
+        "status": "READY_FOR_ACCOUNT_GATE",
+        "mode": "offline",
+        "converse_calls": 0,
+        "live_aws_validated": False,
+        "external_household_actions": 0,
+        "credits_verified": False,
+        "cost_usd": None,
+    }
+    if not live:
+        # Do not resolve credentials, construct an AWS client or use ambient model configuration.
+        planner = BedrockPlanner()
+        planner.model_id = None
+        plan = planner.generate_plan(state)
+        return report | {"planner_source": plan.source, "fallback_reason": plan.fallback_reason}
+    if not approved or not model_id or not region:
+        raise ValueError("Live probe requires account/model/region and one-call approval.")
+    planner = BedrockPlanner(model_id=model_id, region_name=region)
+    injected = client is not None
+    # Client creation may itself fail during credential discovery; redact that boundary too.
+    from botocore.exceptions import BotoCoreError, ClientError
+
+    try:
+        observed = ObservedClient(client if injected else planner._client_or_create())
+    except (BotoCoreError, ClientError):
+        return report | {"status": "BLOCKED", "mode": "live", "reason": "aws_client_unavailable"}
+    planner._client = observed
+    started = time.monotonic()
+    plan = planner.generate_plan(state)
+    elapsed_ms = round((time.monotonic() - started) * 1000, 2)
+    response = observed.response if isinstance(observed.response, dict) else {}
+    usage = response.get("usage", {})
+    usage = usage if isinstance(usage, dict) else {}
+    counts = {
+        key: value
+        for key in ["inputTokens", "outputTokens", "totalTokens"]
+        if type(value := usage.get(key)) is int and value >= 0
+    }
+    success = plan.source == "amazon-bedrock" and plan.used_aws and observed.calls == 1
+    return report | {
+        "status": ("MOCK_PASS" if injected else "LIVE_CALL_PASS") if success else "BLOCKED",
+        "mode": "injected-test" if injected else "live",
+        "converse_calls": observed.calls,
+        "live_aws_validated": success and not injected,
+        "planner_source": plan.source,
+        "fallback_reason": plan.fallback_reason,
+        "elapsed_ms": elapsed_ms,
+        "usage": counts,
+        "usage_complete": len(counts) == 3,
+        "model_id_sha256": hashlib.sha256(model_id.encode()).hexdigest(),
+        "response_text_sha256": hashlib.sha256(plan.text.encode()).hexdigest(),
+        "region": region,
+    }
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--live", action="store_true", help="Make at most one paid Converse call")
+    parser.add_argument(
+        "--approve-one-call",
+        action="store_true",
+        help="Use only after account, model pricing and spend gate are approved",
+    )
+    args = parser.parse_args(argv)
+    try:
+        report = run_probe(
+            live=args.live,
+            approved=args.approve_one_call,
+            model_id=os.getenv("HESTIA_BEDROCK_MODEL_ID"),
+            region=os.getenv("AWS_REGION", "us-east-1"),
+        )
+    except ValueError:
+        report = {
+            "status": "BLOCKED",
+            "reason": "account_model_and_approval_required",
+            "live_aws_validated": False,
+            "converse_calls": 0,
+        }
+    print(json.dumps(report, indent=2))
+    return 2 if report["status"] == "BLOCKED" else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
