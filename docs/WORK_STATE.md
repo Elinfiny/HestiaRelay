@@ -1,10 +1,13 @@
 # HestiaRelay work state
 
-Canonical validated application main SHA: `62b223611963f7afbd2fa1cc1cf9b960c586281c`.
+Application source revision: `1cd5bb24b24be08e468e76c1863727cf2860d3c9`.
+Verified main baseline before this hardening package:
+`9aaf8730755e92984c3c157aa05e009cf43565ec` (CI 34711236792 SUCCESS).
 Phase 1 delivery SHA: `c5739b76d54dc4dda140e2b373d5822a91413d29`.
-The application SHA identifies the last code-changing main baseline. A docs-only
-closure may advance main without changing this tested application; resolve
-GitHub's `main` ref for the current repository head.
+The source revision identifies the code tested for this package; a following
+documentation commit changes only this work state. Resolve GitHub's `main` ref
+for the current repository head and inspect its Actions run for post-merge CI.
+Issue #4 records the merge SHA and run after they are confirmed.
 
 ## Current phase
 
@@ -39,12 +42,28 @@ open because live AWS evidence has not been obtained.
 - AWS probe and runbook tested. Default mode creates no AWS client and makes
   zero Converse calls. Mocked results are labeled and never prove live AWS.
 
+## Evidence integrity follow-up
+
+- Local validation: Ruff PASS; 69 tests PASS; 98.92% application coverage.
+  The 55-test result above is the previous AWS preparation baseline.
+- Twelve additional malformed/incomplete response cases cannot receive PASS;
+  a missing-usage CLI response exits nonzero after exactly one call.
+- Completion requires consistent integer usage, the 600-token output ceiling
+  and `end_turn`; request SHA-256 and UTC timing support redacted traceability.
+- `phase2_complete` remains false even on successful invocation; account,
+  credit, cost, source binding and output review are separate gates.
+- Candidate and post-merge CI must pass validation and Chromium jobs. See the
+  hardening PR and Issue #4 for the final run identities and confirmed outcomes.
+
 ## Open blockers
 
-AWS account/sign-in state is UNKNOWN: cloud-browser navigation/control timed
-out; the subsequent visible DOM was empty. No valid login form was available
-for secure credential collection. No AWS connector was exposed. Do not ask for
-credentials in chat or claim that the owner's own browser signs in this runtime.
+AWS account/sign-in state is UNKNOWN. AWS Core is verified installed and enabled;
+its Bedrock/SDK/billing skills are available. No AWS API/MCP operation tools are
+exposed in this session. The cloud CLI is absent, and its official installer
+download failed at the proxy CONNECT boundary. The console page displays
+`Site Unavailable`. These observations do not prove an AWS service outage.
+No secure login form or authenticated account readback is available. Do not ask
+for credentials in chat or treat a separate browser as authenticated here.
 
 Model/region access, awarded promotional credits, current pricing and an exact
 one-call spending authorization remain unverified. No paid call, IAM grant,
