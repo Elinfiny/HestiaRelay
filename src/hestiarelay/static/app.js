@@ -4,7 +4,12 @@ let snapshot;
 let sessionId = sessionStorage.getItem("hestia-session");
 let busy = false;
 let csrfToken = null;
-function signIn() { document.body.replaceChildren(); location.replace("/login"); }
+let leaving = false;
+function signIn() {
+  if (leaving) return;
+  leaving = true; snapshot = null;
+  document.body.replaceChildren(); location.replace("/login");
+}
 const money = (value) => value == null ? "—" : new Intl.NumberFormat("en-US", {style:"currency", currency:"USD", maximumFractionDigits:2}).format(value);
 function element(tag, text, className) {
   const el = document.createElement(tag);
@@ -26,10 +31,11 @@ async function act(work, announcement) {
   $("status").textContent = "Saving your thread…";
   renderDisabled();
   try { snapshot = await work(); render(); $("status").textContent = announcement; }
-  catch (error) { $("error").textContent = error.message; $("error").hidden = false; $("status").textContent = "No completion claimed. Your saved thread remains available."; }
+  catch (error) { if (leaving) return; $("error").textContent = error.message; $("error").hidden = false; $("status").textContent = "No completion claimed. Your saved thread remains available."; }
   finally { busy = false; renderDisabled(); }
 }
 function renderDisabled() {
+  if (leaving) return;
   document.querySelectorAll("button").forEach(button => { button.disabled = busy; });
   if (!snapshot) return;
   const texts = snapshot.state.turns.map(t => t.user_text);
@@ -160,7 +166,7 @@ async function checkAccess() {
 }
 $("sign-out").addEventListener("click", async () => {
   try { await api("/auth/logout", {}); sessionStorage.removeItem("hestia-session"); signIn(); }
-  catch (error) { $("error").textContent = error.message; $("error").hidden = false; }
+  catch (error) { if (leaving) return; $("error").textContent = error.message; $("error").hidden = false; }
 });
 window.addEventListener("pageshow", event => { if (event.persisted) location.reload(); });
 document.addEventListener("visibilitychange", () => {

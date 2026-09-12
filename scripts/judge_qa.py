@@ -111,6 +111,29 @@ def main():
                     assert page.evaluate("document.activeElement.id") == "send"
                     assert not errors, errors
                     assert not failed, failed
+                    # A separate page proves a mid-interaction revoked session recovers
+                    # without uncaught JavaScript errors; the HTTP 401 is expected.
+                    expired = context.new_page()
+                    denial_exceptions, denial_console = [], []
+                    expired.on("pageerror", lambda e, sink=denial_exceptions: sink.append(str(e)))
+                    expired.on(
+                        "console",
+                        lambda m, sink=denial_console: (
+                            sink.append(m.text) if m.type == "error" else None
+                        ),
+                    )
+                    expired.goto(server.url)
+                    expect(expired.get_by_role("status")).to_contain_text("Ready when you are")
+                    server.stop()
+                    server.start(root / "restored.db")
+                    expired.get_by_role("button", name="Start another session").click()
+                    expect(
+                        expired.get_by_role("heading", name="Open the household demo")
+                    ).to_be_visible()
+                    assert not denial_exceptions, denial_exceptions
+                    assert all("401" in error for error in denial_console), denial_console
+                    assert len(denial_console) <= 1
+                    expired.close()
                     results.append(
                         {
                             "viewport": {"width": width, "height": height},
@@ -120,6 +143,9 @@ def main():
                             ),
                             "login_logout_revoked_replay": "PASS",
                             "restart_revokes_auth": "PASS",
+                            "mid_interaction_revocation": "PASS",
+                            "expected_denial_console": denial_console,
+                            "denial_uncaught_exceptions": denial_exceptions,
                             "canonical_sessions": 3,
                             "approve_reject": "PASS",
                             "restored_full_snapshot": True,
