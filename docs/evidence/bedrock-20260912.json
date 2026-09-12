@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-09-12",
+  "verdict": "LIVE_BEDROCK_PROOF_PASS",
+  "source_commit": "56dd5ad6375a668645eec7d8018430479f308267",
+  "model_id": "amazon.nova-micro-v1:0",
+  "region": "us-east-1",
+  "probe_report": {
+    "build_id_sha256": "29649eebc7354302516071e311cf14155a51d4231b1688a279ef3eab74f20be8",
+    "completion_confirmed": true,
+    "converse_calls": 1,
+    "cost_usd": null,
+    "credits_verified": false,
+    "dedicated_role_verified": true,
+    "elapsed_ms": 1114.44,
+    "evidence_complete": true,
+    "evidence_errors": [],
+    "external_household_actions": 0,
+    "fallback_reason": null,
+    "invoked_at_utc": "2026-09-12T20:52:40.733891+00:00",
+    "live_aws_validated": true,
+    "mode": "live",
+    "model_id_sha256": "864e057ea2b4e0a93f99e3b4aacb7210c2e120d6416f61b535d177533ee97c9b",
+    "phase2_complete": false,
+    "planner_source": "amazon-bedrock",
+    "region": "us-east-1",
+    "request_sha256": "273965096cce1522a543a10ac250c848ba5ecf829469a2f98d12c5209ad0f960",
+    "response_text": "### Action Plan for Fictional Dinner\n\n**Objective:** Plan a fictional dinner for Friday evening with 6 people within a budget of $120.\n\n**Steps:**\n\n1. **Verify Ingredients and Guest Constraints:**\n   - **Action:** Review the list of ingredients required for the dinner menu.\n   - **Note:** Ensure no ingredients are present that could cause allergic reactions, particularly for Ana who is allergic to nuts.\n   - **Confirmation Needed:** Explicit confirmation from the household to check and confirm the ingredients against the list of allergens.\n\n2. **Review the $120 Budget:**\n   - **Action:** Outline a budget plan for the dinner, ensuring it fits within the $120 limit.\n   - **Note:** Prioritize cost-effective ingredients and consider any discounts or sales at local stores.\n   - **Confirmation Needed:** Explicit confirmation from the household to review and adjust the budget plan if necessary.\n\n**Reminder:** This plan is advisory and does not authorize or execute any actions such as purchasing, paying, or modifying external accounts. Explicit confirmation from the household is required for any actions that involve these activities.",
+    "response_text_sha256": "8312e7a841a93a44d1be0891dacf03d929dc11b60e5c3890f9258b75aae2369a",
+    "schema_version": 2,
+    "source_commit": "56dd5ad6375a668645eec7d8018430479f308267",
+    "status": "LIVE_CALL_PASS",
+    "usage": {
+      "inputTokens": 222,
+      "outputTokens": 230,
+      "totalTokens": 452
+    },
+    "usage_complete": true,
+    "usage_consistent": true
+  },
+  "account_preflight": {
+    "identity_verified": true,
+    "model_authorized": true,
+    "enabled_applicable_credits_verified": true,
+    "credit_award_kind": "Existing Free Tier/activity credits; hackathon award unverified",
+    "account_identifiers_redacted": true
+  },
+  "execution": {
+    "provider": "AWS CodeBuild",
+    "build_id_sha256": "29649eebc7354302516071e311cf14155a51d4231b1688a279ef3eab74f20be8",
+    "status": "SUCCEEDED",
+    "start_time": "2026-09-12T20:47:21.883000+00:00",
+    "end_time": "2026-09-12T20:52:42.350000+00:00",
+    "image": "aws/codebuild/standard:7.0-26.07.29",
+    "python_version": "3.12.13",
+    "project_build_count": 1,
+    "dedicated_role_verified": true,
+    "source_and_request_binding_verified": true,
+    "automatic_retries": 0,
+    "build_phases": [
+      {
+        "phase": "SUBMITTED",
+        "status": "SUCCEEDED",
+        "duration_seconds": 0
+      },
+      {
+        "phase": "QUEUED",
+        "status": "SUCCEEDED",
+        "duration_seconds": 0
+      },
+      {
+        "phase": "PROVISIONING",
+        "status": "SUCCEEDED",
+        "duration_seconds": 288
+      },
+      {
+        "phase": "DOWNLOAD_SOURCE",
+        "status": "SUCCEEDED",
+        "duration_seconds": 0
+      },
+      {
+        "phase": "INSTALL",
+        "status": "SUCCEEDED",
+        "duration_seconds": 0
+      },
+      {
+        "phase": "PRE_BUILD",
+        "status": "SUCCEEDED",
+        "duration_seconds": 0
+      },
+      {
+        "phase": "BUILD",
+        "status": "SUCCEEDED",
+        "duration_seconds": 30
+      },
+      {
+        "phase": "POST_BUILD",
+        "status": "SUCCEEDED",
+        "duration_seconds": 0
+      },
+      {
+        "phase": "UPLOAD_ARTIFACTS",
+        "status": "SUCCEEDED",
+        "duration_seconds": 0
+      },
+      {
+        "phase": "FINALIZING",
+        "status": "SUCCEEDED",
+        "duration_seconds": 0
+      },
+      {
+        "phase": "COMPLETED",
+        "status": null,
+        "duration_seconds": null
+      }
+    ],
+    "tests_passed": 83,
+    "coverage_percent": 98.86,
+    "ruff": "PASS"
+  },
+  "cost": {
+    "bedrock_list_cost_usd": "0.000039970",
+    "billed_minutes_estimate": 6,
+    "build_seconds": "320.467",
+    "codebuild_list_cost_estimate_usd": "0.030",
+    "model_plus_compute_list_cost_estimate_usd": "0.030039970",
+    "pricing_checked_at": "2026-09-12",
+    "pricing_effective_date": "2026-08-01",
+    "rates": {
+      "input_usd_per_1000_tokens": "0.000035",
+      "output_usd_per_1000_tokens": "0.000140",
+      "codebuild_usd_per_minute": "0.005"
+    },
+    "operational_budget_usd": "0.10",
+    "cloudwatch_logs_cost_usd": null,
+    "final_billed_cost_usd": null,
+    "credit_application_to_this_run_confirmed": false,
+    "notes": "List-price calculation from observed token counts and rounded build duration; excludes small logs/taxes. Billing and credit application can lag."
+  },
+  "output_review": {
+    "fictional_scenario_preserved": true,
+    "budget_guests_time_and_ana_constraint_preserved": true,
+    "no_completed_external_actions_claimed": true,
+    "no_allergy_safety_certification": true,
+    "advisory_boundary_preserved": true,
+    "quality_limitation": "The response asks for confirmation of some low-risk review tasks. It demonstrates runtime/context use, not final planner UX quality."
+  },
+  "cleanup": {
+    "status": "PENDING_VERIFIED_EVIDENCE_EXPORT"
+  },
+  "limits": [
+    "This report preserves the original probe flags; account/cost/review evidence is added separately.",
+    "Live Alexa+, AgentCore, Strands, public deployment and real-user impact are not demonstrated.",
+    "The default simulator remains deterministic without AWS configuration.",
+    "No second inference attempt is authorized by this result."
+  ]
+}
