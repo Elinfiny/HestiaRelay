@@ -19,7 +19,9 @@ a live SQLite snapshot, restore into a fresh database and server restart.
 Desktop 1440x1000 and mobile 390x844 use real Chromium. Python trusts only the
 generated test certificate; Chromium pins that certificate's public key for
 this test. This is encrypted local CI traffic, not public CA or domain proof.
-The artifact contains screenshots and redacted JSON; authentication traces,
+The deliberate mid-interaction revocation test records its expected HTTP 401
+separately and requires zero uncaught JavaScript errors. Normal browser flows
+require zero console errors. The artifact contains screenshots and redacted JSON; authentication traces,
 keys and cookies are deliberately not archived.
 
 ## Configure an isolated environment
@@ -116,3 +118,6 @@ References checked during implementation:
 [OWASP sessions](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html),
 [OWASP CSRF](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html),
 [Python SQLite backup](https://docs.python.org/3.12/library/sqlite3.html#sqlite3.Connection.backup).
+
+Verified CI: [34721431414](https://github.com/Elinfiny/HestiaRelay/actions/runs/34721431414),
+all four jobs PASS; [durable evidence](evidence/judge-access-20260912.json).

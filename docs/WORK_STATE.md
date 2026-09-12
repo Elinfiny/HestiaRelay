@@ -18,7 +18,8 @@ main CI 34710656387 SUCCESS; Issue #2 closed.
 Issue #12 is the executable specification. Initial code-boundary audit and
 implementation sequence are recorded in `ACCESS_IMPLEMENTATION_NOTES.md`;
 authentication and backup/restore controls are implemented on the feature branch;
-final browser/container CI and delivery gates remain open.
+all four runtime CI gates pass in run 34721431414; final documentation
+merge and post-merge delivery receipts are tracked in Issue #12.
 No extra AWS spending or public deployment is authorized.
 
 ## Completed gates
@@ -108,6 +109,22 @@ and real MCP; public MCP requires its own compatible authorization proof.
 Implementation is complete locally: Ruff PASS, 141 tests PASS, 98.11%
 application coverage. Exact state preservation on denial, CSRF/expiry/revocation,
 backup integrity, WAL consistency, digest selection and no-overwrite restore pass.
-The browser CI job now runs the real TLS login/continuity/recovery suite at both
-viewports. Local Chromium download timed out in this executor; browser PASS is
-not claimed until the cloud CI job succeeds. A public endpoint still requires a concrete account/domain/cost proposal.
+The browser CI job passed the real TLS login/continuity/recovery suite at both
+viewports, including revocation during interaction. Normal flows have zero
+console errors; the deliberate denial records its expected HTTP 401 and zero
+uncaught JavaScript errors. The local Chromium download timed out, so the
+reviewed execution evidence comes from GitHub Actions. A public endpoint still requires a concrete account/domain/cost proposal.
+
+## Phase 4A verified evidence
+
+- Feature head `1041c0505dfd4c3ab890954935f52282ad69f2e2`; actual PR merge checkout
+  `45ff5f2f489abbd0af3dd4c6bd4b01818fe5ad3c`; CI 34721431414, four jobs PASS.
+- Browser artifact 10306905225 downloaded; SHA-256, ZIP CRC and safe paths PASS.
+  Durable evidence: [judge access](evidence/judge-access-20260912.json).
+- Login desktop/mobile and authenticated mobile continuity screenshots from
+  initial run 34721340043 visually reviewed. The follow-up changes only handle
+  mid-interaction revocation and add its real browser test.
+- Existing real MCP/Inspector and container restart suites remain green.
+- Scope/secret/claim review: application auth/recovery only; dependencies and
+  pinned image base unchanged. This is not a complete vulnerability-free image
+  attestation or public deployment review. Those gates remain explicit.
