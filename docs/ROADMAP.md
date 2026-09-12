@@ -32,7 +32,7 @@ Build a polished web simulation that demonstrates the intended Alexa+ interactio
 Chromium desktop/mobile and manual screenshot review. PR #3 merged; main CI
 34710656387 SUCCESS.
 
-## Phase 2 — Live AWS Builder integration — PREPARATION STARTED (#4)
+## Phase 2 — Live AWS Builder integration — LIVE PROOF VERIFIED (#4)
 
 - Validate AWS promotional credits/account path.
 - Enable one appropriate Amazon Bedrock model.
@@ -41,7 +41,11 @@ Chromium desktop/mobile and manual screenshot review. PR #3 merged; main CI
 - Integrate AgentCore Memory if it materially improves cross-session continuity.
 - Evaluate Strands for agent orchestration and adopt only if it improves the architecture.
 
-**Gate:** end-to-end AWS path passes deterministic tests plus one controlled live integration suite.
+**Live gate PASS:** one real Nova Micro Converse call from the immutable
+repository source, 83 tests/98.86% coverage in CodeBuild, exact request/role
+binding, reviewed response and cost evidence. Temporary resources removed.
+Issue #4 records final PR and post-merge CI before delivery closure. AgentCore
+and Strands remain conditional architectural choices, not claimed integrations.
 
 ## Phase 3 — MCP compliance and deployment
 

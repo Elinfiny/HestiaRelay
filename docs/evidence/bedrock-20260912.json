@@ -146,7 +146,28 @@
     "quality_limitation": "The response asks for confirmation of some low-risk review tasks. It demonstrates runtime/context use, not final planner UX quality."
   },
   "cleanup": {
-    "status": "PENDING_VERIFIED_EVIDENCE_EXPORT"
+    "checked_at_utc": "2026-09-12T20:59:47.983512+00:00",
+    "dedicated_role_absent": true,
+    "log_group_absent": true,
+    "other_resources_modified": false,
+    "project_absent": true,
+    "reviewed_evidence_export_verified_before_deletion": true,
+    "stack_status": "DELETE_COMPLETE",
+    "status": "VERIFIED_COMPLETE"
+  },
+  "predeployment_validation": {
+    "aws_validate_template": "PASS",
+    "cfn_lint": "PASS",
+    "cfn_lint_version": "1.56.3",
+    "change_set_validation_errors": 0,
+    "deployed_policy_readback": "PASS",
+    "guard_binding_version": "guardpycfn 0.1.0",
+    "guard_custom_checks_passed": 8,
+    "planned_additions": [
+      "AWS::Logs::LogGroup",
+      "AWS::CodeBuild::Project",
+      "AWS::IAM::Role"
+    ]
   },
   "limits": [
     "This report preserves the original probe flags; account/cost/review evidence is added separately.",

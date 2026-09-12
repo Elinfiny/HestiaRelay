@@ -4,7 +4,7 @@ HestiaRelay is developed against the four official judging criteria instead of t
 
 | Criterion | Target evidence | Implementation status | Exit gate |
 | --- | --- | --- | --- |
-| Technical Implementation | Real MCP over Streamable HTTP, runtime Alexa+ technology path, Amazon Bedrock call path, persistent continuity, tests, CI | MCP, persistence and simulator tested; live AWS pending | Live end-to-end MCP + AWS demo; cloud memory validated |
+| Technical Implementation | Real MCP over Streamable HTTP, runtime Alexa+ technology path, Amazon Bedrock call path, persistent continuity, tests, CI | MCP, persistence and simulator tested; one live Bedrock call verified | Live end-to-end MCP + AWS demo; cloud memory validated |
 | Design | Voice-first flow, visual continuity timeline, clear safe vs consent-gated states, understandable recovery | Responsive simulator implemented; Chromium QA and screenshot review PASS | Desktop/mobile Alexa+ simulation passes usability review |
 | Potential Impact | Household planning use case, repeat-session value, concrete target users, measurable time/coordination savings | Three-session scenario implemented; user impact measurements pending | User story and demo show value beyond hackathon |
 | Quality of Idea | Cross-session state, service orchestration, consent-aware autonomy, not single-turn Q&A | Cross-session demo and exact-proposal consent tested | Demo visibly proves continuity and multi-step orchestration |
@@ -25,11 +25,12 @@ Every real developer-experience problem is recorded in `docs/FRICTION_LOG.md` wi
 ## AWS Builder proof checklist
 
 - [x] Bedrock Runtime adapter exists in runtime code.
-- [ ] Live Bedrock call validated with hackathon AWS account/credits.
+- [x] One live Bedrock call verified with the owner account and existing applicable credits.
+  The separately requested hackathon credit award remains unverified.
 - [ ] AWS integration produces user-visible value in demo.
 - [ ] AgentCore Memory evaluated and integrated if it improves continuity.
 - [ ] Strands evaluated and integrated if it improves orchestration.
-- [ ] README documents exact AWS services and configuration.
+- [x] README and AWS runbook document the real Bedrock/temporary CodeBuild proof.
 
 ## Open Source proof checklist
 

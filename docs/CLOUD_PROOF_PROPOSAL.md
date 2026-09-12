@@ -1,8 +1,11 @@
 # One managed AWS proof — execution proposal
 
-Prepared 2026-09-12. **Execution approval pending. No stack, role, project,
-build or live inference has been created by this package.** This is a temporary
-verification job, not the judge-facing deployment or an Alexa+ integration.
+Prepared and explicitly approved 2026-09-12. **CONSUMED: one build and one
+Converse call succeeded; all three temporary resources were removed after
+verified evidence export.** See [the result](evidence/bedrock-20260912.json).
+The proposal below is retained as the historical authorization boundary; it
+must not be reused to launch another build. This was a temporary verification
+job, not the judge-facing deployment or an Alexa+ integration.
 
 ## Exact scope
 

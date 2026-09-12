@@ -81,3 +81,27 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
   Billing GetCredits and Price List reads succeeded. The original session
   observations remain historical; no service outage or owner-side repair is
   inferred. The managed cloud proof proposal now uses that authenticated route.
+
+## F-004 — First managed proof spends most of its time provisioning
+
+- **Date:** 2026-09-12
+- **Area:** AWS / CodeBuild developer experience
+- **Task attempted:** Run the approved immutable-source Bedrock proof.
+- **Environment:** On-demand Linux general1.small, pinned curated image
+  `aws/codebuild/standard:7.0-26.07.29`, us-east-1.
+- **Steps:** Create the reviewed project; start exactly one build; inspect
+  BatchGetBuilds phases and its CloudWatch log.
+- **Expected:** A visible distinction between environment startup and app latency.
+- **Actual:** PROVISIONING took 288 seconds; BUILD took 30 seconds; the observed
+  Converse request took 1,114.44 ms. The complete run succeeded. This is one
+  observation, not a universal cold-start benchmark; the underlying cause was
+  not determined and no AWS outage is inferred.
+- **Severity:** low.
+- **Workaround:** Show provider phase separately, budget for the full submitted
+  build duration and keep the model latency separate. Do not restart a healthy
+  provisioning build to make the demo appear faster.
+- **Suggestion:** Surface image provisioning progress and its billable duration
+  prominently for first-time users.
+- **Evidence:** [Machine evidence](evidence/bedrock-20260912.json),
+  [reviewed original log](evidence/bedrock-20260912.log.txt).
+- **Status:** worked around; the single approved attempt succeeded.
