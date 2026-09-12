@@ -1,0 +1,211 @@
+{
+  "source_commit": "61496e94cb22dd1b444f72607982b1af6652b7e8",
+  "scope": "Initial read-only release inventory; vulnerability/license scans and full SBOM pending",
+  "python_dependency_lock": {
+    "path": "requirements-proof.txt",
+    "sha256": "ad6c2c2ebcf5974628dc253b9dc6afcbce5d85aa3b7886610417ca45ade07c88",
+    "packages": [
+      {
+        "name": "annotated-types",
+        "version": "0.8.0"
+      },
+      {
+        "name": "anyio",
+        "version": "4.15.1"
+      },
+      {
+        "name": "attrs",
+        "version": "26.1.0"
+      },
+      {
+        "name": "boto3",
+        "version": "1.43.93"
+      },
+      {
+        "name": "botocore",
+        "version": "1.43.93"
+      },
+      {
+        "name": "cffi",
+        "version": "2.1.1"
+      },
+      {
+        "name": "click",
+        "version": "8.5.0"
+      },
+      {
+        "name": "coverage",
+        "version": "7.16.0"
+      },
+      {
+        "name": "cryptography",
+        "version": "50.0.1"
+      },
+      {
+        "name": "h11",
+        "version": "0.16.0"
+      },
+      {
+        "name": "httpcore2",
+        "version": "2.12.0"
+      },
+      {
+        "name": "httpx2",
+        "version": "2.12.0"
+      },
+      {
+        "name": "idna",
+        "version": "3.19"
+      },
+      {
+        "name": "iniconfig",
+        "version": "2.3.0"
+      },
+      {
+        "name": "jmespath",
+        "version": "1.1.0"
+      },
+      {
+        "name": "jsonschema",
+        "version": "4.26.0"
+      },
+      {
+        "name": "jsonschema-specifications",
+        "version": "2025.9.1"
+      },
+      {
+        "name": "mcp",
+        "version": "2.2.0"
+      },
+      {
+        "name": "mcp-types",
+        "version": "2.2.0"
+      },
+      {
+        "name": "opentelemetry-api",
+        "version": "1.44.0"
+      },
+      {
+        "name": "packaging",
+        "version": "26.3"
+      },
+      {
+        "name": "pluggy",
+        "version": "1.6.0"
+      },
+      {
+        "name": "pycparser",
+        "version": "3.0"
+      },
+      {
+        "name": "pydantic",
+        "version": "2.13.5"
+      },
+      {
+        "name": "pydantic_core",
+        "version": "2.46.5"
+      },
+      {
+        "name": "Pygments",
+        "version": "2.21.0"
+      },
+      {
+        "name": "PyJWT",
+        "version": "2.14.0"
+      },
+      {
+        "name": "pytest",
+        "version": "8.4.2"
+      },
+      {
+        "name": "pytest-cov",
+        "version": "6.3.0"
+      },
+      {
+        "name": "python-dateutil",
+        "version": "2.9.0.post0"
+      },
+      {
+        "name": "python-multipart",
+        "version": "0.0.32"
+      },
+      {
+        "name": "referencing",
+        "version": "0.37.0"
+      },
+      {
+        "name": "rpds-py",
+        "version": "2026.6.3"
+      },
+      {
+        "name": "ruff",
+        "version": "0.16.7"
+      },
+      {
+        "name": "s3transfer",
+        "version": "0.19.2"
+      },
+      {
+        "name": "six",
+        "version": "1.17.0"
+      },
+      {
+        "name": "sse-starlette",
+        "version": "3.4.11"
+      },
+      {
+        "name": "starlette",
+        "version": "1.6.0"
+      },
+      {
+        "name": "truststore",
+        "version": "0.10.4"
+      },
+      {
+        "name": "typing-inspection",
+        "version": "0.4.4"
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.16.0"
+      },
+      {
+        "name": "urllib3",
+        "version": "2.7.0"
+      },
+      {
+        "name": "uvicorn",
+        "version": "0.52.4"
+      }
+    ]
+  },
+  "runtime_constraints": [
+    "boto3>=1.40,<2",
+    "mcp>=2,<3",
+    "pydantic>=2.10,<3",
+    "starlette>=1.0,<2",
+    "uvicorn>=0.31,<1"
+  ],
+  "development_constraints": [
+    "pytest>=8,<9",
+    "pytest-cov>=6,<7",
+    "ruff>=0.12,<1",
+    "httpx2>=2.5,<3"
+  ],
+  "container_base": "python:3.12.14-slim-bookworm@sha256:782412e85d0f0984994c290652577d4018aff08145c85b262bb63dc0c7522254",
+  "container_installs_proof_and_development_dependencies": true,
+  "github_actions": [
+    "actions/checkout@v4",
+    "actions/setup-node@v4",
+    "actions/setup-python@v5",
+    "actions/upload-artifact@v4"
+  ],
+  "actions_pinned_by_immutable_sha": false,
+  "mcp_inspector_version": "2.6.0",
+  "playwright_version": "1.62.0",
+  "container_os_inventory": "PENDING",
+  "vulnerability_status": "UNKNOWN_NOT_SCANNED",
+  "full_git_history_secret_scan": "PENDING",
+  "live_aws_calls_in_this_package": 0,
+  "public_deployment": false
+}

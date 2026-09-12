@@ -1,26 +1,40 @@
 # HestiaRelay work state
 
-Canonical main SHA: `e13cef9d3d7a0cd346e4ce59c1810db2e6e3b247`.
-Post-merge CI [34720181231](https://github.com/Elinfiny/HestiaRelay/actions/runs/34720181231)
-SUCCESS, all four jobs; main ref readback matches. PR #11 merged and Issue #10
-closed after confirmation. This Phase 4A checkpoint is on
-`feature/judge-access-v1`, not a direct main change.
+Canonical main SHA: `61496e94cb22dd1b444f72607982b1af6652b7e8`.
+Post-merge CI [34721784644](https://github.com/Elinfiny/HestiaRelay/actions/runs/34721784644)
+SUCCESS: all four jobs. Main ref readback matches. PR #13 merged; Issue #12
+closed after validation. This Phase 4B checkpoint is on
+`feature/release-audit-v1`; runtime changes have not started in this phase.
 
+Previous Phase 3 main: `e13cef9d3d7a0cd346e4ce59c1810db2e6e3b247`,
+CI 34720181231 SUCCESS; Issue #10 closed.
 Live-executed AWS source: `56dd5ad6375a668645eec7d8018430479f308267`.
-Phase 2 evidence merge: `f48c902e5035b6fa33be0e36334afd414f1fbe7e`,
-main CI 34718967183 SUCCESS; Issue #4 closed.
-Phase 1 merge: `c5739b76d54dc4dda140e2b373d5822a91413d29`,
-main CI 34710656387 SUCCESS; Issue #2 closed.
+The one-build/one-Converse authorization is consumed and resources were removed;
+no new AWS spending or invocation is authorized.
 
 ## Current phase
 
-**Phases 1–3 complete. Phase 4A started: authenticated judge access and recovery.**
-Issue #12 is the executable specification. Initial code-boundary audit and
-implementation sequence are recorded in `ACCESS_IMPLEMENTATION_NOTES.md`;
-authentication and backup/restore controls are implemented on the feature branch;
-all four runtime CI gates pass in run 34721431414; final documentation
-merge and post-merge delivery receipts are tracked in Issue #12.
-No extra AWS spending or public deployment is authorized.
+**Phase 4A complete. Phase 4B started: release audit and judge demonstration.**
+Issue #14 is the executable specification. The first source-bound inventory is
+`docs/evidence/release-inventory-20260912.json`: 43 pinned Python packages,
+container base identity, dependency constraints, Actions, Inspector and browser
+versions. It is an inventory, not a completed vulnerability or license scan.
+The judged runtime is one fictional household and one worker; public hosting,
+remote MCP authorization and complete release security remain separate gates.
+
+## Phase 4A delivery gates
+
+- Local and main CI Ruff PASS; 141 tests PASS; 98.11% application coverage.
+- PR CI 34721663874 and main CI 34721784644: all four jobs SUCCESS.
+- Actual main image:
+  `sha256:961bbff2734fe28fe1b8728211024735c291154d07d740f47aebc46fd34a8b3e`.
+- Main browser artifact 10307120082; main container artifact 10306537165.
+  Their identities were read from GitHub; the separately downloaded/reviewed
+  final PR artifact is recorded below in the durable Phase 4A evidence.
+- Shared authentication/CSRF/TLS boundaries, denial/no-planner-effect checks,
+  canonical continuity, exact consent, real browser revocation recovery,
+  backup/WAL/digest/no-overwrite restore and existing MCP/Inspector/container
+  regressions PASS. No new AWS call or public endpoint was created.
 
 ## Completed gates
 
@@ -101,19 +115,14 @@ story/video fields are untouched.
 
 ## Next executable package
 
-[Issue #12](https://github.com/Elinfiny/HestiaRelay/issues/12): implement the authenticated
-single-fictional-household browser path, exact deployment Host/Origin and CSRF
-boundaries, and backup/restore checks described in
-[JUDGE_DEPLOYMENT_DESIGN.md](JUDGE_DEPLOYMENT_DESIGN.md). Preserve loopback defaults
-and real MCP; public MCP requires its own compatible authorization proof.
-Implementation is complete locally: Ruff PASS, 141 tests PASS, 98.11%
-application coverage. Exact state preservation on denial, CSRF/expiry/revocation,
-backup integrity, WAL consistency, digest selection and no-overwrite restore pass.
-The browser CI job passed the real TLS login/continuity/recovery suite at both
-viewports, including revocation during interaction. Normal flows have zero
-console errors; the deliberate denial records its expected HTTP 401 and zero
-uncaught JavaScript errors. The local Chromium download timed out, so the
-reviewed execution evidence comes from GitHub Actions. A public endpoint still requires a concrete account/domain/cost proposal.
+[Issue #14](https://github.com/Elinfiny/HestiaRelay/issues/14): complete the
+source/image/dependency/history/artifact security audit, resolve demonstrated
+material findings through validated changes, and prepare a scripted English
+judge demonstration candidate under three minutes. Use the real app and MCP
+evidence. If historical Bedrock evidence appears, label its original source/date
+and do not imply a new live call. Preserve artifacts and hashes; request final
+visual approval only when a concrete candidate exists. Devpost fields stay
+untouched and no owner PC is required.
 
 ## Phase 4A verified evidence
 
