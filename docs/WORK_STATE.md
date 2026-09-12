@@ -91,7 +91,8 @@ story/video fields are untouched.
 
 ## Phase 3 evidence
 
-- Post-merge run 34720181231 executed the canonical main SHA above. Its image:
+- Post-merge run 34720181231 executed Phase 3 main
+  `e13cef9d3d7a0cd346e4ce59c1810db2e6e3b247`. Its image:
   `sha256:ad44ebcb5ca2dce2baf5808895a7a1832863594dfb545054f890acb8cf2341a8`.
   Container artifact 10306064051 has GitHub-reported ZIP digest
   `05a32b0ec1b896b4cb2d876d19e8a913d9523018b9807a9509fb90a91151a87e`.
