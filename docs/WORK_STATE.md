@@ -1,18 +1,24 @@
 # HestiaRelay work state
 
-Canonical main baseline and live-executed source:
-`56dd5ad6375a668645eec7d8018430479f308267` (CI 34717141533 SUCCESS).
-Resolve GitHub's `main` ref for the latest repository head. Issue #4 records
+Canonical main baseline for Phase 3:
+`f48c902e5035b6fa33be0e36334afd414f1fbe7e` (CI 34718967183 SUCCESS).
+Live-executed source: `56dd5ad6375a668645eec7d8018430479f308267`.
+Resolve GitHub's `main` ref for the latest repository head. Issue #10 records
 this delivery's final merge SHA and post-merge CI after confirmation; a commit
 cannot contain its own SHA. Phase 1 delivery:
 `c5739b76d54dc4dda140e2b373d5822a91413d29` (CI 34710656387 SUCCESS).
 
 ## Current phase
 
-**Phase 1 complete. Phase 2 real Bedrock proof and resource cleanup verified.**
-PR #9 preserves the evidence; Issue #4 closes only after final PR/main CI.
-Phase 3 begins with the reproducible container and clean-room judge package
+**Phase 1 and Phase 2 complete. Phase 3 implementation and execution gates PASS; final delivery CI pending.**
+PR #9 preserves the live proof and cleanup evidence; Issue #4 is closed.
+Phase 3 delivers the reproducible container and clean-room judge package
 in Issue #10. No extra AWS spending or public deployment is authorized.
+
+Phase 2 delivery is now confirmed: PR #9 merged at
+`f48c902e5035b6fa33be0e36334afd414f1fbe7e`; post-merge CI 34718967183 SUCCESS,
+all three jobs. Issue #4 is closed after readback. This is the canonical main
+baseline for the Phase 3 container package.
 
 ## Completed gates
 
@@ -48,8 +54,8 @@ in Issue #10. No extra AWS spending or public deployment is authorized.
 
 ## Delivery and remaining gates
 
-PR and post-merge CI must pass validate, browser and cloud-proof-package jobs;
-Issue #4 records final run identities and the closing readback. Public repository,
+PR and post-merge CI must pass validate, browser, cloud-proof-package and
+container-judge jobs; Issue #10 records final run identities and closing readback. Public repository,
 MIT license, domain boundaries and deterministic fallback remain intact.
 No second build/call is authorized by the consumed proof proposal.
 
@@ -66,10 +72,30 @@ Not demonstrated: live Alexa+, AgentCore, Strands, judge-accessible hosting or
 measured real-user impact. Final video/submission audit remain open. Devpost
 story/video fields are untouched.
 
+## Phase 3 evidence
+
+- CI 34719571606: all four jobs PASS at feature head
+  `2c98e07b008107d95db015ef5b0bb1b16cbb0a36`. Actual PR merge checkout:
+  `f8e77d67a2ae8ef8a6dcd4cd5a7de18ee0981744` (parents verified).
+- Actual image: `sha256:ec20243738e71ec0033c8c8b5ad0d61c689be53ad1ae48352f09f55fde463d80`.
+- Canonical three separate MCP sessions; two container recreations with the
+  same volume; goal, budget, preferences and exact approved/rejected consent
+  recovered. Non-root, read-only root and hostile Host/Origin checks PASS.
+- Inspector 2.6.0 initialization, strict tool listing and continuity-brief call
+  PASS; observed SDK and Inspector protocol `2025-11-25`.
+- Container-backed desktop 1440x1000/mobile 390x844: no console errors, failed
+  requests or horizontal overflow. Both Session 3 screenshots visually reviewed.
+- Artifact 10305424084 downloaded and SHA-256/ZIP CRC/path/browser manifest
+  verified. Durable result: [container evidence](evidence/container-20260912.json).
+- No source application behavior changed and no additional AWS call occurred.
+  The initial CI base-tag inspection defect was corrected before the passing run.
+
 ## Next executable package
 
-Issue #10: create a reproducible non-root container with persistent SQLite;
-validate it in GitHub Actions with canonical API/MCP sessions, container restart,
-consent and desktop/mobile browser checks. Preserve development boundaries,
-record image/source evidence and prepare one public-deployment design. This
-package needs no owner PC and no further AWS invocation.
+Restricted judge access and release hardening: implement the authenticated
+single-fictional-household browser path, exact deployment Host/Origin and CSRF
+boundaries, and backup/restore checks described in
+[JUDGE_DEPLOYMENT_DESIGN.md](JUDGE_DEPLOYMENT_DESIGN.md). Preserve loopback defaults
+and real MCP; public MCP requires its own compatible authorization proof.
+The design and initial boundary audit are complete; implementation can proceed
+offline. A public endpoint still requires a concrete account/domain/cost proposal.

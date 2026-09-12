@@ -84,6 +84,10 @@ No tool accepts arbitrary shell commands. Purchase-like or external-account acti
 
 ## Local setup
 
+For Docker and a cloud-runner verification path, see the
+[container judge guide](docs/CONTAINER_GUIDE.md). The container CI result is
+reported separately from the existing Python and AWS proof evidence.
+
 Requirements:
 
 - Python 3.12+

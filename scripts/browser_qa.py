@@ -15,14 +15,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tests"))
 from test_mcp_http import running_server  # noqa: E402
 
 
-def main():
-    output = Path("qa-artifacts")
+def main(server_factory=running_server, output_dir="qa-artifacts"):
+    output = Path(output_dir)
     output.mkdir(exist_ok=True)
     reports = []
     with sync_playwright() as playwright, TemporaryDirectory() as temporary:
         browser = playwright.chromium.launch()
         for width, height, label in [(1440, 1000, "desktop"), (390, 844, "mobile")]:
-            with running_server(Path(temporary) / f"{label}.db") as url:
+            with server_factory(Path(temporary) / f"{label}.db") as url:
                 context = browser.new_context(viewport={"width": width, "height": height})
                 context.tracing.start(screenshots=True, snapshots=True)
                 page = context.new_page()

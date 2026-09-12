@@ -17,6 +17,8 @@ Every real developer-experience problem is recorded in `docs/FRICTION_LOG.md` wi
 
 - [ ] Working MCP server shown in demo.
 - [x] Streamable HTTP connection verifiably exercised by real SDK/TCP smoke.
+- [x] Official MCP Inspector 2.6.0 verified against the real container;
+  observed protocol 2025-11-25, strict tool list and continuity-brief call PASS.
 - [x] Repository runtime code imports and calls MCP SDK.
 - [x] Alexa+ experience simulation exercised in Chromium; no live Alexa+ claim.
 - [x] Cross-session context visibly recovered with the same goal ID.
@@ -39,7 +41,8 @@ Every real developer-experience problem is recorded in `docs/FRICTION_LOG.md` wi
 - [x] MIT license exists.
 - [x] Source and documentation are public.
 - [ ] Public contribution URL recorded in final submission evidence.
-- [ ] Setup/run instructions validated on a clean environment.
+- [x] Clean GitHub runner built the Docker image and exercised the documented
+  non-root persistent-volume path; CI 34719571606 and durable container evidence.
 
 ## Final submission quality gates
 
