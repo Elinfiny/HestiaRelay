@@ -166,7 +166,7 @@ HestiaRelay keeps competition evidence in the repository from the start:
 
 ## Status
 
-**Phase 1 candidate.** Simulator and behavioral tests implemented; final CI and visual review are recorded in [WORK_STATE](docs/WORK_STATE.md). Live Alexa+/AWS behavior remains unproven until the corresponding external gates pass.
+**Phase 1 complete.** PR #3 merged and main CI passed. The simulator, persistence, consent and MCP evidence are recorded in [WORK_STATE](docs/WORK_STATE.md). Phase 2 now prepares controlled AWS validation; [AWS_RUNBOOK](docs/AWS_RUNBOOK.md) documents the offline probe and live-account gate. Live Alexa+/AWS behavior remains unproven until those gates pass.
 
 ## License
 
