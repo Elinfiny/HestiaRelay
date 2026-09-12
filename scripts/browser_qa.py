@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import csv
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -106,6 +108,14 @@ def main():
                 context.close()
         browser.close()
     (output / "browser-qa.json").write_text(json.dumps(reports, indent=2) + "\n")
+    members = sorted(output.iterdir())
+    with (output / "MANIFEST.csv").open("w", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["relative_path", "size_bytes", "sha256"])
+        for member in members:
+            if member.is_file() and member.name != "MANIFEST.csv":
+                data = member.read_bytes()
+                writer.writerow([member.name, len(data), hashlib.sha256(data).hexdigest()])
     print(json.dumps(reports, indent=2))
 
 

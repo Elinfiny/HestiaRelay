@@ -1,0 +1,75 @@
+{
+  "candidate_sha": "09c92c6a5f1ea341b9a9d76852157fd2be8bc47e",
+  "ci_run_id": 34710345180,
+  "browser_artifact_id": 10303016796,
+  "archive_sha256": "1738faabe253e8b1c7a5d97e234762c1bf40218045cba18c266e01ea1f4df3ef",
+  "tests": 46,
+  "application_coverage_percent": 98.95,
+  "mcp_protocol": "2025-11-25",
+  "mcp_actual_process_restart": "PASS",
+  "browser_report": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "canonical_sessions": 3,
+      "goal_recovered": true,
+      "approve_reject": "PASS",
+      "reload": "PASS",
+      "fresh_browser_context": "PASS",
+      "horizontal_overflow": false,
+      "keyboard_focus": "send",
+      "console_errors": [],
+      "failed_requests": [],
+      "provenance": "deterministic",
+      "external_actions": 0
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "canonical_sessions": 3,
+      "goal_recovered": true,
+      "approve_reject": "PASS",
+      "reload": "PASS",
+      "fresh_browser_context": "PASS",
+      "horizontal_overflow": false,
+      "keyboard_focus": "send",
+      "console_errors": [],
+      "failed_requests": [],
+      "provenance": "deterministic",
+      "external_actions": 0
+    }
+  ],
+  "manual_visual_review": {
+    "method": "Manual inspection of CI Chromium screenshots; not an interactive cloud-browser run",
+    "result": "PASS",
+    "screenshots": [
+      {
+        "name": "desktop-initial.png",
+        "sha256": "bf3f0c0cd18716a6b210991974c3fa75a09497e120b2c9991345de40bb482a7a"
+      },
+      {
+        "name": "desktop-session3.png",
+        "sha256": "25d323fb6ecea444c3f2f71a158915708e2d00a39bcbc3221e76e6127b998541"
+      },
+      {
+        "name": "mobile-initial.png",
+        "sha256": "94bd2eabbe4fcde85c5a202ad9bfdf6e8765e97234805a06d7886e91bb7fa801"
+      },
+      {
+        "name": "mobile-session3.png",
+        "sha256": "7f342ea988b71e868bde39e10aa9b5d15d23fa5498102733343d9685e7b14896"
+      }
+    ]
+  },
+  "limitations": [
+    "No live Alexa+",
+    "No live AWS proof",
+    "No physical-device or screen-reader certification",
+    "No external side-effect adapter",
+    "Single fictional household on loopback only"
+  ]
+}

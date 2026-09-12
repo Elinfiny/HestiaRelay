@@ -53,4 +53,5 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
   endpoint publicly or describe this as an Alexa+ service issue.
 - **Suggestion:** Provide an authenticated executor-to-browser preview route.
 - **Evidence:** `scripts/browser_qa.py`, CI browser job and `docs/DEMO_GUIDE.md`.
-- **Status:** workaround implemented; CI and image review pending.
+- **Status:** worked around; CI run 34710345180 browser job PASS;
+  desktop/mobile screenshots manually inspected.

@@ -8,15 +8,21 @@ Phase: 1 — Issue #2, implementation candidate on `feature/alexa-simulator-v1`.
 Completed: mandatory read-only audit; bootstrap main CI PASS; responsive simulator,
 shared MCP/API service, persisted session/turn/provenance records, explicit AWS
 fallback, transactional writes, exact consent and context-change checks.
-45 behavior/API tests passed with 98.94% application coverage before the new
-real-network MCP smoke was added. Ruff passed. Final full-suite results pending.
+46 tests PASS; 98.95% application coverage; Ruff PASS. Real MCP/TCP smoke
+negotiated 2025-11-25 across three sessions and recovered state after restart.
+CI run 34710345180 passed validate and browser jobs at candidate 09c92c6.
+Chromium 1440×1000 and 390×844 passed with zero console errors, no overflow,
+keyboard focus, approve/reject, reload and fresh-context persistence. Initial
+and session-3 screenshots were manually inspected: coherent layout and readable
+controls, context and consent; no clipping or overlap identified.
 
-In progress: real TCP MCP interoperability and process restart, GitHub Actions
-browser suite, manual screenshot review, final secret/scope/claims diff audit.
+In progress: final evidence-manifest/documentation update and exact-head CI;
+final secret/scope/claims audit before merge.
 No merge or Issue #2 closure yet. Main remains the recoverable baseline.
 
-Blockers: managed cloud browser cannot reach executor loopback; CI-owned Chromium
-is the prepared route for reproducible UI evidence and manual visual inspection.
+Phase 1 blockers: none. Managed browser loopback access is unavailable; actual
+browser interactions ran in CI-owned Chromium, followed by manual screenshot
+inspection. This does not claim a manual interactive cloud-browser session.
 AWS credentials/account/model are unverified and do not block deterministic work.
 
 Competition readiness: Phase 1 candidate only. No live Alexa+, Bedrock, AgentCore
