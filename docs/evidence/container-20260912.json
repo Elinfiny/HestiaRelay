@@ -1,0 +1,104 @@
+{
+  "observed_at": "2026-09-12",
+  "workflow_run": 34719571606,
+  "workflow_url": "https://github.com/Elinfiny/HestiaRelay/actions/runs/34719571606",
+  "pull_request": 11,
+  "branch_head": "2c98e07b008107d95db015ef5b0bb1b16cbb0a36",
+  "checkout_note": "The actual checkout is the GitHub PR test merge of main f48c902e5035b6fa33be0e36334afd414f1fbe7e and the branch head; parents were verified through GitHub.",
+  "jobs": {
+    "validate": "PASS",
+    "browser": "PASS",
+    "cloud-proof-package": "PASS",
+    "container-judge": "PASS"
+  },
+  "container_report": {
+    "status": "PASS",
+    "source_commit": "f8e77d67a2ae8ef8a6dcd4cd5a7de18ee0981744",
+    "image_id": "sha256:ec20243738e71ec0033c8c8b5ad0d61c689be53ad1ae48352f09f55fde463d80",
+    "base_image_reference": "python:3.12.14-slim-bookworm@sha256:782412e85d0f0984994c290652577d4018aff08145c85b262bb63dc0c7522254",
+    "image_user": "10001:10001",
+    "dependency_lock_sha256": "ad6c2c2ebcf5974628dc253b9dc6afcbce5d85aa3b7886610417ca45ade07c88",
+    "canonical_mcp_sessions": 3,
+    "sdk_negotiated_versions": [
+      "2025-11-25",
+      "2025-11-25",
+      "2025-11-25"
+    ],
+    "container_recreations_with_same_volume": 2,
+    "goal_preferences_budget_and_consent_restored": true,
+    "host_origin_rejections": "PASS",
+    "mcp_inspector": {
+      "version": "2.6.0",
+      "protocol": "2025-11-25",
+      "methods": [
+        "initialize",
+        "tools/list",
+        "tools/call"
+      ],
+      "status": "PASS"
+    },
+    "browser": "PASS",
+    "provenance": "deterministic",
+    "external_actions": 0,
+    "aws_calls": 0,
+    "public_deployment": false
+  },
+  "browser_report": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "canonical_sessions": 3,
+      "goal_recovered": true,
+      "approve_reject": "PASS",
+      "reload": "PASS",
+      "fresh_browser_context": "PASS",
+      "horizontal_overflow": false,
+      "keyboard_focus": "send",
+      "console_errors": [],
+      "failed_requests": [],
+      "provenance": "deterministic",
+      "external_actions": 0
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "canonical_sessions": 3,
+      "goal_recovered": true,
+      "approve_reject": "PASS",
+      "reload": "PASS",
+      "fresh_browser_context": "PASS",
+      "horizontal_overflow": false,
+      "keyboard_focus": "send",
+      "console_errors": [],
+      "failed_requests": [],
+      "provenance": "deterministic",
+      "external_actions": 0
+    }
+  ],
+  "artifact": {
+    "id": 10305424084,
+    "name": "container-judge",
+    "sha256": "1dc03c235f0f51db9248a908f21af7ab585c204041ecc0f7fa85ff21880fd8b7",
+    "size_bytes": 3587773,
+    "download_sha256_zip_crc_paths_browser_manifest": "PASS"
+  },
+  "visual_review": {
+    "images": [
+      "container-browser/desktop-session3.png",
+      "container-browser/mobile-session3.png"
+    ],
+    "status": "PASS",
+    "observations": "Readable layout and consent/provenance/continuity evidence at both viewports; no overlap observed. Screenshots reviewed, not physical-device or screen-reader certification."
+  },
+  "prior_failure": {
+    "run": 34719440350,
+    "cause": "Post-build inspection assumed BuildKit materializes the base tag in the Docker daemon; image inspect returned No such image after a successful build.",
+    "correction": "Pinned the observed base digest and retained Dockerfile as base-reference evidence; the next changed-source run passed."
+  },
+  "public_deployment": false,
+  "extra_aws_calls": 0
+}

@@ -53,6 +53,12 @@ Download the `container-judge` artifact from the relevant Actions run for
 container logs and browser screenshots/traces. An in-progress job is not PASS.
 The original Python process/browser and pinned AWS-proof jobs still run.
 
+Verified run: [34719571606](https://github.com/Elinfiny/HestiaRelay/actions/runs/34719571606),
+all four jobs PASS. The [durable result](evidence/container-20260912.json)
+records the actual PR merge checkout, image digest, protocol, browser results
+and artifact hash. The downloaded ZIP passed SHA-256, CRC, path and browser
+manifest checks; its desktop/mobile Session 3 screenshots were visually reviewed.
+
 ## Public deployment decision
 
 Do not publish this singleton service by changing its port binding. A public
@@ -62,6 +68,8 @@ The recommended next increment is a restricted fictional judge environment,
 using one authenticated household and a short deployment lifetime, before
 building general multi-household hosting. Its public endpoint and credentials
 are not created by this container package or the consumed one-call AWS approval.
+The [restricted judge design](JUDGE_DEPLOYMENT_DESIGN.md) specifies the access,
+storage, validation and approval boundaries for the next implementation package.
 
 References checked 2026-09-12:
 [official Python image definitions](https://github.com/docker-library/official-images/blob/master/library/python),

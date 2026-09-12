@@ -47,7 +47,7 @@ binding, reviewed response and cost evidence. Temporary resources removed.
 Issue #4 records final PR and post-merge CI before delivery closure. AgentCore
 and Strands remain conditional architectural choices, not claimed integrations.
 
-## Phase 3 — MCP compliance and deployment
+## Phase 3 — MCP compliance and reproducible execution — COMPLETE (#10)
 
 - Verify MCP Inspector interoperability.
 - Confirm negotiated protocol meets hackathon minimum 2025-11-25.
@@ -55,7 +55,13 @@ and Strands remain conditional architectural choices, not claimed integrations.
 - Add deployment-specific Host/Origin allowlists and TLS plan.
 - Deploy judge-accessible instance or provide zero-friction local testing path.
 
-**Gate:** clean-room MCP client can connect and exercise all submission-critical tools.
+**Gate PASS:** GitHub Actions 34719571606 built and ran the real non-root
+container. Three MCP sessions negotiated 2025-11-25, two container recreations
+preserved state and consent, Inspector 2.6.0 passed initialization/tool listing/
+tool call, and desktop/mobile browser QA passed. Image and source identities
+are in `docs/evidence/container-20260912.json`. Public hosting remains unproven;
+the completed delivery provides the reproducible Docker path and a separate
+restricted judge deployment design. Issue #10 records post-merge CI.
 
 ## Phase 4 — Product hardening
 
