@@ -49,6 +49,20 @@ probe records elapsed time and returned token usage; `cost_usd` remains unknown
 until the actual price and billing/credit evidence are reconciled. The app uses
 its existing Bedrock planner and deterministic failure boundary.
 
+Evidence schema 2 requires all three nonnegative integer token counts, a total
+equal to input plus output, output within the requested 600-token ceiling, and
+`stopReason=end_turn`. Missing or contradictory usage, truncation, filtering,
+or tool requests produce `EVIDENCE_INCOMPLETE` and exit code 2 even when the
+service returned text. This result requires investigation; it never triggers
+an automatic retry. `BLOCKED` remains the verdict for invocation/fallback failure.
+
+The report includes UTC invocation time and SHA-256 of the exact canonical JSON
+request passed to the SDK, without emitting its contents. `MOCK_PASS` always
+has `live_aws_validated=false`. Even `LIVE_CALL_PASS` leaves `phase2_complete=false`:
+account, credits, approved cost, source-commit binding and output review are
+separate required evidence. The hash binds a request; it does not attest that
+an account was authenticated or that the output is safe.
+
 Preserve the stdout JSON with the exact source commit in the private operational
 evidence location chosen for the AWS account, then publish only reviewed,
 redacted evidence. This probe prints no credentials, account IDs, raw request
@@ -68,3 +82,12 @@ investigated before any new invocation; do not rerun unchanged automatically.
 References checked 2026-09-12:
 [Converse API](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html),
 [model access](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html).
+
+## AWS Core connection check
+
+Verify plugin installation, exposed operation tools and authenticated account
+access separately. AWS Core skills being installed is not proof that AWS API
+tools or credentials are available. Discover both connected tools and eligible
+plugins before declaring an access blocker. Keep failures of the cloud execution
+surface separate from AWS service availability. The observed session limitation
+is tracked in F-003 and Issue #4; no owner PC is a project dependency.
