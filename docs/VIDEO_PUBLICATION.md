@@ -1,7 +1,7 @@
 # Video publication package
 
 Updated 2026-09-13. This package records an accepted visual candidate and exact
-publication metadata. **Uploaded once and saved as private; not published.**
+publication metadata. **Published Public on YouTube; full playback unverified.**
 Devpost story/video fields remain untouched.
 
 ## Accepted input
@@ -26,20 +26,33 @@ Terms of Service and Community Guidelines acknowledgment. That permission
 remains valid; no repeated publication or contractual approval is needed.
 
 YouTube created video ID **`_YTQcGxBMrA`** and displayed
-`https://youtu.be/_YTQcGxBMrA`. Its last observed state is **Saved as private**.
-The title and description below are saved; checks reported **No issues found**,
-and the preview showed **1:28**. These are upload observations, not public
-playback evidence. Do not upload another copy. The detailed
-[upload receipt](evidence/video-upload-20260913.json) preserves the effect state.
+`https://youtu.be/_YTQcGxBMrA`. After the owner approved reopening Studio with
+possible loss of unsaved dialog changes, the same draft was recovered with its
+saved title and description intact. The original SRT was imported once and
+saved as **English by you**. No video was uploaded again or regenerated.
 
-The existing English-subtitles dialog is open. A click on its Upload file
-control was automatically rejected by browser review, citing navigation and
-possible loss of unsaved state, although the requested command contained no
-navigation. A read-only snapshot of that same tab was also rejected. No further
-browser action, alternate route, caption upload or Publish click was attempted.
-Resume only after this browser-access gate is resolved, preserving the existing
-video ID. The original burned-in English captions are already in the MP4;
-the additional selectable SRT track is not confirmed uploaded.
+Public was selected and Publish clicked once. YouTube displayed **Video
+published**, then channel Content read back **Public / Published Sep 13, 2026**.
+Checks reported **No issues found** and the preview duration was **1:28**.
+The public watch page opened at the exact post-redirect URL
+[youtube.com/watch?v=_YTQcGxBMrA](https://www.youtube.com/watch?v=_YTQcGxBMrA),
+with the matching title and channel. The
+[publication receipt](evidence/video-publication-20260913.json) records these
+effects separately from the historical private-[upload receipt](evidence/video-upload-20260913.json).
+
+The cloud watch player remained at 0:00 with no loaded media after ordinary
+Play interaction. Its media element reported readyState 0 and no media error;
+the underlying cause is unknown. The page's title, duration and Public status
+do not prove complete playback. No bot challenge or service outage is inferred.
+The supplemental caption track is confirmed saved in Studio; public selectable
+caption availability remains unverified. The MP4's burned-in captions remain.
+
+`scripts/verify_public_video.py` prepares one ordinary, fresh-context Chromium
+check in GitHub Actions with no account cookies or credentials. It checks
+signed-out UI, the exact URL/title, continuous playback without seeking and
+hosted duration, preserving actual JSON and screenshots on failure as well as
+success. Explicit site gates stop it without sign-in, retries or evasion.
+Its result is pending and must not be replaced with publication metadata.
 
 YouTube also displayed a channel-verification requirement for clickable external
 description links. Text URLs are saved, but clickability is not claimed. No
@@ -96,11 +109,10 @@ endorsement or an award.
    authorization and source rehash before the single file selection.
 2. Completed: upload identity, saved title/description, factual audience settings,
    English video language and successful YouTube checks. No new render is used.
-3. Pending: resolve the browser-access rejection without discarding the active
-   dialog or bypassing review. Read back this existing upload before resuming.
-   Add the unchanged timed SRT only if the dialog can be safely continued.
-4. Pending: inspect checks and visibility, then use the already-approved Public
-   setting and publish this video. Reconcile its actual state before any retry.
+3. Completed: owner-authorized Studio recovery, same draft and metadata readback,
+   and original English SRT import/save. F-006 is resolved for this continuation.
+4. Completed: successful checks, Public selection, one Publish click and actual
+   published-state readbacks. Do not publish or upload another copy.
 5. Use the approved public-video route required by the
    [competition rules](https://amazonappdev2026.devpost.com/rules), checked
    2026-09-13. Preserve the actual video ID, URL and destination readback.

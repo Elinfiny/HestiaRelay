@@ -6,6 +6,12 @@ SUCCESS: all four jobs. Main ref and logs read back on 2026-09-13.
 PR #17 merged after final PR CI 34746902549 passed all four jobs. Issue #16
 remains open for publication and final submission. Phase 4B PR #15 and Issue #14
 remain completed at their original source.
+PR #18 is still open. Its earlier head `3068bcdaa7042a0541a9f391cf58742c2286cb13`
+passed all four jobs in CI 34748295910. Merge-connector requests failed, and a
+separate authenticated GitHub merge UI returned a server-response error. Main
+remains unchanged; no post-merge result is claimed. This continuation updates
+that same feature branch with actual publication evidence and a bounded playback
+check, which must receive its own CI results.
 This next-package checkpoint is on `feature/submission-publication-v1` and does
 not claim its own future commit hash as canonical main.
 
@@ -103,21 +109,21 @@ including the YouTube Terms of Service and Community Guidelines acknowledgment.
 That approval is consumed for one upload and remains valid for publishing that
 same video; it does not authorize a duplicate upload or unrelated changes.
 
-**One upload exists: `_YTQcGxBMrA`, last observed Saved as private.** Its saved
-title/description match the publication package. YouTube checks reported No
-issues found and the preview duration is 1:28. The English-subtitles dialog is
-open; adding the original selectable SRT was blocked before file selection.
-The MP4 already contains the original English caption band.
+**The same upload `_YTQcGxBMrA` is now published Public.** After the owner's
+exact Studio-reopening approval, the saved draft/metadata were recovered and
+the original English SRT saved. One Publish click produced Video published;
+channel Content read back Public / Published Sep 13, 2026. The watch page has
+the matching title/channel and a 1:28 duration. Original source hashes remain
+unchanged. See the [publication receipt](evidence/video-publication-20260913.json).
 
-The immediate blocker is browser automatic approval review. It rejected the
-existing-dialog Upload file click and a subsequent read-only snapshot, citing
-navigation and unsaved-state loss even though neither command requested
-navigation. Stop that route; do not retry through another surface. No Publish
-click was attempted and no public playback is claimed. Preserve the existing
-video ID and recheck state when access is safely restored. See the
-[upload receipt](evidence/video-upload-20260913.json) and friction F-006.
+F-006 is resolved for this continuation. Complete playback remains unverified:
+the cloud watch media stayed at 0:00 / readyState 0 after ordinary interaction.
+This is not evidence of successful streaming or a confirmed site bot block.
+One fresh-context, signed-out GitHub Actions check is prepared; it stops on
+actual site gates and preserves its result. PR #18 merge is independently
+blocked by server-response errors from both the connector and GitHub UI.
 
-Public YouTube/Vimeo publication and signed-out playback, final submission
+Complete signed-out playback, final submission
 materials, private owner eligibility/representation and refreshed final audits
 remain later submission gates. These are pending/unknown, never silently PASS.
 Personal information must not be written to the public repository.
@@ -129,9 +135,8 @@ Personal information must not be written to the public repository.
 [product feedback preparation](PRODUCT_FEEDBACK.md), and existing
 [judge evidence map](JUDGE_EVIDENCE_MAP.md).
 The [story](SUBMISSION_STORY.md) and [video publication package](VIDEO_PUBLICATION.md)
-are prepared from the stable implementation. Resume the existing video after
-the browser-access gate is resolved, finish its Public publication under the
-existing authorization, then verify uploaded identity and anonymous playback.
-Do not request the same upload/terms approval again or upload a second copy.
-Continue ordinary technical work automatically. Keep Devpost fields untouched until final
+are prepared from the stable implementation. Run and inspect the bounded public
+playback check, preserve its real outcome, finish PR #18 after its current gates
+pass and the merge route recovers, then verify post-merge main CI.
+No new upload/terms approval or duplicate upload is needed. Keep Devpost fields untouched until final
 materials are stable, audited and within the owner's publication authority.
