@@ -5,8 +5,9 @@
 HestiaRelay is being built for the **Alexa+ track** of the 2026 Amazon Developer Hackathon, with parallel eligibility targets for the **AWS Builder** and **Open Source** mini challenges.
 
 [Published demonstration — 1:28, English captions](https://www.youtube.com/watch?v=_YTQcGxBMrA).
-YouTube publication is confirmed. Complete signed-out playback verification is
-pending; [publication evidence and limits](docs/VIDEO_PUBLICATION.md).
+YouTube publication is confirmed. The owner reports complete signed-out playback
+in Brave with readable English text. The hosted automated check was blocked by
+YouTube; [separate playback evidence and limits](docs/VIDEO_PUBLICATION.md).
 
 ## Core scenario
 

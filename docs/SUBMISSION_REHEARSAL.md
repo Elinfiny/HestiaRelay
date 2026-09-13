@@ -65,7 +65,7 @@ eligibility and final acceptance remain organizer decisions.
 | Source and license | Public [repository](https://github.com/Elinfiny/HestiaRelay), MIT; anonymous repository/README/license reads pass in CI |
 | Working demonstration | Exact candidate above; owner acceptance recorded |
 | Public video | CONFIRMED Public: [same accepted recording](https://www.youtube.com/watch?v=_YTQcGxBMrA); original SRT saved ([receipt](evidence/video-publication-20260913.json)) |
-| Complete signed-out playback | PENDING; cloud watch media did not load; one fresh-context hosted check is prepared |
+| Complete signed-out playback | PASS, human-reported by the owner in Brave, with readable English text; owner-approved replacement method and failed hosted bot-gate result are separate in the [playback receipt](evidence/video-playback-20260913.json) |
 | Product feedback | Evidence-based [draft notes](PRODUCT_FEEDBACK.md); no Devpost field written |
 | AWS Builder | One historical Bedrock Converse on 2026-09-12; original source and usage in [receipt](evidence/bedrock-20260912.json) |
 | Open Source | Owner **Elinfiny**; [implementation contribution PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), [release contribution PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15), same public repository |
@@ -84,8 +84,10 @@ The owner's acceptance is recorded against the MP4 digest above. If revisions ar
 requested, retain this candidate and produce a separately identified replacement.
 The permitted YouTube upload is published Public under the exact publication
 and upload-terms authorization already received. Studio recovery preserved the
-same video and metadata. Complete the outstanding signed-out playback, captions
-and duration checks without duplicating the uploaded recording.
+same video and metadata. The owner subsequently confirmed viewing to the end,
+signed out in Brave, with readable English text. This accepted human observation
+does not turn the hosted bot-gate failure into an automated PASS or certify a
+selectable caption track. Do not duplicate or replace the uploaded recording.
 Never replace a failed upload with a claim of publication or use CI download
 access as evidence of public playback. Any platform authentication or new
 publication permission gate must concern the prepared, exact action.
