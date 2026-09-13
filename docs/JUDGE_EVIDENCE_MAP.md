@@ -55,8 +55,13 @@ must not be represented as a new live call, live Alexa+, AgentCore or Strands.
 
 ## Review and publication boundary
 
-The accepted recording is prepared for publication; no public video URL or
-final submission is claimed yet.
+The same accepted recording is
+[published Public on YouTube](https://www.youtube.com/watch?v=_YTQcGxBMrA).
+The owner confirmed viewing to the end while signed out in Brave, with readable
+English text. This is **human-reported** evidence under the owner's explicit
+acceptance method; the separate hosted bot-gate failure remains preserved in
+the [playback receipt](evidence/video-playback-20260913.json).
+No final submission is claimed.
 The owner accepted the concrete visual candidate on 2026-09-13; the
 [approval receipt](evidence/video-approval-20260913.json) preserves its exact identity.
 The original recording metadata remains historical. Devpost Project Details
