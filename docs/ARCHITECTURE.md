@@ -2,7 +2,9 @@
 
 ## Product promise
 
-HestiaRelay is a persistent household continuity agent for Alexa+. It carries a household goal across sessions, preserves relevant constraints, coordinates low-risk planning, and stops at consent gates before sensitive actions.
+HestiaRelay keeps a household plan available between conversations. Its guided
+Alexa+ simulation and real MCP server share the same saved state, planner and
+consent decisions. There is no live Alexa+ connection or external action adapter.
 
 ## Trust boundaries
 
@@ -46,7 +48,9 @@ During development, SQLite proves cross-session state continuity without requiri
 
 Amazon Bedrock is a real runtime integration, not a README-only claim: `BedrockPlanner` calls the Bedrock Runtime `converse` API when `HESTIA_BEDROCK_MODEL_ID` is configured.
 
-The next AWS milestone will evaluate AgentCore Memory and Strands against three gates:
+One historical Nova Micro call verified this adapter; the current demonstration
+is deterministic. AgentCore Memory and Strands are optional future evaluations,
+outside the current submission package. Adoption would require:
 
 - measurable improvement to continuity or orchestration;
 - clean failure behavior without credentials or service availability;
@@ -56,7 +60,8 @@ The next AWS milestone will evaluate AgentCore Memory and Strands against three 
 
 A sensitive action is first represented as an immutable-scope proposal. Approval changes only that proposal's status. Approval does not grant general permission to future actions.
 
-The bootstrap deliberately does not perform real purchases or external-account changes. Later integrations must preserve this proposal/consent boundary.
+The application does not perform purchases or external-account changes, even
+after approval. Later integrations must preserve this proposal/consent boundary.
 
 ## Demo spine
 
@@ -68,7 +73,8 @@ The canonical demo remains:
 4. The agent reconstructs context and plan.
 5. A proposed purchase is visibly consent-gated instead of silently executed.
 
-This demo directly proves continuity, orchestration, memory, and safety rather than a single-turn chat interaction.
+The demo shows saved context and scoped decisions across separate conversations;
+it does not establish general AI safety or live household-service orchestration.
 
 ## Phase 1 additions
 

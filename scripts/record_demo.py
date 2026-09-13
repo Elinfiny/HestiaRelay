@@ -202,7 +202,7 @@ def main():
             scene(
                 "closing",
                 "One household thread, across separate sessions. Your decisions stay yours.\n"
-                "Public MIT source: github.com/Elinfiny/HestiaRelay | Draft for visual review.",
+                "Pick up where life left off. Try the MIT open-source project on GitHub.",
                 "footer",
                 8,
             )

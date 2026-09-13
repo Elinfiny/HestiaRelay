@@ -1,113 +1,107 @@
-# HestiaRelay — submission story
+# HestiaRelay
 
-Prepared from the validated implementation on 2026-09-13. Repository text only;
-Devpost Project Details fields have not been edited. The public video URL must
-be verified before the final submission package is complete.
-
-## Project name
-
-HestiaRelay
+Prepared submission copy. Devpost fields have not been changed.
 
 ## Tagline
 
-A household plan that remembers the context and respects your decisions.
+Pick up where life left off. Your household plan comes with you.
 
 ## Inspiration
 
-Household plans rarely arrive in one complete conversation. First comes the
-dinner invitation. Later, the budget changes or someone remembers a guest's
-allergy. By Friday, the useful question is not how to start planning again:
-it is what is already remembered, what changed, and what still needs attention.
+Planning dinner rarely happens in one sitting. You invite six people. Later,
+someone mentions an allergy. By Friday, you want to know what is ready and what
+still needs doing, without explaining the whole evening again.
 
-HestiaRelay explores that continuity through an Alexa+ experience simulation.
-The idea is to preserve the household's evolving plan together with the exact
-decisions it has made.
+That is the small, everyday problem behind HestiaRelay. A helpful assistant
+should carry a plan forward as life adds details, while leaving the decisions
+with the people who will live with them.
 
 ## What it does
 
-Start with: “We're having six people over Friday evening, budget $120.”
-In a separate session, add: “Remember Ana is allergic to nuts.”
-Then return and ask: “Are we ready for Friday?”
+The demo starts with a simple request: “We're having six people over Friday
+evening, budget $120.” HestiaRelay saves the plan and creates a preparation list.
 
-HestiaRelay recovers the same goal, budget, people, preferences, preparation
-tasks, planner provenance and consent history. Each new session sends only its
-new message. SQLite persistence carries the thread across sessions and actual
-server restarts.
+In a new session: “Remember Ana is allergic to nuts.” The detail joins the
+existing plan. The guest count and budget do not need to be entered again.
 
-The interface makes remembered context and unfinished work visible. Planning
-advice identifies whether it came from the deterministic planner or Bedrock.
-Sensitive proposals stop at an exact-proposal consent gate. Approval applies
-to the saved details and current context; it does not authorize a changed
-proposal. Rejection is recorded alongside the plan.
+In a third session: “Are we ready for Friday?” HestiaRelay brings back the plan,
+the people, the constraint and the unfinished work. Its timeline shows how those
+pieces arrived in different conversations. Restarting the server keeps them.
 
-This prototype records consent but executes no purchase, payment, message or
-external-account change. Allergy information is a planning constraint, not
-food-safety verification.
+Decisions stay with the plan too. A sensitive proposal shows its exact details
+before approval or rejection. If the household context changes, an earlier
+approval cannot authorize the new proposal. In this prototype, approval records
+consent only: no purchase, payment, message or account change is carried out.
+Allergy information is a planning constraint, not a food-safety guarantee.
 
-## How we built it
+## How it works
 
-The guided English browser simulation and a real Streamable HTTP MCP server
-share the same Python household service and domain engine. The server exposes
-bounded tools rather than arbitrary execution. Real SDK and MCP Inspector
-clients have negotiated protocol 2025-11-25 and retrieved persisted state.
+The guided browser experience and a real Streamable HTTP MCP server use the
+same Python service and SQLite database. A new session sends only its new
+message; the service retrieves the saved context. The video finishes with a real
+MCP client reading the same household shown in the browser.
 
-The optional Amazon Bedrock Runtime adapter calls `converse` through boto3.
-One controlled Nova Micro proof ran in temporary AWS CodeBuild on September 12,
-2026; its source, usage and reviewed output are preserved. The demonstration
-video uses the deterministic planner and makes no live AWS call. The service
-also works without AWS credentials.
+The planner has two explicit sources. The demonstration uses deterministic
+planning, so anyone can reproduce it without an AWS account. The optional
+Amazon Bedrock adapter calls `converse` through boto3. One Nova Micro call was
+tested in temporary AWS CodeBuild on September 12, 2026, with its response and
+usage recorded. That historical cloud test is separate from the video.
 
-The public MIT repository includes setup instructions, a non-root container,
-an optional authenticated single-household judge mode, backup/restore tooling,
-tests and four GitHub Actions jobs.
+This is an Alexa+ experience simulation, with working MCP integration. It is
+not connected to live Alexa+. AgentCore and Strands are not integrated.
 
-## Challenges and accomplishments
+## The hardest part
 
-The central challenge was keeping state and consent coherent across separate
-sessions, changed context and restarts. The demonstration follows the real
-application through all three sessions, an exact approval, a process restart,
-a changed constraint and a rejection. A real MCP client then reads the same
-running household.
+Remembering a fact is only part of continuity. The harder question is what
+that fact changes. A new dietary constraint can make an old proposal unsuitable;
+an approval must not quietly carry over. HestiaRelay stores the proposal's
+context and checks it when a decision is made.
 
-Validation includes 150 passing tests with 98.11% application coverage,
-desktop/mobile Chromium checks, actual container recreation, authenticated TLS
-and recovery checks. The release audit preserves dependency inventories,
-upstream notices, raw findings and expiring applicability decisions; it is a
-scoped prototype assessment, not a vulnerability-free deployment claim.
+The same care applies after a restart. The demo closes the actual server
+process and starts another against the same database. The household and its
+decisions return together. Tests also cover rejection, changed context, failed
+planner calls and backup restoration.
 
-## What we learned
+## What is working
 
-Useful continuity requires preserving decisions and their context as carefully
-as the original goal. Explicit planner provenance also matters: deterministic
-fallback and historical cloud evidence must remain distinguishable from a live
-model response. The recorded friction log separates actual provider experience
-from tooling and test-environment limitations.
+The public MIT project includes the simulator, MCP server, a non-root Docker
+setup and instructions for trying the three-session story. Validation covers
+150 tests with 98.11% application coverage, real MCP clients, desktop and mobile
+Chromium, container recreation and authenticated recovery checks. Detailed
+results and security limits are linked below.
 
-## What's next
+The useful distinction is visible in the demo: you can return to the same plan
+without surrendering control over what happens next.
 
-Test whether households can resume plans with less repetition and clearer
-understanding of unfinished work. That benefit is currently a hypothesis;
-real-user time savings have not been measured. Further work would address
-broader language interaction, accessibility validation and isolated households
-before any public multi-user deployment.
+## What comes next
 
-The current product is a guided text simulation with real MCP integration.
-Live Alexa+, AgentCore and Strands are not demonstrated. External execution
-would require a separately designed and validated consent-bound adapter.
+The first audience is people who coordinate meals and small household events.
+The next product test is straightforward: can someone return to a plan, spot
+the unfinished work and understand what they approved without repeating the
+earlier context? Time savings and fewer mistakes are hypotheses to test, not
+results already measured.
+
+The prototype currently supports guided English messages and one fictional
+household. Broader conversation, screen-reader testing and household isolation
+are the next steps before a public multi-user service. Any future shopping or
+messaging integration would need its own consent-bound execution adapter.
 
 ## Submission references
 
-- Primary track: **Alexa+**. Mini-challenge targets: **AWS Builder**, **Open Source**.
-- Built with: Python, MCP Python SDK, Streamable HTTP, SQLite, Pydantic,
-  Starlette, Uvicorn, HTML/CSS/JavaScript, Amazon Bedrock Runtime, boto3,
-  AWS CodeBuild, CloudFormation, IAM, CloudWatch, Docker, GitHub Actions,
-  pytest, Ruff, Playwright and FFmpeg. AWS infrastructure was temporary.
-- Public source: [Elinfiny/HestiaRelay](https://github.com/Elinfiny/HestiaRelay).
-- GitHub contributor: **Elinfiny**; [implementation PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3)
-  and [release PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15).
-- Contribution: created the public continuity service and simulation, shared
-  MCP runtime, persistent state and exact consent ledger; added reproducible
-  tests and evidence so others can inspect and extend the prototype.
-- [Product feedback](PRODUCT_FEEDBACK.md), [friction log](FRICTION_LOG.md),
-  [judge evidence map](JUDGE_EVIDENCE_MAP.md), [release receipt](evidence/release-20260913.json),
-  [historical AWS proof](evidence/bedrock-20260912.json).
+- Primary track: **Alexa+**. Mini-challenges: **Open Source** and **AWS Builder**.
+- [Watch the public demonstration](https://www.youtube.com/watch?v=_YTQcGxBMrA).
+- [Public MIT source and run instructions](https://github.com/Elinfiny/HestiaRelay).
+- GitHub username: **Elinfiny**. Contribution: [implementation PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3),
+  [release PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15).
+- Open Source contribution: built a shared household service for the browser
+  and MCP, persistent context and an exact-consent ledger, with tests and run
+  instructions so other developers can reproduce and extend the pattern.
+- Built with: Python, MCP Python SDK, SQLite, Pydantic, Starlette, Uvicorn,
+  HTML/CSS/JavaScript, Amazon Bedrock, boto3, Docker and GitHub Actions.
+  The full development-tool feedback and temporary AWS services are listed in
+  [product feedback](PRODUCT_FEEDBACK.md).
+- Development used AI assistance through ChatGPT/Codex. The repository preserves
+  the implementation, review history and reproducible checks; generated advice
+  is never treated as permission to act.
+- [Judge evidence map](JUDGE_EVIDENCE_MAP.md), [friction log](FRICTION_LOG.md),
+  [release audit](RELEASE_AUDIT.md), [historical Bedrock proof](evidence/bedrock-20260912.json).
