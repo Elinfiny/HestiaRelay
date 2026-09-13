@@ -51,6 +51,10 @@ jobs:
         run: python scripts/browser_qa.py
       - name: Exercise authenticated TLS and recovery
         run: python scripts/judge_qa.py
+      - name: Install video encoder
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends --yes ffmpeg
       - name: Record judge demonstration candidate
         run: python scripts/record_demo.py
       - name: Save browser evidence
@@ -107,6 +111,7 @@ jobs:
       - name: Build the application image
         run: |
           mkdir -p qa-artifacts
+          docker buildx imagetools inspect python:3.12.14-slim-trixie > qa-artifacts/candidate-base.txt
           docker build --pull --tag hestiarelay:judge .
           cp Dockerfile qa-artifacts/Dockerfile
           cp /tmp/hestiarelay-inspector/package-lock.json qa-artifacts/inspector-package-lock.json

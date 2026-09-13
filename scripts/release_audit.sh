@@ -21,7 +21,7 @@ artifact_status=$?
 /tmp/hestia-audit-tools/bin/pip-audit --strict --disable-pip --no-deps -r requirements-proof.txt -f json -o "$out/python-advisories.json"
 python_status=$?
 # Include build/backend, browser and template-validation dependencies actually resolved in CI.
-python -m pip freeze --exclude-editable > "$out/build-requirements.txt"
+python -m pip freeze --all --exclude-editable > "$out/build-requirements.txt"
 /tmp/hestia-audit-tools/bin/pip-audit --strict --disable-pip --no-deps -r "$out/build-requirements.txt" -f json -o "$out/build-advisories.json"
 build_status=$?
 npm audit --prefix /tmp/hestiarelay-inspector --json > "$out/npm-advisories.json"

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import html
 import json
 import os
 import subprocess
@@ -172,13 +173,32 @@ def main():
                 )
             )
             assert "Ana" in json.dumps(mcp["result"])
+            brief = "\n".join(item.get("text", "") for item in mcp["result"]["content"])
+            evidence_page = output / "mcp-receipt.html"
+            evidence_page.write_text(
+                '<!doctype html><html lang="en"><meta charset="utf-8">'
+                "<title>HestiaRelay — recorded MCP evidence</title><style>"
+                "body{margin:80px;background:#f8f5ef;color:#172c24;font:24px system-ui;}"
+                "h1{font-size:48px;}pre{white-space:pre-wrap;line-height:1.7;"
+                "padding:36px;background:white;border-radius:16px;font:28px system-ui;}"
+                "small{color:#526354;}</style><small>RECORDED EVIDENCE · REAL SDK CLIENT</small>"
+                "<h1>One household. Two real interfaces.</h1><p>Streamable HTTP · Protocol "
+                + html.escape(mcp["protocol"])
+                + "</p><p>Tool: get_continuity_brief</p><pre>"
+                + html.escape(brief)
+                + "</pre><p>This output came from the same running "
+                "service used in the browser. No additional model call.</p>"
+                "<small>Evidence presentation · not the application interface</small></html>"
+            )
+            page.goto(evidence_page.resolve().as_uri())
             scene(
                 "mcp",
                 "A real MCP client just read this same household over Streamable HTTP.\n"
                 "Protocol and tool output are preserved in mcp-evidence.json.",
-                "#timeline",
+                None,
                 8,
             )
+            page.goto(url)
             scene(
                 "closing",
                 "One household thread, across separate sessions. Your decisions stay yours.\n"
