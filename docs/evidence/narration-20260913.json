@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "status": "CANDIDATE_REQUIRES_FINAL_VISUAL_REVIEW",
+  "source_sha256": "95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd",
+  "script_sha256": "86afe33c0c68fd67b4b8050b2a4b66d98fe815c57365cd0eafce51538e76318a",
+  "model_sha256": "8fbea51ea711f2af382e88c833d9e288c6dc82ce5e98421ea61c058ce21a34cb",
+  "voice_sha256": "d583ccff3cdca2f7fae535cb998ac07e9fcb90f09737b9a41fa2734ec44a8f0b",
+  "voice_kind": "stock synthetic English narrator; not Alexa or an imitation of the creator",
+  "duration_seconds": 87.84,
+  "application_frames": "Original order, dimensions and timing; re-encoded",
+  "caption_band": "Original 120px band replaced with narration captions",
+  "scenes": [
+    {
+      "scene": 1,
+      "start": 1.248,
+      "audio_seconds": 4.032,
+      "scene_end": 7.366,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 2,
+      "start": 7.466,
+      "audio_seconds": 4.074666666666666,
+      "scene_end": 13.549,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 3,
+      "start": 13.649,
+      "audio_seconds": 4.309333333333333,
+      "scene_end": 19.737,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 4,
+      "start": 19.837,
+      "audio_seconds": 6.208,
+      "scene_end": 27.848,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 5,
+      "start": 27.948,
+      "audio_seconds": 5.0986666666666665,
+      "scene_end": 33.947,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 6,
+      "start": 34.047,
+      "audio_seconds": 7.573333333333333,
+      "scene_end": 42.114,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 7,
+      "start": 42.214,
+      "audio_seconds": 5.461333333333333,
+      "scene_end": 49.531,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 8,
+      "start": 49.631,
+      "audio_seconds": 5.717333333333333,
+      "scene_end": 57.914,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 9,
+      "start": 58.014,
+      "audio_seconds": 4.288,
+      "scene_end": 64.104,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 10,
+      "start": 64.204,
+      "audio_seconds": 5.056,
+      "scene_end": 71.377,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 11,
+      "start": 71.477,
+      "audio_seconds": 5.397333333333333,
+      "scene_end": 79.634,
+      "speed": 1,
+      "clipped": false
+    },
+    {
+      "scene": 12,
+      "start": 79.734,
+      "audio_seconds": 7.658666666666667,
+      "scene_end": 87.84,
+      "speed": 1,
+      "clipped": false
+    }
+  ],
+  "files": {
+    "11.wav": "ed98445d19a5fbee11c3a6e2fb72b7de3ec7a44b7774760c8516b8e25b67ea44",
+    "captions.srt": "0362d1c2598e18a4dabfccfc12a37c2d3bf0cc1dafd45392f6c2b1bd7b80bc3a",
+    "09.wav": "e8349246d9d82031611262430fb2ff92c87d22c2b4657cf40694243d31033a66",
+    "hestiarelay-narrated.mp4": "e35a707ee24b8c39ad4d2e50ff21b8ec9f1ed1ae5e66ea4de7e284a3dee3d73c",
+    "narration.wav": "d41821d8ca3d88620671d421daea7a1c6835c159425c69fee719d8260cc6f951",
+    "05.wav": "246feaf452aecec62fca65aef661bfc6ff5050699aa76faea464da4ae350e03e",
+    "02.wav": "539ff9bd94c0bf4bfb789d22206683ca606dcab5a2795d7a985bf981c8ab4213",
+    "00.wav": "2aa09cd7d92a587a83095e958a2d54f3218f3ccde6ee229795267f9a61bc795c",
+    "04.wav": "b9de8341ed991c0cfe1d333345761aa8fc8dd5ea063f995cec071ea7de719473",
+    "06.wav": "478bd319d66166570830eaf7655f954021b18ed93443e69ec01d9a8d659efd9e",
+    "01.wav": "56531b44c4a5e9e6ab12349a5c2a627ee343f030449db2411caa8440f6d711da",
+    "03.wav": "9f5779e9635194fd45fb1793c8a3b41f9e3f1577022bc1d7fa99ffb4078df6b2",
+    "captions.ass": "0675f446f6823316ea8a318eaef6f78c019b8310463c1704ec76c587e7569992",
+    "08.wav": "26f3c3c2a624ca2b27052579abaf7b88000f0e277806390ea8f44fe6e4e65276",
+    "10.wav": "fa5aab4703461a38ae6fd6d9e47b3841ad55563f776981c796959f3d7cf12163",
+    "07.wav": "3f993530d7aa22d95929669a9cfc135da34b383b33d384b93bd039936714c0a2"
+  },
+  "publication": "Not uploaded; original public video unchanged",
+  "reviewed_at_utc": "2026-09-13",
+  "model_revision": "1939ad2a8e416c0acfeecc08a694d14ef25f2231",
+  "technical_review": {
+    "video_codec": "H.264",
+    "audio_codec": "AAC",
+    "width": 1440,
+    "height": 1120,
+    "audio_sample_rate_hz": 48000,
+    "audio_channels": 1,
+    "integrated_loudness_lufs": -16.37,
+    "true_peak_dbfs": -1.41,
+    "loudness_range_lu": 5,
+    "application_region_ssim": 0.999246,
+    "frame_times_inspected_seconds": [
+      22,
+      36,
+      84
+    ],
+    "all_scene_audio_fits": true,
+    "all_speech_speed": 1,
+    "independent_listening_review": false,
+    "final_visual_and_listening_acceptance": "PENDING",
+    "public_playback": "NOT_APPLICABLE_UNPUBLISHED_CANDIDATE"
+  },
+  "dependency_audit": {
+    "local_attempt": "PyPI advisory connection timed out; no successful local scan claimed",
+    "required_gate": "CI validate job: Audit isolated narration dependencies; exact result recorded in Issue #16"
+  },
+  "metadata_correction": {
+    "public_video_id": "_YTQcGxBMrA",
+    "description": "docs/YOUTUBE_DESCRIPTION.txt",
+    "studio_save": "verified in a separately opened details page; exact content match and Save disabled",
+    "repository_about": "verified via GitHub repository API",
+    "new_upload": false
+  }
+}

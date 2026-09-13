@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "hestiarelay"
 version = "0.1.0"
-description = "Persistent Alexa+ household continuity agent with MCP, AWS orchestration, memory, and consent gates."
+description = "Household plans that persist across conversations: an Alexa+ simulation with real MCP and exact consent."
 readme = "README.md"
 requires-python = ">=3.12"
 license = {text = "MIT"}

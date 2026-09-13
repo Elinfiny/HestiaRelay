@@ -1,74 +1,68 @@
-# Judge evidence map — review candidate
+# See HestiaRelay work
 
-HestiaRelay preserves a household plan across separate conversations, including
-what changed and exactly what the household approved. The intended benefit is
-less repeated context and fewer coordination mistakes. Real-user time savings
-have not been measured.
+[Watch the 1:28 demonstration](https://www.youtube.com/watch?v=_YTQcGxBMrA),
+then try the [Python setup](../README.md#local-setup) or
+[Docker instructions](CONTAINER_GUIDE.md). No AWS account is needed for the
+default demonstration.
 
-## Watch and reproduce
+The story is simple: six people are coming on Friday, the budget is $120, and
+Ana's nut allergy is added in another conversation. When you come back,
+HestiaRelay remembers the plan and shows what still needs attention.
 
-The `browser-qa` artifact in the Phase 4B CI run contains
-`demo/hestiarelay-candidate.mp4`, English `captions.srt`, scene screenshots,
-`demo-report.json`, the actual `mcp-evidence.json`, and SHA-256 hashes.
-The original video is a silent captioned **review candidate**, subsequently
-accepted by the owner on 2026-09-13. It records
-real browser interactions with a real service and SQLite. Captions occupy a
-separate video band; the script never injects responses or modifies the app DOM.
+## Moments to look for
 
-Run the repository CI or, with Python dependencies, Chromium and FFmpeg installed:
-
-```bash
-python scripts/record_demo.py
-```
-
-The scripted sequence shows the canonical three sessions, deterministic planner
-provenance, an exact approval, a server-process restart with identical recovered
-state, a new constraint and exact rejection, then an actual MCP client reading
-the same running household. Only fictional data is used; no AWS call occurs.
-Desktop/mobile and TLS/recovery QA remain separate mandatory CI checks.
-
-## Evidence by criterion
-
-| Criterion / target | Demonstrated evidence | Practical limit |
+| Time | What happens | Why it matters |
 | --- | --- | --- |
-| Technical Implementation | Shared service behind real Streamable HTTP MCP and UI; persistent SQLite; actual restart; exact consent; SDK and Inspector checks; coverage and CI | Single household/worker; no public hosted service or live Alexa+ connection |
-| Design | Guided three-session flow, visible remembered context, planner source, readable consent and continuity timeline; desktop 1440px and mobile 390px QA | Guided English text; no voice or screen-reader certification |
-| Potential Impact | A dinner plan retains six people, Friday, $120 and a later allergy constraint without repeating the goal | Intended household coordination benefit; no measured user savings or food-safety certification |
-| Quality of Idea | Goals, preferences, tasks, provenance and scoped decisions persist together; changed context cannot inherit old approval | No shopping, payment, messaging or external-account executor |
-| AWS Builder | One real Bedrock Runtime Converse through the repository adapter, with original source/date, response and usage evidence | Historical 2026-09-12 proof, not this deterministic recording; no additional invocation authorized |
-| Open Source | Public MIT repository, code and reproduction guides; PR history and CI artifacts | Final submission fields and contribution description are not published |
+| 0:07 | The first session saves the dinner plan | A goal becomes a persistent household record |
+| 0:13 | A new session adds Ana's constraint | Earlier details are recovered without being sent again |
+| 0:19 | A third session asks about Friday | The goal, budget, preferences and unfinished tasks return together |
+| 0:33 | An exact proposal is reviewed and approved | The decision belongs to these details, not to future actions |
+| 0:49 | The server restarts | All three sessions and the saved decision survive |
+| 0:57 | A new constraint leads to a new proposal and rejection | Earlier approval does not transfer to changed context |
+| 1:11 | A real MCP client reads the household | The browser and MCP share the same working service |
 
-Public contribution: [Elinfiny/HestiaRelay](https://github.com/Elinfiny/HestiaRelay),
-GitHub username **Elinfiny**. Implementation and evidence contributions are visible
-in [merged pull requests](https://github.com/Elinfiny/HestiaRelay/pulls?q=is%3Apr+is%3Amerged).
+This is a guided Alexa+ web simulation with deterministic planning. It is not
+a live Alexa+ connection. Approval records consent; no purchase, payment,
+message or account change is executed. The example household is fictional,
+and planner advice does not verify food safety.
 
-## Historical AWS proof, separately identified
+## Check the implementation
 
-On **2026-09-12**, source `56dd5ad6375a668645eec7d8018430479f308267`
-executed one `amazon.nova-micro-v1:0` Converse request in temporary CodeBuild.
-The reviewed response used the fictional household constraints; 222 input and
-230 output tokens were reported, with 1,114.44 ms observed model-call duration.
-The [machine receipt](evidence/bedrock-20260912.json) and
-[original reviewed output](evidence/bedrock-20260912.log.txt) preserve the result.
-Temporary resources were removed after verified evidence export. These facts
-must not be represented as a new live call, live Alexa+, AgentCore or Strands.
+| Area | Evidence | Scope |
+| --- | --- | --- |
+| Continuity | [Real MCP process-restart test](../tests/test_mcp_http.py), [session tests](../tests/test_simulator.py) | SQLite, one household and worker |
+| Decisions | [Domain tests](../tests/test_engine.py), [shared service](../src/hestiarelay/service.py) | Exact approval/rejection and changed-context checks; no external executor |
+| Browser experience | [Browser QA](../scripts/browser_qa.py), [authenticated QA](../scripts/judge_qa.py) | Desktop 1440px/mobile 390px Chromium; no screen-reader certification |
+| MCP interoperability | [Container QA](../scripts/container_qa.py), [container receipt](evidence/container-20260912.json) | Actual SDK and Inspector 2.6.0, protocol 2025-11-25 |
+| Security and recovery | [Threat model](THREAT_MODEL.md), [release audit](RELEASE_AUDIT.md), [judge access guide](JUDGE_ACCESS_GUIDE.md) | Scoped prototype review; dated vulnerability findings and applicability limits |
+| Open Source | [Implementation PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), [release PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15) | Public MIT source, contribution by Elinfiny |
 
-## Review and publication boundary
+The potential benefit is less repeated context and clearer household decisions.
+Real-user time savings have not been measured. The [project story](SUBMISSION_STORY.md)
+explains the intended audience and next product test.
 
-The same accepted recording is
-[published Public on YouTube](https://www.youtube.com/watch?v=_YTQcGxBMrA).
-The owner confirmed viewing to the end while signed out in Brave, with readable
-English text. This is **human-reported** evidence under the owner's explicit
-acceptance method; the separate hosted bot-gate failure remains preserved in
-the [playback receipt](evidence/video-playback-20260913.json).
-No final submission is claimed.
-The owner accepted the concrete visual candidate on 2026-09-13; the
-[approval receipt](evidence/video-approval-20260913.json) preserves its exact identity.
-The original recording metadata remains historical. Devpost Project Details
-and video fields remain untouched. CI artifacts are review evidence; GitHub may
-require sign-in to download them. Anonymous repository/README/license access is
-checked separately and does not imply anonymous video or hosted-app access.
+## Historical Bedrock test
 
-The official [Alexa+ resources](https://amazonappdev2026.devpost.com/resources)
-allow a simulated web experience with a working MCP integration (checked
-2026-09-13). Eligibility and prize decisions remain with the organizer.
+On September 12, 2026, the repository's optional adapter made one real Nova Micro
+Converse call in temporary AWS CodeBuild. It returned a plan from the fictional
+household constraints: 222 input tokens, 230 output tokens and an observed call
+duration of 1,114.44 ms. See the [original receipt](evidence/bedrock-20260912.json)
+and [reviewed output](evidence/bedrock-20260912.log.txt).
+
+This is separate from the deterministic video. Temporary resources were
+removed. AgentCore, Strands and a public hosted application are not demonstrated.
+
+## Reproduce and inspect the recording
+
+`python scripts/record_demo.py` records the real app and MCP interaction when
+the documented Python dependencies, Chromium and FFmpeg are installed. It adds
+captions outside the application image; it does not inject application data or
+responses. CI preserves the recording, actual MCP output, screenshots and hashes.
+
+The accepted original's exact identity and complete signed-out Brave viewing
+report are in the [publication record](VIDEO_PUBLICATION.md). The separate
+automated YouTube check stopped at a bot challenge; that failed result remains
+in the [playback receipt](evidence/video-playback-20260913.json).
+GitHub artifact downloads may require sign-in; the public video above is the
+viewing route. The [requirements audit](COMPETITION_AUDIT.md) tracks final
+submission readiness.

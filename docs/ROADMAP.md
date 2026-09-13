@@ -34,12 +34,11 @@ Chromium desktop/mobile and manual screenshot review. PR #3 merged; main CI
 
 ## Phase 2 — Live AWS Builder integration — LIVE PROOF VERIFIED (#4)
 
-- Validate AWS promotional credits/account path.
-- Enable one appropriate Amazon Bedrock model.
-- Prove live `converse` calls through the runtime adapter.
-- Record cost/latency evidence.
-- Integrate AgentCore Memory if it materially improves cross-session continuity.
-- Evaluate Strands for agent orchestration and adopt only if it improves the architecture.
+- Completed: one appropriate Amazon Bedrock model and actual `converse` proof.
+- Completed: source-bound usage/latency evidence and temporary resource cleanup.
+- Promotional credits were requested; award and final billing remain unconfirmed.
+- AgentCore Memory and Strands are optional future evaluations, outside the
+  current submission package and not required for the simulation track.
 
 **Live gate PASS:** one real Nova Micro Converse call from the immutable
 repository source, 83 tests/98.86% coverage in CodeBuild, exact request/role
@@ -79,7 +78,10 @@ MCP/container regressions green. Public hosting remains a separate gate.
 - dependency/security review;
 - repository secret scan.
 
-**Gate:** independent audit has no P0/P1 findings.
+**Scoped gate completed:** Phase 4B self-review, source-bound security reports,
+CI and real demonstration evidence are recorded in `RELEASE_AUDIT.md` and Issue
+#14. This is not an independent third-party audit. Remaining high/unknown image
+records have narrow non-reachability decisions that expire September 27, 2026.
 
 ## Phase 5 — Submission package
 
@@ -91,3 +93,12 @@ MCP/container regressions green. Public hosting remains a separate gate.
 - Run final signed-out/judge-path audit.
 
 **Gate:** submission checklist 100% PASS before Devpost submit.
+
+Current package: `feature/judge-presentation-audit-v1`, tracked in Issue #16.
+Natural English story, public description, complete requirements mapping,
+tool-by-tool feedback and a separate narrated candidate are prepared.
+See `COMPETITION_AUDIT.md` for verified items and remaining final gates.
+Final visual/listening acceptance, private eligibility/rights declarations,
+refreshed expiring audit evidence and the received Devpost submission remain
+open. No public hosting, new AWS operation or additional framework is required
+to complete the chosen simulation route.

@@ -1,0 +1,20 @@
+{
+  "source_video_sha256": "95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd",
+  "duration_seconds": 87.84,
+  "voice": "af_heart",
+  "voice_kind": "stock synthetic English narrator; not Alexa or an imitation of the creator",
+  "scenes": [
+    {"start": 1.148, "end": 7.366, "text": "Dinner plans change. Hestia Relay helps you pick up where you left off."},
+    {"start": 7.366, "end": 13.549, "text": "First: dinner for six on Friday, with a one hundred twenty dollar budget."},
+    {"start": 13.549, "end": 19.737, "text": "Later, Ana's nut allergy joins the plan, in a completely new session."},
+    {"start": 19.737, "end": 27.848, "text": "Are we ready for Friday? The guests, budget and allergy are remembered. Here's what still needs attention."},
+    {"start": 27.848, "end": 33.947, "text": "This is a deterministic Alexa Plus simulation, with no live Alexa connection."},
+    {"start": 33.947, "end": 42.114, "text": "Before a sensitive decision, review the exact proposal. Approval belongs to these details and this household context."},
+    {"start": 42.114, "end": 49.531, "text": "Approval saves the decision. No purchase, payment, message or account change is made."},
+    {"start": 49.531, "end": 57.914, "text": "Even after a real server restart, the three sessions, the plan and its approval are still here."},
+    {"start": 57.914, "end": 64.104, "text": "Lee is vegetarian. The plan changes, so it needs a new decision."},
+    {"start": 64.104, "end": 71.377, "text": "Reject this proposal, and that decision stays with the household too. You're in control."},
+    {"start": 71.377, "end": 79.634, "text": "A real M C P client reads the same household over Streamable H T T P."},
+    {"start": 79.634, "end": 87.84, "text": "Hestia Relay. One household, across separate conversations. Try the open source project, and pick up where life left off."}
+  ]
+}

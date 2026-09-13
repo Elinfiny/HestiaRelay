@@ -1,10 +1,18 @@
 # Submission rehearsal — candidate review
 
-Prepared 2026-09-13 for [Issue #16](https://github.com/Elinfiny/HestiaRelay/issues/16).
+Updated during the September 13 UTC presentation review for
+[Issue #16](https://github.com/Elinfiny/HestiaRelay/issues/16).
 This is a repository checklist, not a completed submission. Devpost Project
 Details story and video fields remain untouched.
 
-## Exact candidate
+The [complete requirement audit](COMPETITION_AUDIT.md) is the current checklist.
+The [English narrated candidate](NARRATION_GUIDE.md) is separately prepared for
+final review. Its hash and technical checks are in the
+[narration receipt](evidence/narration-20260913.json). Until that new candidate is
+accepted and published, the existing public recording below remains the
+submission video reference. Its previous playback result applies only to it.
+
+## Existing accepted recording
 
 - Merged implementation: `a5180502d7b347ff41c696bc2c5104c91c69d896` (PR #15).
 - Selected recording: CI [34744690053](https://github.com/Elinfiny/HestiaRelay/actions/runs/34744690053),
@@ -87,7 +95,8 @@ and upload-terms authorization already received. Studio recovery preserved the
 same video and metadata. The owner subsequently confirmed viewing to the end,
 signed out in Brave, with readable English text. This accepted human observation
 does not turn the hosted bot-gate failure into an automated PASS or certify a
-selectable caption track. Do not duplicate or replace the uploaded recording.
+selectable caption track. A new narrated candidate needs its own exact final
+review and publication readback before replacing this reference.
 Never replace a failed upload with a claim of publication or use CI download
 access as evidence of public playback. Any platform authentication or new
 publication permission gate must concern the prepared, exact action.

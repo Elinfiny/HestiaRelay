@@ -1,19 +1,25 @@
 # HestiaRelay
 
-**A persistent Alexa+ household continuity agent that carries goals across sessions, orchestrates low-risk household work, and stops at consent gates before sensitive actions.**
+**Pick up where life left off.**
 
-HestiaRelay is being built for the **Alexa+ track** of the 2026 Amazon Developer Hackathon, with parallel eligibility targets for the **AWS Builder** and **Open Source** mini challenges.
+Dinner plans change between conversations. HestiaRelay keeps the guest list,
+budget, preferences and unfinished tasks together, so the next conversation
+starts with what you already know.
 
 [Published demonstration — 1:28, English captions](https://www.youtube.com/watch?v=_YTQcGxBMrA).
-YouTube publication is confirmed. The owner reports complete signed-out playback
-in Brave with readable English text. The hosted automated check was blocked by
-YouTube; [separate playback evidence and limits](docs/VIDEO_PUBLICATION.md).
+See three separate sessions, a real server restart and decisions that stay with
+the plan. This working prototype is a **guided Alexa+ web simulation** backed by
+a real MCP server. It runs without AWS credentials. There is no live Alexa+
+connection, and approval never makes a purchase or sends a message.
+
+Built for the **Alexa+ track** of the Amazon Developer Hackathon 2026, with
+**Open Source** and **AWS Builder** mini-challenge entries in preparation.
 
 ## Core scenario
 
 > “We’re having six people over Friday evening, budget $120.”
 
-HestiaRelay turns that intent into a durable household workflow: guest count, budget, preferences, reminders, preparation tasks, and proposed purchases remain available across later sessions. Low-risk planning can continue automatically; sensitive operations are surfaced as explicit approval gates.
+HestiaRelay saves the plan and creates a preparation checklist.
 
 A follow-up session can add context such as:
 
@@ -23,18 +29,23 @@ A later session can ask:
 
 > “Are we ready for Friday?”
 
-The goal is continuity, not another single-turn chatbot.
+The Friday plan, $120 budget and Ana's constraint are still there. You can see
+what needs attention and review an exact proposal before recording a decision.
+The same information survives closing a session or restarting the server.
+Allergy details help organize the plan; they do not certify that food is safe.
 
 ## Hackathon compliance targets
 
 - **Primary track:** Alexa+
 - **Runtime surface:** self-hosted MCP server using **Streamable HTTP**
 - **MCP requirement:** compatible with the hackathon minimum specification baseline **2025-11-25**
-- **AWS Builder target:** demonstrated Amazon Bedrock runtime; AgentCore/Strands remain optional evaluations
+- **AWS Builder evidence:** optional Bedrock adapter and one documented live call on September 12, 2026; the video uses the deterministic planner
 - **Open Source target:** public repository with MIT license and hackathon-window contribution history
 - **Submission language:** English
 
 ## Run the three-session simulator
+
+From a checkout of this repository with Python 3.12+ (full setup below):
 
 ```bash
 python -m pip install -e ".[dev]"
@@ -75,7 +86,7 @@ remain separate gates.
 
 ## MCP tools
 
-The initial MCP server exposes bounded tools for:
+The MCP server exposes bounded tools for:
 
 - starting or updating a household goal;
 - remembering a household preference;
@@ -85,7 +96,8 @@ The initial MCP server exposes bounded tools for:
 - approving or rejecting sensitive proposals;
 - opening a simulator session and submitting a guided message through the same service as the UI.
 
-No tool accepts arbitrary shell commands. Purchase-like or external-account actions are proposals only until explicitly approved, and the bootstrap does not perform a real purchase.
+No tool accepts arbitrary shell commands. Approving a purchase-like or
+external-account proposal records consent only; it never executes that action.
 
 ## Local setup
 
@@ -165,9 +177,10 @@ versions; a target alone is not interoperability evidence.
 
 See [demo and validation guide](docs/DEMO_GUIDE.md) for precise steps and limits.
 
-## Evidence-first development
+## Explore the project
 
-HestiaRelay keeps competition evidence in the repository from the start:
+Start with the [project story](docs/SUBMISSION_STORY.md) and
+[judge evidence map](docs/JUDGE_EVIDENCE_MAP.md). For a closer look:
 
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — product and technical boundaries
 - [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) — consent, privacy, and execution risks
@@ -178,10 +191,12 @@ HestiaRelay keeps competition evidence in the repository from the start:
 
 ## Status
 
-**Continuity, MCP/container interoperability, authenticated judge mode and state recovery implemented; scoped release audit and demonstration candidate validated.**
+**The working demonstration is public.** Continuity, MCP/container
+interoperability, optional authenticated judge mode and state recovery are implemented.
 See the [judge evidence map](docs/JUDGE_EVIDENCE_MAP.md) and
 [reviewed release receipt](docs/evidence/release-20260913.json) for evidence and
-remaining gates. The 87.84-second captioned video is a draft awaiting final visual approval.
+remaining gates. The [publication record](docs/VIDEO_PUBLICATION.md) separates
+confirmed human viewing from the hosted playback check that YouTube blocked.
 
 **Historical live Bedrock proof verified.** One authorized Nova Micro
 Converse call ran through the real repository adapter in a dedicated CodeBuild

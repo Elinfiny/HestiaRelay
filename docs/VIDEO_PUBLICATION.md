@@ -83,7 +83,19 @@ plan, owner-side recording or owner PC is not required by this package.
 
 HestiaRelay | A household plan that survives the next conversation
 
-## Description
+## Current public description
+
+The [current description](YOUTUBE_DESCRIPTION.txt) was saved on the same video
+during the presentation audit. A separate Studio page read back the exact text
+and showed Save disabled. Title, Public visibility and video identity were
+preserved. The wording now explains the dinner story directly; internal review
+language is kept in technical receipts. It describes English captions without
+calling a future narrated candidate silent.
+
+## Original description — historical publication snapshot
+
+The following text is preserved as the original publication record; it is no
+longer the current public description.
 
 HestiaRelay preserves a household plan across separate sessions: six people,
 Friday evening, a $120 budget, and a later allergy constraint. This prototype
@@ -140,12 +152,20 @@ endorsement or an award.
    A local file, CI artifact link or upload-success message alone does not prove
    public playback. Devpost fields require the completed, audited final package.
 
-## Audio recommendation, not a replacement authorization
+## Narrated candidate — preparation authorized
 
-English narration synchronized with the real demonstration is a recommended
-presentation improvement; the current accepted recording remains silent.
-The owner's audio question and playback confirmation do not authorize a new
-render or publication. Preserve this accepted source and URL. Any later approved
-replacement must be separately identified, reviewed and verified before use,
-retain readable captions, and never imply live Alexa+ or AWS execution that the
-recording does not demonstrate.
+The later instruction to handle the presentation end-to-end authorizes English
+narration preparation and the public description correction above. A new
+87.84-second candidate preserves the original application footage, replaces only
+the caption band and adds a stock synthetic English narrator. It removes the
+draft-review closing caption without changing the preserved original.
+The [narration guide](NARRATION_GUIDE.md) and
+[technical receipt](evidence/narration-20260913.json) identify its exact source,
+voice, output and verification limits.
+
+The current public video remains the accepted original. The narrated candidate
+has not been uploaded or published. The project mandate still requires the
+exact final visual/listening decision before a replacement publication action.
+When an accepted narrated version is published, its metadata must describe
+English narration and captions. Preserve this original publication history;
+do not transfer its human playback result to a different video.

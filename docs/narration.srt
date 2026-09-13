@@ -1,0 +1,52 @@
+1
+00:00:01,148 --> 00:00:07,366
+Dinner plans change. HestiaRelay helps you pick up where you left off.
+
+2
+00:00:07,366 --> 00:00:13,549
+First: dinner for six on Friday, with a one hundred twenty dollar budget.
+
+3
+00:00:13,549 --> 00:00:19,737
+Later, Ana's nut allergy joins the plan, in a completely new session.
+
+4
+00:00:19,737 --> 00:00:27,848
+Are we ready for Friday? The guests, budget and allergy are remembered. Here's what
+still needs attention.
+
+5
+00:00:27,848 --> 00:00:33,947
+This is a deterministic Alexa Plus simulation, with no live Alexa connection.
+
+6
+00:00:33,947 --> 00:00:42,114
+Before a sensitive decision, review the exact proposal. Approval belongs to these
+details and this household context.
+
+7
+00:00:42,114 --> 00:00:49,531
+Approval saves the decision. No purchase, payment, message or account change is made.
+
+8
+00:00:49,531 --> 00:00:57,914
+Even after a real server restart, the three sessions, the plan and its approval are
+still here.
+
+9
+00:00:57,914 --> 00:01:04,104
+Lee is vegetarian. The plan changes, so it needs a new decision.
+
+10
+00:01:04,104 --> 00:01:11,377
+Reject this proposal, and that decision stays with the household too. You're in
+control.
+
+11
+00:01:11,377 --> 00:01:19,634
+A real MCP client reads the same household over Streamable HTTP.
+
+12
+00:01:19,634 --> 00:01:27,840
+HestiaRelay. One household, across separate conversations. Try the open source
+project, and pick up where life left off.

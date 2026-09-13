@@ -1,61 +1,45 @@
-# Hackathon Scoring Matrix
+# Judging criteria and current evidence
 
-HestiaRelay is developed against the four official judging criteria instead of treating judging as a final-stage documentation task.
+Reviewed against the [official rules](https://amazonappdev2026.devpost.com/rules)
+on September 13, 2026. These are our assessments of the work, not predicted scores.
 
-| Criterion | Target evidence | Implementation status | Exit gate |
-| --- | --- | --- | --- |
-| Technical Implementation | Real MCP over Streamable HTTP, runtime Alexa+ technology path, Amazon Bedrock call path, persistent continuity, tests, CI | MCP, persistence and simulator tested; one live Bedrock call verified | Live end-to-end MCP + AWS demo; cloud memory validated |
-| Design | Guided text flow, visual continuity timeline, clear safe vs consent-gated states, understandable recovery | Responsive simulator implemented; Chromium QA and screenshot review PASS | Desktop/mobile Alexa+ simulation passes usability review |
-| Potential Impact | Household planning use case, repeat-session value, concrete target users, measurable time/coordination savings | Three-session scenario implemented; user impact measurements pending | User story and demo show value beyond hackathon |
-| Quality of Idea | Cross-session state, service orchestration, consent-aware autonomy, not single-turn Q&A | Cross-session demo and exact-proposal consent tested | Demo visibly proves continuity and multi-step orchestration |
+| Criterion | What HestiaRelay demonstrates | Next improvement |
+| --- | --- | --- |
+| Technical Implementation | Shared browser/MCP service, protocol 2025-11-25 over Streamable HTTP, persistent SQLite, exact consent and real restart tests | Keep reproduction simple and verify the final source with current CI |
+| Design | Three guided sessions, remembered context, visible planner source, decisions and recovery; desktop/mobile QA | Natural narration and concise explanations; screen-reader and real-user testing remain unperformed |
+| Potential Impact | One recognizable dinner plan carried across interruptions and changing requirements | Measure whether people can resume the plan and identify unfinished work with less repetition |
+| Quality of Idea | Goals, constraints, tasks and consent stay together; changed context cannot inherit approval | Demonstrate this relationship clearly, without adding unproved services |
 
-## Bonus target: friction log
+The strongest present case is **Alexa+ continuity and a reusable open-source
+pattern**. The AWS adapter is real, but its one historical Bedrock call is a
+limited mini-challenge demonstration. A multi-service AWS architecture is not
+implemented. AgentCore, Strands and public cloud memory are possible future
+work, not mandatory completion gates for this simulation.
 
-Every real developer-experience problem is recorded in `docs/FRICTION_LOG.md` with reproduction steps, severity, workaround, and an actionable suggestion. No issue is fabricated for bonus scoring.
+## Primary-track evidence
 
-## Primary-track proof checklist
+- [x] The public video shows the working simulation and a real MCP client call.
+- [x] Actual SDK/TCP and Inspector 2.6.0 checks negotiate protocol 2025-11-25.
+- [x] Runtime source imports and calls the MCP SDK.
+- [x] Separate sessions recover the same goal and later constraints.
+- [x] Exact approval/rejection, changed context and restart are demonstrated.
+- [x] The demo clearly identifies the Alexa+ simulation and deterministic planner.
 
-- [ ] Working MCP server shown in demo.
-- [x] Streamable HTTP connection verifiably exercised by real SDK/TCP smoke.
-- [x] Official MCP Inspector 2.6.0 verified against the real container;
-  observed protocol 2025-11-25, strict tool list and continuity-brief call PASS.
-- [x] Repository runtime code imports and calls MCP SDK.
-- [x] Alexa+ experience simulation exercised in Chromium; no live Alexa+ claim.
-- [x] Cross-session context visibly recovered with the same goal ID.
-- [x] Sensitive action visibly blocked behind exact-proposal consent.
+## Mini-challenge evidence
 
-## AWS Builder proof checklist
+| Target | Existing contribution | Limit |
+| --- | --- | --- |
+| Open Source | Public MIT repository created September 12, 2026; [implementation PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), tests, shared MCP/UI design and run instructions; username Elinfiny | Final Devpost fields are not submitted |
+| AWS Builder | Bedrock adapter and one actual Nova Micro Converse call on September 12, 2026, with temporary CodeBuild execution and preserved usage/output | Historical proof; the public video contains no live AWS call; requested promotional award remains unconfirmed |
 
-- [x] Bedrock Runtime adapter exists in runtime code.
-- [x] One live Bedrock call verified with the owner account and existing applicable credits.
-  The separately requested hackathon credit award remains unverified.
-- [ ] AWS integration produces user-visible value in demo.
-- [ ] AgentCore Memory evaluated and integrated if it improves continuity.
-- [ ] Strands evaluated and integrated if it improves orchestration.
-- [x] README and AWS runbook document the real Bedrock/temporary CodeBuild proof.
+The [product feedback](PRODUCT_FEEDBACK.md) describes the tools actually used.
+The [friction log](FRICTION_LOG.md) retains reproducible observations, including
+which belong to Amazon services and which belong to development tooling.
+No bonus or award is assumed.
 
-## Open Source proof checklist
+## Final release and submission gates
 
-- [x] Repository created during hackathon window.
-- [x] Repository is public.
-- [x] MIT license exists.
-- [x] Source and documentation are public.
-- [ ] Public contribution URL recorded in final submission evidence.
-- [x] Clean GitHub runner built the Docker image and exercised the documented
-  non-root persistent-volume path; CI 34719571606 and durable container evidence.
-
-## Final submission quality gates
-
-- Video under three minutes and in English.
-- Public repository is judge-accessible without credentials.
-- README claims match tested behavior exactly.
-- Installation path is independently reproduced.
-- No secrets or private-project material exist in Git history.
-- Submission text maps each major feature to judging evidence.
-
-## Review candidate
-
-The [judge evidence map](JUDGE_EVIDENCE_MAP.md) links each criterion to demonstrated
-behavior and its limits. The captioned recording shows a real MCP client receipt
-from the same household as the UI. Final visual approval and Devpost publication
-remain separate gates.
+Use the [requirements audit](COMPETITION_AUDIT.md) for mandatory items and
+remaining unknowns, and the [judge evidence map](JUDGE_EVIDENCE_MAP.md) to find
+the relevant demonstration. Personal eligibility, exact final media selection,
+current-source security validation and the submission receipt remain distinct.
