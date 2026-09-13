@@ -1,6 +1,6 @@
 **
 !Dockerfile
-!requirements-proof.txt
+!requirements-runtime.txt
 !LICENSE
 !src
 !src/hestiarelay

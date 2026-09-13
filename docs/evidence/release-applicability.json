@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "reviewed": "2026-09-13",
+  "expires": "2026-09-27",
+  "scope": "Only the recorded non-root, read-only fictional-household container; invalid for public deployment or changed source/dependencies. Raw findings remain published.",
+  "source_sha256": {
+    "Dockerfile": "f59049d6188d6ed4bbd24c162444623b96a83e5eb83528edb3caaf7405958d5c",
+    "requirements-runtime.txt": "a253b60aee48e452d41aca2d251f292b6ed1d6a75398086ed37ea2b18083fbad",
+    "src/hestiarelay/__init__.py": "6f13981c35df4a5fe1ab5f94c59f0939e5725dcd73fea776d4a3aa3532a2e991",
+    "src/hestiarelay/access.py": "22f9f84189c9999d1b365c682ce86a096758676ff6019f84b59cf41c38b954a9",
+    "src/hestiarelay/aws_probe.py": "5d87fc47ed1348ebe27e5eab5918b674a91ec081f2664f5b9372925053b9f050",
+    "src/hestiarelay/bedrock.py": "4d03829f9d29973640c347fb54ee5e18c71267b7f36bbcc8923e6d9afc10b92d",
+    "src/hestiarelay/cloud_probe.py": "a97a33fc944c4e26f740ead3b3ea358bf63e7c422ee90fc8ce411a5759a286cb",
+    "src/hestiarelay/engine.py": "facb5687313481e82767ff745b805e28302644d9b51d3a92ab1271f05ff9cb38",
+    "src/hestiarelay/models.py": "2fe21ca2e1032aff1fbdb98dc8d34ca488c5f56d0c201bec576353f9a6e84646",
+    "src/hestiarelay/recovery.py": "097a1f5305389a0ea3566eb85b6c68ff15ccb2d848610bcf76c954d920d5445b",
+    "src/hestiarelay/server.py": "532353bdccf292e86aaf02e6e4425e96cabf96bfb5c7a37433bddc08ef7552be",
+    "src/hestiarelay/service.py": "c6000fa38932a790cf581220a29f596ba4c3cb2f5a5652d0677fe0bdecb317fd",
+    "src/hestiarelay/store.py": "5f822d66ec234debc4432ed623fae8d82d04fa1d8f505e250e47377ddf0c2dad",
+    "src/hestiarelay/web.py": "0e719538217a466f8ae28b55cfbdd5161b7fb789a05cc34810db5db87aaac55a"
+  },
+  "required_surface": {
+    "uid": 10001,
+    "mount_absent": true,
+    "nsenter_absent": true,
+    "infocmp_absent": true,
+    "perl_absent": true,
+    "homed_absent": true,
+    "lzma_binding_absent": true,
+    "privileged_libraries_unloaded": true,
+    "capabilities_zero": true,
+    "no_new_privileges": true
+  },
+  "findings": {
+    "CVE-2026-76642": {
+      "packages": {
+        "bsdutils": "1:2.41.5-0+deb13u1",
+        "libblkid1": "2.41.5-0+deb13u1",
+        "liblastlog2-2": "2.41.5-0+deb13u1",
+        "libmount1": "2.41.5-0+deb13u1",
+        "libsmartcols1": "2.41.5-0+deb13u1",
+        "libuuid1": "2.41.5-0+deb13u1",
+        "login": "1:4.16.0-2+really2.41.5-0+deb13u1",
+        "mount": "2.41.5-0+deb13u1",
+        "util-linux": "2.41.5-0+deb13u1"
+      },
+      "reason": "The vulnerable mount CLI is removed. Non-root, zero capabilities and no-new-privileges are verified. No mount/helper operation is exposed by the service.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-76642"
+    },
+    "CVE-2026-78408": {
+      "packages": {
+        "bsdutils": "1:2.41.5-0+deb13u1",
+        "libblkid1": "2.41.5-0+deb13u1",
+        "liblastlog2-2": "2.41.5-0+deb13u1",
+        "libmount1": "2.41.5-0+deb13u1",
+        "libsmartcols1": "2.41.5-0+deb13u1",
+        "libuuid1": "2.41.5-0+deb13u1",
+        "login": "1:4.16.0-2+really2.41.5-0+deb13u1",
+        "mount": "2.41.5-0+deb13u1",
+        "util-linux": "2.41.5-0+deb13u1"
+      },
+      "reason": "The vulnerable nsenter CLI is removed. No privileged cgroup/namespace operator or inherited cgroup descriptor is used by the service.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-78408"
+    },
+    "CVE-2026-78409": {
+      "packages": {
+        "bsdutils": "1:2.41.5-0+deb13u1",
+        "libblkid1": "2.41.5-0+deb13u1",
+        "liblastlog2-2": "2.41.5-0+deb13u1",
+        "libmount1": "2.41.5-0+deb13u1",
+        "libsmartcols1": "2.41.5-0+deb13u1",
+        "libuuid1": "2.41.5-0+deb13u1",
+        "login": "1:4.16.0-2+really2.41.5-0+deb13u1",
+        "mount": "2.41.5-0+deb13u1",
+        "util-linux": "2.41.5-0+deb13u1"
+      },
+      "reason": "The vulnerable mount CLI is removed. The service has no fstab/subdirectory mount interface and runs without capabilities or privilege escalation.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-78409"
+    },
+    "CVE-2026-78410": {
+      "packages": {
+        "bsdutils": "1:2.41.5-0+deb13u1",
+        "libblkid1": "2.41.5-0+deb13u1",
+        "liblastlog2-2": "2.41.5-0+deb13u1",
+        "libmount1": "2.41.5-0+deb13u1",
+        "libsmartcols1": "2.41.5-0+deb13u1",
+        "libuuid1": "2.41.5-0+deb13u1",
+        "login": "1:4.16.0-2+really2.41.5-0+deb13u1",
+        "mount": "2.41.5-0+deb13u1",
+        "util-linux": "2.41.5-0+deb13u1"
+      },
+      "reason": "The vulnerable mount CLI is removed. No SUID mount or fstab-controlled bind mount is available through the service.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-78410"
+    },
+    "CVE-2026-54369": {
+      "packages": {
+        "libacl1": "2.3.2-2+b1"
+      },
+      "reason": "libacl is not loaded by the service. No ACL pathname function or privileged filesystem operator is exposed; UID 10001, zero capabilities and no-new-privileges are verified.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-54369"
+    },
+    "TEMP-1147318-639065": {
+      "packages": {
+        "liblzma5": "5.8.1-1+deb13u1"
+      },
+      "reason": "The optional Python _lzma extension is removed; liblzma is not loaded. There is no XZ upload/extraction/decoder API in the fixed source/dependency scope. Upstream GHSA-5qpq-xqfv-j9pg remains open for the OS package; this is not a vendor fix claim.",
+      "reference": "https://security-tracker.debian.org/tracker/TEMP-1147318-639065"
+    },
+    "CVE-2025-69720": {
+      "packages": {
+        "libncursesw6": "6.5+20250216-2",
+        "libtinfo6": "6.5+20250216-2",
+        "ncurses-base": "6.5+20250216-2",
+        "ncurses-bin": "6.5+20250216-2"
+      },
+      "reason": "The affected analyze_string function belongs to the infocmp CLI; that executable is removed. ncurses library package matches are retained in the raw report.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2025-69720"
+    },
+    "CVE-2026-16742": {
+      "packages": {
+        "libsystemd0": "257.13-1~deb13u1",
+        "libudev1": "257.13-1~deb13u1"
+      },
+      "reason": "The affected systemd-homed daemon is absent. libsystemd/libudev are not loaded by the service; no homed-managed user or system-group API exists.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-16742"
+    },
+    "CVE-2026-9538": {
+      "packages": {
+        "perl-base": "5.40.1-6+deb13u1"
+      },
+      "reason": "The Perl interpreter entry points are removed. The service is Python and exposes no Perl archive extraction route.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-9538"
+    }
+  }
+}

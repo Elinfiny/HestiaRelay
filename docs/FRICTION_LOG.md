@@ -105,3 +105,24 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
 - **Evidence:** [Machine evidence](evidence/bedrock-20260912.json),
   [reviewed original log](evidence/bedrock-20260912.log.txt).
 - **Status:** worked around; the single approved attempt succeeded.
+
+## F-005 — Browser runner has no video encoder by default
+
+- **Date:** 2026-09-13
+- **Area:** Tooling / GitHub Actions / demonstration capture
+- **Task attempted:** Encode the actual Playwright recording with English captions.
+- **Environment:** GitHub-hosted Ubuntu browser job, Python 3.12.14,
+  Playwright 1.62.0; the cloud editing executor separately had FFmpeg installed.
+- **Steps:** Run the real three-session/consent/restart/MCP sequence, then invoke
+  FFmpeg to encode the captured WebM as an MP4 with a separate caption band.
+- **Expected:** The encoder is available to the recording script.
+- **Actual:** UI and MCP interactions succeeded; encoding raised
+  `FileNotFoundError: ffmpeg` in CI 34743407436, browser job 103686835298.
+- **Severity:** medium, demonstration packaging only.
+- **Workaround:** Explicitly install FFmpeg in the browser job. CI 34743686022
+  produced an 87.68-second video and passed browser validation. Visual review
+  then corrected caption font size; no application-response substitution occurred.
+- **Suggestion:** Declare media encoder dependencies separately from browser
+  dependencies and verify the exact execution environment before recording.
+- **Evidence:** `scripts/record_demo.py`, CI workflow, archived raw recording.
+- **Status:** resolved; final candidate review remains a separate gate.

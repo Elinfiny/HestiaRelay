@@ -6,7 +6,7 @@ HestiaRelay is being built for the **Alexa+ track** of the 2026 Amazon Developer
 
 ## Core scenario
 
-> “We’re having six people over Friday evening.”
+> “We’re having six people over Friday evening, budget $120.”
 
 HestiaRelay turns that intent into a durable household workflow: guest count, budget, preferences, reminders, preparation tasks, and proposed purchases remain available across later sessions. Low-risk planning can continue automatically; sensitive operations are surfaced as explicit approval gates.
 
@@ -25,7 +25,7 @@ The goal is continuity, not another single-turn chatbot.
 - **Primary track:** Alexa+
 - **Runtime surface:** self-hosted MCP server using **Streamable HTTP**
 - **MCP requirement:** compatible with the hackathon minimum specification baseline **2025-11-25**
-- **AWS Builder target:** Amazon Bedrock at runtime, followed by AgentCore/Strands integration where it materially improves the product
+- **AWS Builder target:** demonstrated Amazon Bedrock runtime; AgentCore/Strands remain optional evaluations
 - **Open Source target:** public repository with MIT license and hackathon-window contribution history
 - **Submission language:** English
 
@@ -173,7 +173,12 @@ HestiaRelay keeps competition evidence in the repository from the start:
 
 ## Status
 
-**Phase 1 complete; live Bedrock proof verified.** One authorized Nova Micro
+**Continuity, MCP/container interoperability, authenticated judge mode and state recovery implemented; scoped release audit and demonstration candidate validated.**
+See the [judge evidence map](docs/JUDGE_EVIDENCE_MAP.md) and
+[reviewed release receipt](docs/evidence/release-20260913.json) for evidence and
+remaining gates. The 87.84-second captioned video is a draft awaiting final visual approval.
+
+**Historical live Bedrock proof verified.** One authorized Nova Micro
 Converse call ran through the real repository adapter in a dedicated CodeBuild
 role on 2026-09-12: 222 input tokens, 230 output tokens, 1,114.44 ms. All 83 tests
 passed in AWS with 98.86% application coverage. The temporary resources were

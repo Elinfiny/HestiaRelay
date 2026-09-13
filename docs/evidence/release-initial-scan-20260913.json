@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "captured_utc": "2026-09-13T06:44:41.669271+00:00",
+  "source_commit": "36e0adc10897d0b4d05519e01dd60c411558957e",
+  "run_id": "34743407436",
+  "git_commits_scanned": 55,
+  "git_shallow": "false",
+  "image_id": "sha256:ff96861c5e265e6b976cd12eb08ed0a457a8d5da65c67947339af31ad48cfc3b",
+  "exit_codes": {
+    "history_secrets": 0,
+    "artifact_secrets": 0,
+    "python_advisories": 1,
+    "build_advisories": 1,
+    "npm_advisories": 0,
+    "image_scan": 0,
+    "sbom": 0
+  },
+  "aws_calls": 0,
+  "public_deployment": false,
+  "scope": "Known-advisory and secret scans, not proof of absence of vulnerabilities",
+  "image_finding_counts": {
+    "LOW": 105,
+    "HIGH": 57,
+    "MEDIUM": 107,
+    "UNKNOWN": 1,
+    "CRITICAL": 5
+  },
+  "artifact": {
+    "id": 10313422862,
+    "sha256": "ed4a45fe1ce405c9a931b8d9c4c40bb54b26b1ac8aec34cbbcec8a064fe2debe",
+    "verified_download": true,
+    "manifest_verified": true
+  },
+  "decision": "BLOCKED_PENDING_TARGETED_REMEDIATION",
+  "python_finding": "CVE-2025-71176 in pytest 8.4.2 (duplicate advisory records)",
+  "sbom_components": 151,
+  "public_judge_path": [
+    {
+      "url": "https://github.com/Elinfiny/HestiaRelay",
+      "status": 200,
+      "sha256": "d6bf382b0483e352ac38da869f1af7ae86264f432bf31044af58701422ebfcbd",
+      "authentication": "none"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Elinfiny/HestiaRelay/main/README.md",
+      "status": 200,
+      "sha256": "f96154aa54c38f0b127e7a24082869cca4736d805a404c3c4eedc015590494a9",
+      "authentication": "none"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Elinfiny/HestiaRelay/main/LICENSE",
+      "status": 200,
+      "sha256": "ce1d00937a6d9f698a76e7780f263903505942b3e464153983de66df14bea5a7",
+      "authentication": "none"
+    }
+  ]
+}

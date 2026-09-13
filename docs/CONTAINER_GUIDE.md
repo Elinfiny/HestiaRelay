@@ -28,9 +28,10 @@ host are not mounted. The build context allowlists application source/static
 assets, the dependency lock, Dockerfile and license. AWS configuration is empty
 by default, and EC2 metadata credential lookup is disabled.
 
-Python dependencies use the already validated `requirements-proof.txt`. The
-official Python base is pinned by version and the content digest observed in the
-first CI build. Each run records that reference and its final image ID; build
+Python runtime dependencies use `requirements-runtime.txt` (32 pinned packages).
+Proof/development dependencies remain in `requirements-proof.txt`; pytest and pip
+are absent from the runtime image. The official Python 3.12.14 Trixie base is
+pinned by version and the content digest observed during the release audit. Each run records that reference and its final image ID; build
 timestamps can still differ, so byte-identical rebuilds are not claimed.
 Inspector 2.6.0 is pinned separately;
 its resolved npm lock is included in the CI artifact.
@@ -40,7 +41,9 @@ its resolved npm lock is included in the CI artifact.
 The `container-judge` CI job starts real containers with a fresh named volume,
 performs three separate MCP sessions, recreates the container between sessions,
 checks exact approve/reject decisions, then recreates it again to verify the
-consent state. It checks hostile Host/Origin rejection and non-root/read-only
+consent state. It also backs up and restores the real database with the image's
+SQLite library, then opens the restored file in a new container and checks the
+complete state. It checks hostile Host/Origin rejection and non-root/read-only
 configuration. No tool response or browser request is intercepted.
 
 The official MCP Inspector CLI performs initialization, strict tool listing and
@@ -53,7 +56,7 @@ Download the `container-judge` artifact from the relevant Actions run for
 container logs and browser screenshots/traces. An in-progress job is not PASS.
 The original Python process/browser and pinned AWS-proof jobs still run.
 
-Verified run: [34719571606](https://github.com/Elinfiny/HestiaRelay/actions/runs/34719571606),
+Historical Phase 3 run: [34719571606](https://github.com/Elinfiny/HestiaRelay/actions/runs/34719571606),
 all four jobs PASS. The [durable result](evidence/container-20260912.json)
 records the actual PR merge checkout, image digest, protocol, browser results
 and artifact hash. The downloaded ZIP passed SHA-256, CRC, path and browser
@@ -74,3 +77,12 @@ storage, validation and approval boundaries for the next implementation package.
 References checked 2026-09-12:
 [official Python image definitions](https://github.com/docker-library/official-images/blob/master/library/python),
 [MCP Inspector CLI smoke guide](https://github.com/modelcontextprotocol/inspector/blob/main/docs/cli-smoke-testing.md).
+
+The [release audit](RELEASE_AUDIT.md) describes the newer source/image scans and
+remediation; its current outcome is tracked in [WORK_STATE](WORK_STATE.md).
+
+The release image intentionally omits mount/nsenter/infocmp, Perl interpreter
+entry points and the optional Python LZMA extension. They are unnecessary for
+HestiaRelay's supported interface. Do not use this container as a general shell,
+package installer or archive-processing environment. Exact OS fixes and expiring
+component-applicability decisions are documented in the release audit.
