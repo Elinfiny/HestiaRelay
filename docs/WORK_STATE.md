@@ -1,24 +1,24 @@
 # HestiaRelay work state
 
-Canonical main SHA: `0515cf10128c4e2819f5f9f6b039a9ecfa4ca78d`.
-Post-merge CI [34747092355](https://github.com/Elinfiny/HestiaRelay/actions/runs/34747092355)
-SUCCESS: all four jobs. Main ref and logs read back on 2026-09-13.
-PR #17 merged after final PR CI 34746902549 passed all four jobs. Issue #16
-remains open for publication and final submission. Phase 4B PR #15 and Issue #14
-remain completed at their original source.
-PR #18 is still open. Its earlier head `3068bcdaa7042a0541a9f391cf58742c2286cb13`
-passed all four jobs in CI 34748295910. Merge-connector requests failed, and a
-separate authenticated GitHub merge UI returned a server-response error. Main
-remains unchanged; no post-merge result is claimed. This continuation updates
-that same feature branch with actual publication evidence and a bounded playback
-check, which must receive its own CI results.
-This next-package checkpoint is on `feature/submission-publication-v1` and does
-not claim its own future commit hash as canonical main.
+Canonical main SHA at this checkpoint:
+`9b41158373dd89d34fc4e9ef41c3be8d48a43a9d` (PR #18).
+Exact merged head: `081d288591a21f0b4905cdb75aadecd1e71781a5`;
+main before merge: `0515cf10128c4e2819f5f9f6b039a9ecfa4ca78d`.
+PR/main readbacks confirmed the ordinary expected-head merge at
+2026-09-13T22:15:08Z. Post-merge
+[CI 34786227088](https://github.com/Elinfiny/HestiaRelay/actions/runs/34786227088)
+is SUCCESS: all four jobs at this exact merge SHA, independently read back.
+Issue #16 remains OPEN for eligibility and final submission. Phase 4B PR #15
+and Issue #14 remain completed at their original source.
+This documentation-only follow-up is on `feature/publication-evidence-closeout-v1`;
+its own final head, merge SHA and post-merge CI will be recorded in Issue #16.
+No self-referential future commit hash or future CI result is claimed here.
 
 ## Current phase
 
 **Phase 4B complete within its scoped release-audit and draft-video remit.**
-**Phase 5 started: submission rehearsal and final visual decision, Issue #16.**
+**Phase 5: public video published, human playback confirmed, PR #18 merged;
+final submission remains incomplete, Issue #16.**
 The English rehearsal checklist and factual product-feedback notes are prepared.
 The owner accepted the presented video on 2026-09-13 after the coverage
 clarification. The unchanged file and approval scope are preserved in
@@ -27,6 +27,15 @@ or video field is edited.
 
 ## Completed gates
 
+- PR #18 CI [34749218708](https://github.com/Elinfiny/HestiaRelay/actions/runs/34749218708),
+  attempt 2: all four jobs SUCCESS at exact head `081d288`.
+- Complete public-video playback and readable English text: **human-reported
+  PASS** by the owner, signed out in Brave. The exact question/answer, method
+  authorization and evidence limits are in the
+  [playback receipt](evidence/video-playback-20260913.json).
+- Hosted playback run 34749218515 attempt 2 remains **FAILURE / BLOCKED by
+  YouTube's actual bot gate**, not a fifth successful job. The original JSON,
+  screenshot, source SHA and failed result are retained; no bypass or retry.
 - Final PR CI 34744985406 and main CI 34745237742: all four jobs SUCCESS.
 - Ruff PASS; 150 tests PASS; 98.11% meaningful application coverage, both local
   and main CI. The known Starlette/AnyIO deprecation warning is not a test failure.
@@ -40,14 +49,14 @@ or video field is edited.
   no physical-device, screen-reader or full manual-interaction certification.
 - Source-bound runtime/build/proof Python and Inspector/npm advisory scans,
   image/SBOM/notices, full Git history and artifact secret checks completed.
-  Main history contains 60 scanned commits; one exact historical source-hash
+  The Phase 4B main history scan covered 60 commits; one exact historical source-hash
   false positive is documented in the narrow Gitleaks ignore entry.
 - Phase 4B main image: `sha256:072afddba77b5f5a4f09ed1e8d163592f57643b9c3b8c8879449604c400a2ac0`.
   Phase 4B main artifacts: container 10312644689, browser 10314305185, validation
   10313654525. Their GitHub-reported identities are recorded in Issue #14;
   they do not replace the separately downloaded and visually reviewed candidate.
 - Anonymous repository/README/license access PASS. CI video downloads can
-  require authentication; public video playback is a separate outstanding gate.
+  require authentication; they do not replace the separate public human viewing.
 
 ## Audit limits that must persist
 
@@ -106,8 +115,8 @@ Secure Google sign-in completed through the native credential flow; the selected
 YouTube channel is **Tomescu Marius**. No credential values were read or stored.
 The owner explicitly approved uploading and publishing the exact recording,
 including the YouTube Terms of Service and Community Guidelines acknowledgment.
-That approval is consumed for one upload and remains valid for publishing that
-same video; it does not authorize a duplicate upload or unrelated changes.
+That approval is consumed for the single upload and Public publication;
+it does not authorize a duplicate upload or unrelated changes.
 
 **The same upload `_YTQcGxBMrA` is now published Public.** After the owner's
 exact Studio-reopening approval, the saved draft/metadata were recovered and
@@ -116,16 +125,21 @@ channel Content read back Public / Published Sep 13, 2026. The watch page has
 the matching title/channel and a 1:28 duration. Original source hashes remain
 unchanged. See the [publication receipt](evidence/video-publication-20260913.json).
 
-F-006 is resolved for this continuation. Complete playback remains unverified:
-the cloud watch media stayed at 0:00 / readyState 0 after ordinary interaction.
-This is not evidence of successful streaming or a confirmed site bot block.
-One fresh-context, signed-out GitHub Actions check is prepared; it stops on
-actual site gates and preserves its result. PR #18 merge is independently
-blocked by server-response errors from both the connector and GitHub UI.
+F-006 and PR #18's merge-route failure F-007 are resolved for this continuation.
+GitHub Support reconciled the two stuck runs; one permitted re-run per run
+produced actual jobs. The four CI jobs passed. The hosted playback job failed
+on an actual YouTube bot gate (F-010); the earlier authenticated browser's 0:00
+observation (F-008) is a separate, still-unremediated limitation.
 
-Complete signed-out playback, final submission
-materials, private owner eligibility/representation and refreshed final audits
-remain later submission gates. These are pending/unknown, never silently PASS.
+The owner then approved human playback as the replacement evidence method and
+explicitly confirmed complete signed-out viewing in Brave with readable English
+text. This satisfies that scoped gate, not automated streaming telemetry or
+independent third-party certification. Public selectable captions are not
+separately confirmed. The completed recovery watcher is disabled; no continuous
+background execution or additional media retry is promised.
+
+Final submission materials, private owner eligibility/representation and
+refreshed final audits remain gates. These are pending/unknown, never silently PASS.
 Personal information must not be written to the public repository.
 
 ## Next executable package
@@ -135,8 +149,13 @@ Personal information must not be written to the public repository.
 [product feedback preparation](PRODUCT_FEEDBACK.md), and existing
 [judge evidence map](JUDGE_EVIDENCE_MAP.md).
 The [story](SUBMISSION_STORY.md) and [video publication package](VIDEO_PUBLICATION.md)
-are prepared from the stable implementation. Run and inspect the bounded public
-playback check, preserve its real outcome, finish PR #18 after its current gates
-pass and the merge route recovers, then verify post-merge main CI.
-No new upload/terms approval or duplicate upload is needed. Keep Devpost fields untouched until final
-materials are stable, audited and within the owner's publication authority.
+are prepared from the stable implementation. Complete this documentation-only
+closeout with its own CI and guarded merge; verify its post-merge main CI.
+Then rehearse the complete judge-facing package against the current source,
+refresh expiring security applicability before submission, and separate the
+remaining private eligibility/final-publication gates from technical readiness.
+English narration is an editorial recommendation only; the silent accepted
+recording and its URL remain unchanged. Any actual replacement needs an exact
+review/publication decision. No new AWS operation, media retry or duplicate
+upload is needed. Keep Devpost fields untouched until the final package is
+stable, audited and within the owner's publication authority.

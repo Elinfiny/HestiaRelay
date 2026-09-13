@@ -1,7 +1,8 @@
 # Video publication package
 
 Updated 2026-09-13. This package records an accepted visual candidate and exact
-publication metadata. **Published Public on YouTube; full playback unverified.**
+publication metadata. **Published Public; complete signed-out playback is
+human-confirmed in Brave. The hosted automated playback check remains blocked.**
 Devpost story/video fields remain untouched.
 
 ## Accepted input
@@ -22,8 +23,9 @@ Verified target: **Tomescu Marius**, public channel ID
 `UCFNZRod5B5_zl5U2C6UbBGg`, through YouTube Studio after secure sign-in.
 The owner explicitly responded **“Aprob”** to uploading and publishing the
 unchanged recording on this channel, including the upload dialog's YouTube
-Terms of Service and Community Guidelines acknowledgment. That permission
-remains valid; no repeated publication or contractual approval is needed.
+Terms of Service and Community Guidelines acknowledgment. That exact approval
+was consumed by the single upload and publication; it is not permission for
+another upload or a replacement recording.
 
 YouTube created video ID **`_YTQcGxBMrA`** and displayed
 `https://youtu.be/_YTQcGxBMrA`. After the owner approved reopening Studio with
@@ -40,19 +42,33 @@ with the matching title and channel. The
 [publication receipt](evidence/video-publication-20260913.json) records these
 effects separately from the historical private-[upload receipt](evidence/video-upload-20260913.json).
 
-The cloud watch player remained at 0:00 with no loaded media after ordinary
+The initial authenticated cloud watch player remained at 0:00 with no loaded media after ordinary
 Play interaction. Its media element reported readyState 0 and no media error;
 the underlying cause is unknown. The page's title, duration and Public status
 do not prove complete playback. No bot challenge or service outage is inferred.
 The supplemental caption track is confirmed saved in Studio; public selectable
 caption availability remains unverified. The MP4's burned-in captions remain.
 
-`scripts/verify_public_video.py` prepares one ordinary, fresh-context Chromium
-check in GitHub Actions with no account cookies or credentials. It checks
-signed-out UI, the exact URL/title, continuous playback without seeking and
-hosted duration, preserving actual JSON and screenshots on failure as well as
-success. Explicit site gates stop it without sign-in, retries or evasion.
-Its result is pending and must not be replaced with publication metadata.
+The separate fresh-context Chromium check actually ran in
+[34749218515, attempt 2](https://github.com/Elinfiny/HestiaRelay/actions/runs/34749218515)
+after GitHub Support reconciled the stuck first attempt. It **FAILED / BLOCKED**
+at YouTube's actual "Sign in to confirm you're not a bot" challenge, at 0:00,
+without sign-in, retry, seeking or evasion. Its JSON and screenshot are retained;
+this result is not successful playback and is distinct from the earlier
+authenticated cloud observation, which displayed no challenge.
+
+The owner explicitly approved a separate human observation as the replacement
+acceptance method for this PR and video, then reported viewing it in **Brave**.
+When asked whether they watched to the end without signing in to YouTube and
+whether the English texts were readable, they quoted that question and answered
+**"DA" (YES)**. The scoped gate is **PASS, human-reported**. This is not automated
+media telemetry, independent third-party assurance, or a claim that the failed
+workflow is green. Exact viewing time, browser version, device and measured
+played ranges were not supplied. The
+[playback receipt](evidence/video-playback-20260913.json) binds the factual account,
+owner-approved method, original video identity and failed automated evidence.
+The supplemental selectable caption track remains unverified; readable English
+text in the video was confirmed. No further playback workflow was requested.
 
 YouTube also displayed a channel-verification requirement for clickable external
 description links. Text URLs are saved, but clickability is not claimed. No
@@ -116,9 +132,20 @@ endorsement or an award.
 5. Use the approved public-video route required by the
    [competition rules](https://amazonappdev2026.devpost.com/rules), checked
    2026-09-13. Preserve the actual video ID, URL and destination readback.
-6. Verify signed-out playback, the complete sequence, English captions and
-   duration. Record that hosted transcoding changes bytes; distinguish source
-   SHA-256 integrity from visual/playback identity of the hosted video.
-7. Update the issue and submission inventory only after these checks pass.
+6. Completed under the owner's explicit replacement method: human-reported
+   viewing to the end while signed out, with readable English text. The original
+   source is 87.84 seconds; no measured streamed duration or byte-identity claim
+   is made. The hosted automated result remains FAILURE / BLOCKED.
+7. The actual account is recorded in Issue #16 and the submission inventory.
    A local file, CI artifact link or upload-success message alone does not prove
    public playback. Devpost fields require the completed, audited final package.
+
+## Audio recommendation, not a replacement authorization
+
+English narration synchronized with the real demonstration is a recommended
+presentation improvement; the current accepted recording remains silent.
+The owner's audio question and playback confirmation do not authorize a new
+render or publication. Preserve this accepted source and URL. Any later approved
+replacement must be separately identified, reviewed and verified before use,
+retain readable captions, and never imply live Alexa+ or AWS execution that the
+recording does not demonstrate.

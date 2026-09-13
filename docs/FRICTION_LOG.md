@@ -175,6 +175,12 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
 - **Evidence:** PR #18, head 3068bcdaa7042a0541a9f391cf58742c2286cb13,
   CI 34748295910; Issue #16 records the later publication separately.
 - **Status:** open; underlying cause unknown, no GitHub-wide outage inferred.
+- **Later result:** resolved for PR #18 at 2026-09-13T22:15:08Z. One ordinary
+  connector merge with expected head `081d288591a21f0b4905cdb75aadecd1e71781a5`
+  succeeded after the current gates passed under the owner's explicit human
+  playback method. Independent PR/main reads confirm merge
+  `9b41158373dd89d34fc4e9ef41c3be8d48a43a9d`. No protection or permission changed;
+  this does not establish the cause of the earlier server errors.
 
 ## F-008 — Public watch metadata loads but cloud media does not start
 
@@ -193,3 +199,55 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
 - **Evidence:** [Publication receipt](evidence/video-publication-20260913.json),
   `scripts/verify_public_video.py`.
 - **Status:** open; neither successful playback nor a site outage is inferred.
+- **Later disposition:** this original cloud-browser limitation remains
+  unremediated. A different hosted observation encountered an explicit bot gate
+  (F-010). The owner-approved human verification subsequently passed in Brave;
+  it is an alternative source of evidence, not a repair of this browser.
+
+## F-009 — GitHub Actions remains queued without creating jobs
+
+- **Date:** 2026-09-13
+- **Area:** GitHub Actions dispatch / supported recovery
+- **Task attempted:** Validate exact PR #18 head `081d288` using its existing
+  CI and public-playback workflows.
+- **Steps:** Inspect runs 34749218708 and 34749218515 after their 09:16:11 UTC
+  creation. Compare REST and UI, jobs, artifacts and pending approvals. Request
+  ordinary cancellation exactly once per run, then reconcile the results.
+- **Expected:** The existing runs create jobs or reach a truthful terminal state.
+- **Actual:** Both stayed QUEUED, attempt 1, with zero jobs/artifacts for hours.
+  Both cancellation controls reported failure; REST remained QUEUED. No
+  application or playback result existed at this stage.
+- **Severity:** blocker for this package's validation.
+- **Workaround:** One existing support ticket, #4754431, requested reconciliation.
+  An engineer reported marking both complete on the backend; separate REST/UI
+  reads confirmed completed/cancelled before one owner-authorized full re-run
+  per existing run. Attempt 2 created jobs. CI passed four jobs; the separate
+  playback failure is F-010. No force-cancel, trigger commit or repeated re-run.
+- **Suggestion:** Expose orphaned-dispatch state and a reliable terminal-state
+  reconciliation instead of leaving a QUEUED record without diagnostic jobs.
+- **Evidence:** Issue #16 recovery comments and the two public run histories.
+  Private support account/contact data is intentionally excluded.
+- **Status:** queue recovery resolved; GitHub's internal root cause was not
+  demonstrated. The generic initial support suggestion was not engineer evidence.
+
+## F-010 — YouTube blocks the fresh hosted playback check
+
+- **Date:** 2026-09-13
+- **Area:** Public video verification from a GitHub-hosted Chromium browser
+- **Task attempted:** Observe the same approved public video completely while
+  signed out, without imported browser state.
+- **Steps:** Execute the existing bounded verifier in run 34749218515 attempt 2.
+  Inspect its actual result JSON and final-page screenshot.
+- **Expected:** Ordinary complete playback, or an honest stop at an access gate.
+- **Actual:** YouTube displayed "Sign in to confirm you're not a bot". The
+  verifier stopped at 0:00 with no played range and recorded BLOCKED. HTTP 200
+  and Public metadata were not substituted for playback.
+- **Severity:** blocker for this automated evidence method only.
+- **Workaround:** No automated bypass attempted. The owner explicitly authorized
+  human verification, then confirmed signed-out viewing to the end in Brave with
+  readable English text. The failed workflow remains failed; its stop is intact.
+- **Suggestion:** Provide a supported, credential-free way to verify public
+  demonstration availability without requiring bot-challenge evasion.
+- **Evidence:** [Playback receipt](evidence/video-playback-20260913.json), artifact
+  10325769333, original result JSON and screenshot hashes.
+- **Status:** automated route remains blocked; scoped human evidence accepted.
