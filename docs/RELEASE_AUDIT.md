@@ -130,3 +130,13 @@ They do not authorize public deployment, new subprocess/native-library routes,
 untrusted code execution or different runtime privileges. Medium/low OS records
 remain visible for reassessment with future vendor updates. This bounded scope
 is sufficient only for the fictional local/cloud-CI demonstration candidate.
+
+## Secret-scanner false positive, narrowly resolved
+
+CI 34744445964 flagged `release-applicability.json` line 10 as `generic-api-key`.
+The value is the SHA-256 of public `src/hestiarelay/access.py`, independently
+recomputed from that file and checked by the release gate. It is not a credential.
+`.gitleaksignore` records only the exact historical commit/path/rule/line
+fingerprint. It does not suppress this file, hash patterns, later commits or any
+actual secret. The original redacted finding remains in artifact 10313444442;
+its downloaded archive and report manifest were verified before classification.

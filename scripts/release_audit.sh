@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CI-only release audit. No AWS commands, credentials, automatic fixes or allowlists.
+# CI-only release audit. No AWS commands, credentials, automatic fixes or blanket allowlists.
 set -euo pipefail
 out=qa-artifacts/release
 mkdir -p "$out" /tmp/hestia-audit-bin
