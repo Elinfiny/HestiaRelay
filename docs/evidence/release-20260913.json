@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "phase": "4B",
+  "scope": "Validated fictional-household release and demonstration candidate, not public deployment or a zero-CVE image",
+  "ci_run_id": 34744690053,
+  "ci_conclusion": "success",
+  "all_four_jobs": "PASS",
+  "feature_head": "5c57917395adf3b247c77f06dcf9338557e826fe",
+  "actual_pr_merge_checkout": "fae4f056d7d140d04958ce6e29b2ac339227eaa1",
+  "tests": 150,
+  "application_coverage_percent": 98.11,
+  "ruff": "PASS",
+  "image_id": "sha256:d32ff2e0dac7208b99b798d49798400bb9e6e1307efc05a4022c4049d8aa128f",
+  "scanner_exit_codes": {
+    "history_secrets": 0,
+    "artifact_secrets": 0,
+    "python_advisories": 0,
+    "build_advisories": 0,
+    "npm_advisories": 0,
+    "image_scan": 0,
+    "sbom": 0
+  },
+  "git_commits_scanned": 59,
+  "image_records_by_severity": {
+    "LOW": 57,
+    "HIGH": 44,
+    "MEDIUM": 48,
+    "UNKNOWN": 1
+  },
+  "remaining_vendor_fix_available_records": 0,
+  "scoped_not_reachable_records": 45,
+  "scoped_not_reachable_identities": 9,
+  "blocking_findings": [],
+  "applicability_expires": "2026-09-27",
+  "runtime_surface": {
+    "uid": 10001,
+    "mount_absent": true,
+    "nsenter_absent": true,
+    "infocmp_absent": true,
+    "perl_absent": true,
+    "homed_absent": true,
+    "lzma_binding_absent": true,
+    "privileged_libraries_unloaded": true,
+    "capabilities_zero": true,
+    "no_new_privileges": true
+  },
+  "sbom_components": 124,
+  "upstream_notices": 158,
+  "container_artifact": {
+    "id": 10313706366,
+    "sha256": "1f99af28ed57f2f9a4c1d5256278ad82db795fd8f29dca5cb9b72ceead32872c"
+  },
+  "browser_artifact": {
+    "id": 10313078678,
+    "sha256": "5596fb5588fa537fe34e94916f92aa8cdc24db935e9c34dd5ff851086cbc65e3"
+  },
+  "artifact_integrity": "Both ZIP digests, CRC, safe paths and all inner manifest hashes verified",
+  "visual_review": "Actual session/restart/approve/reject/MCP video frames and mobile continuity inspected; final candidate session-three/MCP frames rereviewed. No full manual interaction or screen-reader certification claimed.",
+  "demo": {
+    "source_commit": "fae4f056d7d140d04958ce6e29b2ac339227eaa1",
+    "run_id": "34744690053",
+    "encoder": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "duration_seconds": 87.84,
+    "status": "DRAFT_FOR_OWNER_VISUAL_REVIEW",
+    "audio": "none; English captions",
+    "canonical_sessions": 3,
+    "process_restart_state_equal": true,
+    "real_mcp_same_household": true,
+    "provenance": "deterministic",
+    "live_aws_calls": 0,
+    "external_actions": 0,
+    "live_alexa_connection": false,
+    "console_errors": [],
+    "failed_requests": [],
+    "video_sha256": "95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd"
+  },
+  "public_repository_path": [
+    {
+      "url": "https://github.com/Elinfiny/HestiaRelay",
+      "status": 200,
+      "sha256": "7ae23727b7ea53ff1142ca04df1488ec014a5e8d8393b33d4fcc554a0096c528",
+      "authentication": "none"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Elinfiny/HestiaRelay/main/README.md",
+      "status": 200,
+      "sha256": "f96154aa54c38f0b127e7a24082869cca4736d805a404c3c4eedc015590494a9",
+      "authentication": "none"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Elinfiny/HestiaRelay/main/LICENSE",
+      "status": 200,
+      "sha256": "ce1d00937a6d9f698a76e7780f263903505942b3e464153983de66df14bea5a7",
+      "authentication": "none"
+    }
+  ],
+  "owner_visual_approval": "PENDING",
+  "devpost_fields_edited": false,
+  "new_aws_calls": 0,
+  "post_merge_delivery_receipt": "Issue #14 after main CI readback"
+}

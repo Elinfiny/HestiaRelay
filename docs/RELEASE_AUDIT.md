@@ -86,9 +86,16 @@ source-availability requirements of its included OS components.
 
 ## Current result
 
-Candidate image scan, final artifact review and main CI remain pending at this
-checkpoint. No release-ready or vulnerability-free declaration is made here.
-The completed result belongs in the dated machine receipt and WORK_STATE.
+CI [34744690053](https://github.com/Elinfiny/HestiaRelay/actions/runs/34744690053)
+passed all four jobs. The [reviewed receipt](evidence/release-20260913.json)
+binds the source, image, all scans and selected 87.84-second candidate.
+There are no critical or vendor-fix-available records. Raw residuals remain:
+44 high and one unknown-severity record covered by nine exact scoped decisions,
+48 medium and 57 low records. This is not a zero-CVE or public-deployment
+attestation. The SBOM has 124 components; 158 upstream notice files supplement
+license inference, including all four library entries with missing inferred
+licenses. Final documentation CI and post-merge delivery are recorded in Issue
+#14; owner visual approval is still required for final submission publication.
 
 Primary tooling references, checked 2026-09-13:
 [Gitleaks](https://github.com/gitleaks/gitleaks),

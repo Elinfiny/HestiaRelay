@@ -173,8 +173,10 @@ HestiaRelay keeps competition evidence in the repository from the start:
 
 ## Status
 
-**Continuity, MCP/container interoperability, authenticated judge mode and state recovery implemented; release audit and demonstration candidate in progress.**
-See the [judge evidence map](docs/JUDGE_EVIDENCE_MAP.md) for proven behavior and remaining gates.
+**Continuity, MCP/container interoperability, authenticated judge mode and state recovery implemented; scoped release audit and demonstration candidate validated.**
+See the [judge evidence map](docs/JUDGE_EVIDENCE_MAP.md) and
+[reviewed release receipt](docs/evidence/release-20260913.json) for evidence and
+remaining gates. The 87.84-second captioned video is a draft awaiting final visual approval.
 
 **Historical live Bedrock proof verified.** One authorized Nova Micro
 Converse call ran through the real repository adapter in a dedicated CodeBuild

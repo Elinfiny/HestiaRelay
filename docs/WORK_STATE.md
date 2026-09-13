@@ -5,7 +5,8 @@ Post-merge CI [34721784644](https://github.com/Elinfiny/HestiaRelay/actions/runs
 SUCCESS: all four jobs. Main ref readback matches. PR #13 merged; Issue #12
 closed after validation. This Phase 4B checkpoint is on
 `feature/release-audit-v1`; PR #15 is open. Phase 4B container/toolchain
-remediation and the real demonstration candidate are under validation.
+remediation and the real demonstration candidate are validated in CI
+34744690053. Final documentation and merge/main readback are the delivery gates.
 
 Previous Phase 3 main: `e13cef9d3d7a0cd346e4ce59c1810db2e6e3b247`,
 CI 34720181231 SUCCESS; Issue #10 closed.
@@ -21,8 +22,8 @@ Issue #14 is the executable specification. The first source-bound inventory is
 container base identity, dependency constraints, Actions, Inspector and browser
 versions. The first completed scan and preserved failures are recorded in
 `docs/evidence/release-initial-scan-20260913.json`. `docs/RELEASE_AUDIT.md`
-records targeted remediation and the expiring applicability gate. Final PR/main
-CI and candidate integrity/visual review are still pending at this checkpoint.
+records targeted remediation and the expiring applicability gate. The complete scoped audit and candidate integrity/technical visual review
+are in `docs/evidence/release-20260913.json`; final publication needs owner approval.
 The judged runtime is one fictional household and one worker; public hosting,
 remote MCP authorization and complete release security remain separate gates.
 
@@ -143,22 +144,29 @@ untouched and no owner PC is required.
   pinned image base unchanged. This is not a complete vulnerability-free image
   attestation or public deployment review. Those gates remain explicit.
 
-## Phase 4B current checkpoint
+## Phase 4B validated delivery candidate
 
-- PR #15; initial source 0fc7a419804c50037ab5ce0df6d86f8196afdedf,
-  scan CI 34743407436 failed as intended on actual dependency/image findings.
-- Pytest CVE-2025-71176 fixed at 9.0.3; Python/build/npm advisory scans passed
-  in CI 34743686022. Full Git history and container-artifact secret scans passed.
-- Official Python 3.12.14 Trixie digest observed in CI, pinned in Dockerfile.
-  Runtime dependency closure reduced to 32 packages; package installer removed.
-- CI 34743936152 passed browser/demo, validation, cloud-proof-package and all
-  container functional/recovery checks, but image audit still blocked on OS
-  patches and component applicability. No unchanged failed run was retried.
-- Candidate video from CI 34743686022 is 87.68 seconds, real UI/MCP, English
-  captions, deterministic, zero AWS/external household actions. Its archive and
-  inner hashes were verified; caption placement was corrected in the next head.
-- Current local validation: Ruff PASS, 150 tests PASS, 98.11% application coverage.
-- Pending: verify exact Debian patches and runtime component-absence probes;
-  review final image/SBOM/notices and all demo artifacts; green PR and main CI.
-- Owner visual approval applies only to the concrete final video candidate;
-  Devpost fields remain untouched. No new AWS authorization is requested.
+- PR #15; feature head `5c57917395adf3b247c77f06dcf9338557e826fe`.
+  Actual test checkout `fae4f056d7d140d04958ce6e29b2ac339227eaa1`.
+  CI 34744690053 SUCCESS, all four jobs. Ruff PASS; 150 tests PASS;
+  98.11% application coverage; all MCP/Inspector/container/TLS/recovery gates PASS.
+- Complete scoped audit and reviewed artifacts:
+  [release receipt](evidence/release-20260913.json),
+  [audit scope and residuals](RELEASE_AUDIT.md).
+  No critical or vendor-fix-available records; nine exact applicability decisions
+  cover 44 high and one unknown-severity record, expiring 2026-09-27.
+  Medium/low OS residuals remain recorded; this is not a zero-CVE/public-hosting claim.
+- Full history (59 commits) and artifact secret scans PASS after one narrowly
+  documented source-hash false positive. Python/build/npm known-advisory scans PASS.
+  SBOM 124 components, 158 upstream notices, anonymous public repository path PASS.
+- Reviewed video: **87.84 seconds**, English captions, actual UI and MCP,
+  real restart and exact approve/reject; no new AWS or external household actions.
+  Browser artifact 10313078678; video SHA-256
+  `95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
+- Remaining delivery: final documentation CI, merge and post-merge main CI;
+  the exact post-merge SHA/run will be recorded in Issue #14 and the next
+  executable package checkpoint. The canonical main SHA at the top is the
+  read-back baseline before this feature is merged, not a self-referential hash.
+- Next package: submission rehearsal and final visual decision. The selected
+  candidate is ready for owner review. Final video publication, Devpost fields,
+  public hosting and new AWS operations remain unperformed.
