@@ -1,7 +1,7 @@
 # Video publication package
 
-Prepared 2026-09-13. This package records an accepted visual candidate and exact
-publication metadata. **No video has been uploaded or publicly published.**
+Updated 2026-09-13. This package records an accepted visual candidate and exact
+publication metadata. **Uploaded once and saved as private; not published.**
 Devpost story/video fields remain untouched.
 
 ## Accepted input
@@ -18,11 +18,32 @@ Devpost story/video fields remain untouched.
 
 ## Target and current gate
 
-Target: the owner's selected YouTube channel, through YouTube Studio.
-The cloud browser reached Google's account chooser on 2026-09-13; saved accounts
-were signed out. Account/channel selection and authentication are not inferred
-from a saved account name. Secure browser sign-in must establish the destination
-before any upload. No account identifier or credential is stored here.
+Verified target: **Tomescu Marius**, public channel ID
+`UCFNZRod5B5_zl5U2C6UbBGg`, through YouTube Studio after secure sign-in.
+The owner explicitly responded **“Aprob”** to uploading and publishing the
+unchanged recording on this channel, including the upload dialog's YouTube
+Terms of Service and Community Guidelines acknowledgment. That permission
+remains valid; no repeated publication or contractual approval is needed.
+
+YouTube created video ID **`_YTQcGxBMrA`** and displayed
+`https://youtu.be/_YTQcGxBMrA`. Its last observed state is **Saved as private**.
+The title and description below are saved; checks reported **No issues found**,
+and the preview showed **1:28**. These are upload observations, not public
+playback evidence. Do not upload another copy. The detailed
+[upload receipt](evidence/video-upload-20260913.json) preserves the effect state.
+
+The existing English-subtitles dialog is open. A click on its Upload file
+control was automatically rejected by browser review, citing navigation and
+possible loss of unsaved state, although the requested command contained no
+navigation. A read-only snapshot of that same tab was also rejected. No further
+browser action, alternate route, caption upload or Publish click was attempted.
+Resume only after this browser-access gate is resolved, preserving the existing
+video ID. The original burned-in English captions are already in the MP4;
+the additional selectable SRT track is not confirmed uploaded.
+
+YouTube also displayed a channel-verification requirement for clickable external
+description links. Text URLs are saved, but clickability is not claimed. No
+channel verification, identity expansion or new account was initiated.
 
 Connected-tool discovery found no direct YouTube/Vimeo upload tool. Directory
 results included analytics/social tools, none already connected for this route.
@@ -71,15 +92,15 @@ endorsement or an award.
 
 ## Upload and verification sequence
 
-1. Authenticate securely and inspect the actual channel destination. Do not
-   create a new channel or accept new terms implicitly.
-2. Rehash the accepted input immediately before upload. Upload only that file
-   and use the title/description above. Do not regenerate the video.
-3. Inspect the actual upload controls, audience questions, checks and visibility.
-   Resolve factual settings from the fictional software demonstration. Stop for
-   any new legal, financial or access-expansion gate. Do not purchase promotion.
-4. Confirm upload and processing results before any second attempt. An
-   interrupted response leaves the effect unknown until the channel is checked.
+1. Completed: secure sign-in, actual channel readback, exact contractual
+   authorization and source rehash before the single file selection.
+2. Completed: upload identity, saved title/description, factual audience settings,
+   English video language and successful YouTube checks. No new render is used.
+3. Pending: resolve the browser-access rejection without discarding the active
+   dialog or bypassing review. Read back this existing upload before resuming.
+   Add the unchanged timed SRT only if the dialog can be safely continued.
+4. Pending: inspect checks and visibility, then use the already-approved Public
+   setting and publish this video. Reconcile its actual state before any retry.
 5. Use the approved public-video route required by the
    [competition rules](https://amazonappdev2026.devpost.com/rules), checked
    2026-09-13. Preserve the actual video ID, URL and destination readback.

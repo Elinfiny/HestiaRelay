@@ -126,3 +126,30 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
   dependencies and verify the exact execution environment before recording.
 - **Evidence:** `scripts/record_demo.py`, CI workflow, archived raw recording.
 - **Status:** resolved; final candidate review remains a separate gate.
+
+## F-006 — Browser review blocks the active YouTube subtitle dialog
+
+- **Date:** 2026-09-13
+- **Area:** Cloud browser approval review / video publication tooling
+- **Task attempted:** Add the original timed English captions to the existing,
+  owner-authorized upload before publishing it.
+- **Environment:** Authenticated cloud YouTube Studio, existing upload wizard,
+  English-subtitles dialog; one uploaded video, last observed saved as private.
+- **Steps:** Click the observed Upload file button inside that dialog through
+  the existing tab handle. After rejection, request a read-only DOM snapshot
+  from that same handle, without navigation or reloading.
+- **Expected:** Interact with or inspect the current dialog without changing its
+  location. A rejection should identify the actual proposed action.
+- **Actual:** Automatic review rejected both operations as navigation to the
+  Studio origin that might discard unsaved upload/subtitle state. Neither
+  submitted command contained navigation. The reason for this mismatch is
+  unknown; it is not evidence of a YouTube or AWS service outage.
+- **Severity:** blocker for continuing this publication route only.
+- **Workaround:** None established. Stop browser interaction, preserve the video
+  ID and last confirmed state, and continue repository documentation. Do not
+  retry indirectly, create another upload or claim public playback.
+- **Suggestion:** Distinguish existing-tab DOM operations from navigation in
+  approval review and provide a supported recovery that preserves draft state.
+- **Evidence:** [Upload receipt](evidence/video-upload-20260913.json), Issue #16;
+  the upload-terms and publication authorization was already explicitly given.
+- **Status:** open; supplementary SRT upload and public publication unconfirmed.

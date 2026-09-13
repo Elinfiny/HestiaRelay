@@ -97,15 +97,26 @@ public application hosting or measured real-user impact. The project remains
 public MIT and supports fictional data with one worker/household.
 
 Secure Google sign-in completed through the native credential flow; the selected
-YouTube channel is **Tomescu Marius**. Fresh Content access succeeded. No
-credential values were read or stored. The upload dialog is open, but no file
-chooser has been submitted and **no upload has begun**.
+YouTube channel is **Tomescu Marius**. No credential values were read or stored.
+The owner explicitly approved uploading and publishing the exact recording,
+including the YouTube Terms of Service and Community Guidelines acknowledgment.
+That approval is consumed for one upload and remains valid for publishing that
+same video; it does not authorize a duplicate upload or unrelated changes.
 
-The immediate gate is action-time confirmation of the upload dialog's
-acknowledgment of YouTube Terms of Service and Community Guidelines. Browser
-control rules require confirmation at this contractual step. The exact action
-is uploading the unchanged accepted video to this channel and publishing it
-Public with the prepared metadata; no other channel setting or video is included.
+**One upload exists: `_YTQcGxBMrA`, last observed Saved as private.** Its saved
+title/description match the publication package. YouTube checks reported No
+issues found and the preview duration is 1:28. The English-subtitles dialog is
+open; adding the original selectable SRT was blocked before file selection.
+The MP4 already contains the original English caption band.
+
+The immediate blocker is browser automatic approval review. It rejected the
+existing-dialog Upload file click and a subsequent read-only snapshot, citing
+navigation and unsaved-state loss even though neither command requested
+navigation. Stop that route; do not retry through another surface. No Publish
+click was attempted and no public playback is claimed. Preserve the existing
+video ID and recheck state when access is safely restored. See the
+[upload receipt](evidence/video-upload-20260913.json) and friction F-006.
+
 Public YouTube/Vimeo publication and signed-out playback, final submission
 materials, private owner eligibility/representation and refreshed final audits
 remain later submission gates. These are pending/unknown, never silently PASS.
@@ -118,8 +129,9 @@ Personal information must not be written to the public repository.
 [product feedback preparation](PRODUCT_FEEDBACK.md), and existing
 [judge evidence map](JUDGE_EVIDENCE_MAP.md).
 The [story](SUBMISSION_STORY.md) and [video publication package](VIDEO_PUBLICATION.md)
-are prepared from the stable implementation. Obtain the upload dialog's exact
-contractual confirmation, then upload the accepted source only within the
-permitted route and verify its uploaded identity and anonymous playback. Continue ordinary
-technical work automatically. Keep Devpost fields untouched until final
+are prepared from the stable implementation. Resume the existing video after
+the browser-access gate is resolved, finish its Public publication under the
+existing authorization, then verify uploaded identity and anonymous playback.
+Do not request the same upload/terms approval again or upload a second copy.
+Continue ordinary technical work automatically. Keep Devpost fields untouched until final
 materials are stable, audited and within the owner's publication authority.

@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "observed_date_utc": "2026-09-13",
+  "status": "UPLOADED_PRIVATE_BROWSER_REVIEW_BLOCKED",
+  "canonical_main_at_upload": "0515cf10128c4e2819f5f9f6b039a9ecfa4ca78d",
+  "authorization": {
+    "owner_response": "Aprob",
+    "scope": "Upload and Public publication of the exact 87.84-second HestiaRelay recording on Tomescu Marius, including the YouTube Terms of Service and Community Guidelines acknowledgment",
+    "public_publication_already_authorized": true,
+    "duplicate_upload_authorized": false,
+    "paid_promotion_authorized": false,
+    "devpost_submission_authorized": false
+  },
+  "source": {
+    "original_run_id": 34744690053,
+    "original_browser_artifact_id": 10313078678,
+    "video_sha256": "95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd",
+    "video_rehashed_before_selection": true,
+    "duration_seconds": 87.84,
+    "burned_in_english_captions": true,
+    "original_draft_review_footer_preserved": true,
+    "supplementary_srt_sha256": "91b475d612668b19de9ecf2e8de8d1c46769e6459b4036ad646a59313ad0fb3f",
+    "supplementary_srt_matches_original_manifest": true,
+    "supplementary_srt_upload_confirmed": false
+  },
+  "destination": {
+    "channel_name": "Tomescu Marius",
+    "channel_id": "UCFNZRod5B5_zl5U2C6UbBGg",
+    "video_id": "_YTQcGxBMrA",
+    "observed_video_link": "https://youtu.be/_YTQcGxBMrA",
+    "public_playback_verified_url": null
+  },
+  "observations": {
+    "file_selections_for_video": 1,
+    "last_visibility_readback": "Saved as private",
+    "title_saved": "HestiaRelay | A household plan that survives the next conversation",
+    "description_saved_from": "docs/VIDEO_PUBLICATION.md",
+    "checks_readback": "Checks complete. No issues found.",
+    "preview_duration_readback": "1:28",
+    "video_language": "English",
+    "made_for_kids": false,
+    "paid_promotion": false,
+    "realistic_altered_content_disclosure_required_for_this_capture": false,
+    "automatic_chapters_places_concepts_enabled": false,
+    "external_description_links_clickable": false,
+    "external_link_verification_prompt_observed": true,
+    "channel_verification_started": false,
+    "active_dialog": "English subtitles",
+    "publish_clicked": false,
+    "public_playback_verified": false,
+    "signed_out_playback_verified": false
+  },
+  "blocker": {
+    "source": "Cloud browser automatic approval review",
+    "first_rejected_request": "Click Upload file within the existing English subtitles dialog",
+    "stated_reason": "Navigation to YouTube Studio during the active upload/subtitle workflow might discard unsaved state",
+    "requested_navigation": false,
+    "safer_followup": "Read-only DOM snapshot of the same existing tab",
+    "safer_followup_result": "Rejected as the same blocked navigation",
+    "cause_of_action_reason_mismatch": "UNKNOWN",
+    "further_browser_attempts_after_second_rejection": 0,
+    "alternate_surface_used_to_bypass_review": false,
+    "resume_guard": "Resolve access gate, read back existing video _YTQcGxBMrA, continue once under existing publication authorization; never upload a duplicate"
+  },
+  "devpost_fields_edited": false,
+  "new_aws_operations": 0,
+  "limits": [
+    "The observed video link is not proof of public availability",
+    "Saved metadata and successful checks do not prove publication",
+    "Source SHA-256 identifies original bytes, not YouTube transcoded bytes",
+    "No caption file chooser or Publish click was attempted after the rejection",
+    "No credential values, private account identifiers or unrelated browser contents are included"
+  ]
+}
