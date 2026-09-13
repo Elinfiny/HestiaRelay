@@ -5,7 +5,7 @@ HestiaRelay is developed against the four official judging criteria instead of t
 | Criterion | Target evidence | Implementation status | Exit gate |
 | --- | --- | --- | --- |
 | Technical Implementation | Real MCP over Streamable HTTP, runtime Alexa+ technology path, Amazon Bedrock call path, persistent continuity, tests, CI | MCP, persistence and simulator tested; one live Bedrock call verified | Live end-to-end MCP + AWS demo; cloud memory validated |
-| Design | Voice-first flow, visual continuity timeline, clear safe vs consent-gated states, understandable recovery | Responsive simulator implemented; Chromium QA and screenshot review PASS | Desktop/mobile Alexa+ simulation passes usability review |
+| Design | Guided text flow, visual continuity timeline, clear safe vs consent-gated states, understandable recovery | Responsive simulator implemented; Chromium QA and screenshot review PASS | Desktop/mobile Alexa+ simulation passes usability review |
 | Potential Impact | Household planning use case, repeat-session value, concrete target users, measurable time/coordination savings | Three-session scenario implemented; user impact measurements pending | User story and demo show value beyond hackathon |
 | Quality of Idea | Cross-session state, service orchestration, consent-aware autonomy, not single-turn Q&A | Cross-session demo and exact-proposal consent tested | Demo visibly proves continuity and multi-step orchestration |
 
@@ -52,3 +52,10 @@ Every real developer-experience problem is recorded in `docs/FRICTION_LOG.md` wi
 - Installation path is independently reproduced.
 - No secrets or private-project material exist in Git history.
 - Submission text maps each major feature to judging evidence.
+
+## Review candidate
+
+The [judge evidence map](JUDGE_EVIDENCE_MAP.md) links each criterion to demonstrated
+behavior and its limits. The captioned recording shows a real MCP client receipt
+from the same household as the UI. Final visual approval and Devpost publication
+remain separate gates.

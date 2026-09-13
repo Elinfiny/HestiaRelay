@@ -4,7 +4,8 @@ Canonical main SHA: `61496e94cb22dd1b444f72607982b1af6652b7e8`.
 Post-merge CI [34721784644](https://github.com/Elinfiny/HestiaRelay/actions/runs/34721784644)
 SUCCESS: all four jobs. Main ref readback matches. PR #13 merged; Issue #12
 closed after validation. This Phase 4B checkpoint is on
-`feature/release-audit-v1`; runtime changes have not started in this phase.
+`feature/release-audit-v1`; PR #15 is open. Phase 4B container/toolchain
+remediation and the real demonstration candidate are under validation.
 
 Previous Phase 3 main: `e13cef9d3d7a0cd346e4ce59c1810db2e6e3b247`,
 CI 34720181231 SUCCESS; Issue #10 closed.
@@ -18,7 +19,10 @@ no new AWS spending or invocation is authorized.
 Issue #14 is the executable specification. The first source-bound inventory is
 `docs/evidence/release-inventory-20260912.json`: 43 pinned Python packages,
 container base identity, dependency constraints, Actions, Inspector and browser
-versions. It is an inventory, not a completed vulnerability or license scan.
+versions. The first completed scan and preserved failures are recorded in
+`docs/evidence/release-initial-scan-20260913.json`. `docs/RELEASE_AUDIT.md`
+records targeted remediation and the expiring applicability gate. Final PR/main
+CI and candidate integrity/visual review are still pending at this checkpoint.
 The judged runtime is one fictional household and one worker; public hosting,
 remote MCP authorization and complete release security remain separate gates.
 
@@ -138,3 +142,23 @@ untouched and no owner PC is required.
 - Scope/secret/claim review: application auth/recovery only; dependencies and
   pinned image base unchanged. This is not a complete vulnerability-free image
   attestation or public deployment review. Those gates remain explicit.
+
+## Phase 4B current checkpoint
+
+- PR #15; initial source 0fc7a419804c50037ab5ce0df6d86f8196afdedf,
+  scan CI 34743407436 failed as intended on actual dependency/image findings.
+- Pytest CVE-2025-71176 fixed at 9.0.3; Python/build/npm advisory scans passed
+  in CI 34743686022. Full Git history and container-artifact secret scans passed.
+- Official Python 3.12.14 Trixie digest observed in CI, pinned in Dockerfile.
+  Runtime dependency closure reduced to 32 packages; package installer removed.
+- CI 34743936152 passed browser/demo, validation, cloud-proof-package and all
+  container functional/recovery checks, but image audit still blocked on OS
+  patches and component applicability. No unchanged failed run was retried.
+- Candidate video from CI 34743686022 is 87.68 seconds, real UI/MCP, English
+  captions, deterministic, zero AWS/external household actions. Its archive and
+  inner hashes were verified; caption placement was corrected in the next head.
+- Current local validation: Ruff PASS, 150 tests PASS, 98.11% application coverage.
+- Pending: verify exact Debian patches and runtime component-absence probes;
+  review final image/SBOM/notices and all demo artifacts; green PR and main CI.
+- Owner visual approval applies only to the concrete final video candidate;
+  Devpost fields remain untouched. No new AWS authorization is requested.

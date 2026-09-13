@@ -57,6 +57,8 @@ jobs:
           sudo apt-get install --no-install-recommends --yes ffmpeg
       - name: Record judge demonstration candidate
         run: python scripts/record_demo.py
+      - name: Scan browser and demo artifacts for secrets
+        run: bash scripts/scan_browser_artifacts.sh
       - name: Save browser evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
