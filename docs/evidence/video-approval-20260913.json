@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "observed_date_utc": "2026-09-13",
+  "owner_response": "ok, aprob",
+  "conversation_context": "Pending exact video review request, then coverage clarification, then owner acceptance",
+  "status": "OWNER_ACCEPTED_PRESENTED_CANDIDATE",
+  "scope": "The presented 87.84-second video and risk-based testing recommendation; no specific owner viewing procedure is asserted",
+  "video_sha256": "95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd",
+  "duration_seconds": 87.84,
+  "original_run_id": 34744690053,
+  "original_browser_artifact_id": 10313078678,
+  "original_source_checkout": "fae4f056d7d140d04958ce6e29b2ac339227eaa1",
+  "source_bytes_reverified": true,
+  "original_capture_and_review_receipts_modified": false,
+  "approved_replacement_render": false,
+  "canonical_main_at_continuation": "a5180502d7b347ff41c696bc2c5104c91c69d896",
+  "publication_state": "NOT_UPLOADED_AUTHENTICATION_REQUIRED",
+  "public_video_url": null,
+  "devpost_fields_edited": false,
+  "new_aws_operations": 0
+}
