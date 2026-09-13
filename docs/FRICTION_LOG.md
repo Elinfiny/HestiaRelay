@@ -126,3 +126,70 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
   dependencies and verify the exact execution environment before recording.
 - **Evidence:** `scripts/record_demo.py`, CI workflow, archived raw recording.
 - **Status:** resolved; final candidate review remains a separate gate.
+
+## F-006 — Browser review blocks the active YouTube subtitle dialog
+
+- **Date:** 2026-09-13
+- **Area:** Cloud browser approval review / video publication tooling
+- **Task attempted:** Add the original timed English captions to the existing,
+  owner-authorized upload before publishing it.
+- **Environment:** Authenticated cloud YouTube Studio, existing upload wizard,
+  English-subtitles dialog; one uploaded video, last observed saved as private.
+- **Steps:** Click the observed Upload file button inside that dialog through
+  the existing tab handle. After rejection, request a read-only DOM snapshot
+  from that same handle, without navigation or reloading.
+- **Expected:** Interact with or inspect the current dialog without changing its
+  location. A rejection should identify the actual proposed action.
+- **Actual:** Automatic review rejected both operations as navigation to the
+  Studio origin that might discard unsaved upload/subtitle state. Neither
+  submitted command contained navigation. The reason for this mismatch is
+  unknown; it is not evidence of a YouTube or AWS service outage.
+- **Severity:** blocker for continuing this publication route only.
+- **Workaround:** None established. Stop browser interaction, preserve the video
+  ID and last confirmed state, and continue repository documentation. Do not
+  retry indirectly, create another upload or claim public playback.
+- **Suggestion:** Distinguish existing-tab DOM operations from navigation in
+  approval review and provide a supported recovery that preserves draft state.
+- **Evidence:** [Upload receipt](evidence/video-upload-20260913.json), Issue #16;
+  the upload-terms and publication authorization was already explicitly given.
+- **Status:** resolved for the next continuation. The owner explicitly approved
+  reopening Studio despite possible unsaved-dialog loss. That navigation
+  succeeded; the same saved draft and metadata were recovered, original SRT
+  saved, and Public publication confirmed. No duplicate video upload.
+
+## F-007 — PR merge returns server-response errors
+
+- **Date:** 2026-09-13
+- **Area:** GitHub publication tooling
+- **Task attempted:** Merge reviewed PR #18 after all four CI jobs passed.
+- **Steps:** Submit the connector merge with the exact reviewed head; reconcile
+  the PR after each failed response. In the next continuation, inspect the
+  authenticated GitHub PR page and its Ready to merge state, then confirm merge.
+- **Actual:** Connector responses included ReadTimeout and internal MCP errors.
+  The GitHub UI displayed "Unable to read response from the server. Please try
+  again later." PR readbacks remained OPEN with main unchanged.
+- **Severity:** blocker for merging this PR; no code or data loss demonstrated.
+- **Workaround:** None established. Keep the feature branch and CI evidence;
+  reconcile before any future attempt. Do not change protection, repository
+  auto-merge settings or credential scopes to force completion.
+- **Evidence:** PR #18, head 3068bcdaa7042a0541a9f391cf58742c2286cb13,
+  CI 34748295910; Issue #16 records the later publication separately.
+- **Status:** open; underlying cause unknown, no GitHub-wide outage inferred.
+
+## F-008 — Public watch metadata loads but cloud media does not start
+
+- **Date:** 2026-09-13
+- **Area:** Cloud browser / YouTube playback verification
+- **Task attempted:** Play the newly published 1:28 HestiaRelay video.
+- **Steps:** Open the published link, inspect matching title/channel, use the
+  ordinary Play control and inspect the visible player and media state.
+- **Actual:** The page and Public publication readbacks succeeded, but the
+  black player stayed at 0:00. The media element reported readyState 0, no
+  played ranges and no media error. No bot challenge was displayed.
+- **Severity:** blocker for playback validation in this browser only.
+- **Workaround:** None demonstrated. A separate mandatory signed-out check is
+  prepared in a fresh GitHub-hosted context, with no imported login state,
+  fingerprints, proxies, response substitution or automatic retries.
+- **Evidence:** [Publication receipt](evidence/video-publication-20260913.json),
+  `scripts/verify_public_video.py`.
+- **Status:** open; neither successful playback nor a site outage is inferred.

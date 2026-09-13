@@ -1,7 +1,7 @@
 # Video publication package
 
-Prepared 2026-09-13. This package records an accepted visual candidate and exact
-publication metadata. **No video has been uploaded or publicly published.**
+Updated 2026-09-13. This package records an accepted visual candidate and exact
+publication metadata. **Published Public on YouTube; full playback unverified.**
 Devpost story/video fields remain untouched.
 
 ## Accepted input
@@ -18,11 +18,45 @@ Devpost story/video fields remain untouched.
 
 ## Target and current gate
 
-Target: the owner's selected YouTube channel, through YouTube Studio.
-The cloud browser reached Google's account chooser on 2026-09-13; saved accounts
-were signed out. Account/channel selection and authentication are not inferred
-from a saved account name. Secure browser sign-in must establish the destination
-before any upload. No account identifier or credential is stored here.
+Verified target: **Tomescu Marius**, public channel ID
+`UCFNZRod5B5_zl5U2C6UbBGg`, through YouTube Studio after secure sign-in.
+The owner explicitly responded **“Aprob”** to uploading and publishing the
+unchanged recording on this channel, including the upload dialog's YouTube
+Terms of Service and Community Guidelines acknowledgment. That permission
+remains valid; no repeated publication or contractual approval is needed.
+
+YouTube created video ID **`_YTQcGxBMrA`** and displayed
+`https://youtu.be/_YTQcGxBMrA`. After the owner approved reopening Studio with
+possible loss of unsaved dialog changes, the same draft was recovered with its
+saved title and description intact. The original SRT was imported once and
+saved as **English by you**. No video was uploaded again or regenerated.
+
+Public was selected and Publish clicked once. YouTube displayed **Video
+published**, then channel Content read back **Public / Published Sep 13, 2026**.
+Checks reported **No issues found** and the preview duration was **1:28**.
+The public watch page opened at the exact post-redirect URL
+[youtube.com/watch?v=_YTQcGxBMrA](https://www.youtube.com/watch?v=_YTQcGxBMrA),
+with the matching title and channel. The
+[publication receipt](evidence/video-publication-20260913.json) records these
+effects separately from the historical private-[upload receipt](evidence/video-upload-20260913.json).
+
+The cloud watch player remained at 0:00 with no loaded media after ordinary
+Play interaction. Its media element reported readyState 0 and no media error;
+the underlying cause is unknown. The page's title, duration and Public status
+do not prove complete playback. No bot challenge or service outage is inferred.
+The supplemental caption track is confirmed saved in Studio; public selectable
+caption availability remains unverified. The MP4's burned-in captions remain.
+
+`scripts/verify_public_video.py` prepares one ordinary, fresh-context Chromium
+check in GitHub Actions with no account cookies or credentials. It checks
+signed-out UI, the exact URL/title, continuous playback without seeking and
+hosted duration, preserving actual JSON and screenshots on failure as well as
+success. Explicit site gates stop it without sign-in, retries or evasion.
+Its result is pending and must not be replaced with publication metadata.
+
+YouTube also displayed a channel-verification requirement for clickable external
+description links. Text URLs are saved, but clickability is not claimed. No
+channel verification, identity expansion or new account was initiated.
 
 Connected-tool discovery found no direct YouTube/Vimeo upload tool. Directory
 results included analytics/social tools, none already connected for this route.
@@ -71,15 +105,14 @@ endorsement or an award.
 
 ## Upload and verification sequence
 
-1. Authenticate securely and inspect the actual channel destination. Do not
-   create a new channel or accept new terms implicitly.
-2. Rehash the accepted input immediately before upload. Upload only that file
-   and use the title/description above. Do not regenerate the video.
-3. Inspect the actual upload controls, audience questions, checks and visibility.
-   Resolve factual settings from the fictional software demonstration. Stop for
-   any new legal, financial or access-expansion gate. Do not purchase promotion.
-4. Confirm upload and processing results before any second attempt. An
-   interrupted response leaves the effect unknown until the channel is checked.
+1. Completed: secure sign-in, actual channel readback, exact contractual
+   authorization and source rehash before the single file selection.
+2. Completed: upload identity, saved title/description, factual audience settings,
+   English video language and successful YouTube checks. No new render is used.
+3. Completed: owner-authorized Studio recovery, same draft and metadata readback,
+   and original English SRT import/save. F-006 is resolved for this continuation.
+4. Completed: successful checks, Public selection, one Publish click and actual
+   published-state readbacks. Do not publish or upload another copy.
 5. Use the approved public-video route required by the
    [competition rules](https://amazonappdev2026.devpost.com/rules), checked
    2026-09-13. Preserve the actual video ID, URL and destination readback.
