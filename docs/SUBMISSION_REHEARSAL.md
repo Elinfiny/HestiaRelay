@@ -14,7 +14,8 @@ Details story and video fields remain untouched.
   only four documentation files differ between that head and merged main.
 - Duration: **87.84 seconds**. Audio: none; English captions.
 - MP4 SHA-256: `95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
-- Owner visual decision: **PENDING for this exact file**. A later CI recording
+- Owner visual decision: **ACCEPTED on 2026-09-13**; see the
+  [approval receipt](evidence/video-approval-20260913.json). A later CI recording
   is a different artifact and must not silently replace this candidate.
 
 The [release receipt](evidence/release-20260913.json) preserves ZIP digests,
@@ -62,13 +63,13 @@ eligibility and final acceptance remain organizer decisions.
 | --- | --- |
 | Primary track | Alexa+; guided text simulation with an additional working MCP server |
 | Source and license | Public [repository](https://github.com/Elinfiny/HestiaRelay), MIT; anonymous repository/README/license reads pass in CI |
-| Working demonstration | Exact candidate above; approval pending |
-| Public video and signed-out playback | PENDING after exact visual approval and an authorized publication route |
+| Working demonstration | Exact candidate above; owner acceptance recorded |
+| Public video and signed-out playback | PENDING; secure YouTube authentication is the immediate gate |
 | Product feedback | Evidence-based [draft notes](PRODUCT_FEEDBACK.md); no Devpost field written |
 | AWS Builder | One historical Bedrock Converse on 2026-09-12; original source and usage in [receipt](evidence/bedrock-20260912.json) |
 | Open Source | Owner **Elinfiny**; [implementation contribution PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), [release contribution PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15), same public repository |
 | Four judging criteria | [Evidence map](JUDGE_EVIDENCE_MAP.md); household benefit remains an unmeasured hypothesis |
-| Final story, media and submission | PENDING; generated only from stable, audited behavior; Devpost untouched |
+| Final story, media and submission | Story and video metadata prepared from stable behavior; Devpost untouched |
 | Personal eligibility / representation | UNKNOWN; verify privately at the actual submission gate, never infer from a username |
 | Current-source security and CI | Phase 4B evidence is dated and scoped; refresh before final submission; applicability decisions expire **2026-09-27** |
 
@@ -78,7 +79,7 @@ both does not imply eligibility to receive both mini-challenge prizes.
 
 ## Publication handoff after the visual decision
 
-Record the owner's decision against the MP4 digest above. If revisions are
+The owner's acceptance is recorded against the MP4 digest above. If revisions are
 requested, retain this candidate and produce a separately identified replacement.
 Prepare the permitted YouTube/Vimeo upload route, verify its actual account and
 publication effect, then verify signed-out playback, captions and complete duration.

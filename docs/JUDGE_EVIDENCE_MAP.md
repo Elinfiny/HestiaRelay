@@ -10,7 +10,8 @@ have not been measured.
 The `browser-qa` artifact in the Phase 4B CI run contains
 `demo/hestiarelay-candidate.mp4`, English `captions.srt`, scene screenshots,
 `demo-report.json`, the actual `mcp-evidence.json`, and SHA-256 hashes.
-The video is a silent captioned **draft for owner visual review**. It records
+The original video is a silent captioned **review candidate**, subsequently
+accepted by the owner on 2026-09-13. It records
 real browser interactions with a real service and SQLite. Captions occupy a
 separate video band; the script never injects responses or modifies the app DOM.
 
@@ -54,8 +55,11 @@ must not be represented as a new live call, live Alexa+, AgentCore or Strands.
 
 ## Review and publication boundary
 
-The current candidate is prepared for review, not final submission publication.
-The owner must approve the concrete visual candidate. Devpost Project Details
+The accepted recording is prepared for publication; no public video URL or
+final submission is claimed yet.
+The owner accepted the concrete visual candidate on 2026-09-13; the
+[approval receipt](evidence/video-approval-20260913.json) preserves its exact identity.
+The original recording metadata remains historical. Devpost Project Details
 and video fields remain untouched. CI artifacts are review evidence; GitHub may
 require sign-in to download them. Anonymous repository/README/license access is
 checked separately and does not imply anonymous video or hosted-app access.

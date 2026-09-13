@@ -12,8 +12,10 @@ not claim its own future commit hash as canonical main.
 **Phase 4B complete within its scoped release-audit and draft-video remit.**
 **Phase 5 started: submission rehearsal and final visual decision, Issue #16.**
 The English rehearsal checklist and factual product-feedback notes are prepared.
-The exact video candidate is ready for the owner decision requested by the
-original mandate. No Devpost Project Details story or video field is edited.
+The owner accepted the presented video on 2026-09-13 after the coverage
+clarification. The unchanged file and approval scope are preserved in
+`docs/evidence/video-approval-20260913.json`. No Devpost Project Details story
+or video field is edited.
 
 ## Completed gates
 
@@ -61,8 +63,9 @@ gate when they invalidate its scope. Refresh the audit before final submission.
   `95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
 - ZIP digest, CRC, safe paths and inner manifests verified. The selected
   implementation head differs from merged main in four documentation files only.
-- **Owner visual approval PENDING for this exact file.** A new CI video is not
-  automatically an approved replacement. No AWS call or household side effect
+- **Owner accepted this exact candidate on 2026-09-13.** A new CI video is not
+  automatically an approved replacement. Original capture metadata stays intact.
+  No AWS call or household side effect
   occurred in this deterministic recording.
 
 ## Historical AWS proof and authority
@@ -90,7 +93,9 @@ historical Bedrock call. Not demonstrated: live Alexa+, AgentCore, Strands,
 public application hosting or measured real-user impact. The project remains
 public MIT and supports fictional data with one worker/household.
 
-The immediate external gate is the owner's exact final visual decision.
+The immediate external gate is secure YouTube account authentication. The cloud
+browser reaches the Google account chooser with saved accounts signed out.
+No upload has occurred and no channel destination is yet verified.
 Public YouTube/Vimeo publication and signed-out playback, final submission
 materials, private owner eligibility/representation and refreshed final audits
 remain later submission gates. These are pending/unknown, never silently PASS.
@@ -102,8 +107,9 @@ Personal information must not be written to the public repository.
 [submission rehearsal](SUBMISSION_REHEARSAL.md),
 [product feedback preparation](PRODUCT_FEEDBACK.md), and existing
 [judge evidence map](JUDGE_EVIDENCE_MAP.md).
-Present the exact candidate for the mandated visual decision. After that
-response, apply requested edits or prepare its permitted publication route;
-verify the actual uploaded identity and anonymous playback. Continue ordinary
+The [story](SUBMISSION_STORY.md) and [video publication package](VIDEO_PUBLICATION.md)
+are prepared from the stable implementation. Authenticate securely, verify the
+actual channel, upload the accepted source only within the permitted route,
+and verify its uploaded identity and anonymous playback. Continue ordinary
 technical work automatically. Keep Devpost fields untouched until final
 materials are stable, audited and within the owner's publication authority.
