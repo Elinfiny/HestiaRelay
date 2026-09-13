@@ -1,10 +1,12 @@
 # HestiaRelay work state
 
-Canonical main SHA: `a5180502d7b347ff41c696bc2c5104c91c69d896`.
-Post-merge CI [34745237742](https://github.com/Elinfiny/HestiaRelay/actions/runs/34745237742)
+Canonical main SHA: `0515cf10128c4e2819f5f9f6b039a9ecfa4ca78d`.
+Post-merge CI [34747092355](https://github.com/Elinfiny/HestiaRelay/actions/runs/34747092355)
 SUCCESS: all four jobs. Main ref and logs read back on 2026-09-13.
-PR #15 merged; Issue #14 closed only after confirmed post-merge completion.
-This next-package checkpoint is on `feature/submission-rehearsal-v1` and does
+PR #17 merged after final PR CI 34746902549 passed all four jobs. Issue #16
+remains open for publication and final submission. Phase 4B PR #15 and Issue #14
+remain completed at their original source.
+This next-package checkpoint is on `feature/submission-publication-v1` and does
 not claim its own future commit hash as canonical main.
 
 ## Current phase
@@ -34,8 +36,8 @@ or video field is edited.
   image/SBOM/notices, full Git history and artifact secret checks completed.
   Main history contains 60 scanned commits; one exact historical source-hash
   false positive is documented in the narrow Gitleaks ignore entry.
-- Main image: `sha256:072afddba77b5f5a4f09ed1e8d163592f57643b9c3b8c8879449604c400a2ac0`.
-  Main artifacts: container 10312644689, browser 10314305185, validation
+- Phase 4B main image: `sha256:072afddba77b5f5a4f09ed1e8d163592f57643b9c3b8c8879449604c400a2ac0`.
+  Phase 4B main artifacts: container 10312644689, browser 10314305185, validation
   10313654525. Their GitHub-reported identities are recorded in Issue #14;
   they do not replace the separately downloaded and visually reviewed candidate.
 - Anonymous repository/README/license access PASS. CI video downloads can
@@ -62,7 +64,8 @@ gate when they invalidate its scope. Refresh the audit before final submission.
 - Video SHA-256:
   `95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
 - ZIP digest, CRC, safe paths and inner manifests verified. The selected
-  implementation head differs from merged main in four documentation files only.
+  implementation head differs from Phase 4B main in four documentation files only.
+  The later submission-preparation merge adds documentation only.
 - **Owner accepted this exact candidate on 2026-09-13.** A new CI video is not
   automatically an approved replacement. Original capture metadata stays intact.
   No AWS call or household side effect
@@ -93,9 +96,16 @@ historical Bedrock call. Not demonstrated: live Alexa+, AgentCore, Strands,
 public application hosting or measured real-user impact. The project remains
 public MIT and supports fictional data with one worker/household.
 
-The immediate external gate is secure YouTube account authentication. The cloud
-browser reaches the Google account chooser with saved accounts signed out.
-No upload has occurred and no channel destination is yet verified.
+Secure Google sign-in completed through the native credential flow; the selected
+YouTube channel is **Tomescu Marius**. Fresh Content access succeeded. No
+credential values were read or stored. The upload dialog is open, but no file
+chooser has been submitted and **no upload has begun**.
+
+The immediate gate is action-time confirmation of the upload dialog's
+acknowledgment of YouTube Terms of Service and Community Guidelines. Browser
+control rules require confirmation at this contractual step. The exact action
+is uploading the unchanged accepted video to this channel and publishing it
+Public with the prepared metadata; no other channel setting or video is included.
 Public YouTube/Vimeo publication and signed-out playback, final submission
 materials, private owner eligibility/representation and refreshed final audits
 remain later submission gates. These are pending/unknown, never silently PASS.
@@ -108,8 +118,8 @@ Personal information must not be written to the public repository.
 [product feedback preparation](PRODUCT_FEEDBACK.md), and existing
 [judge evidence map](JUDGE_EVIDENCE_MAP.md).
 The [story](SUBMISSION_STORY.md) and [video publication package](VIDEO_PUBLICATION.md)
-are prepared from the stable implementation. Authenticate securely, verify the
-actual channel, upload the accepted source only within the permitted route,
-and verify its uploaded identity and anonymous playback. Continue ordinary
+are prepared from the stable implementation. Obtain the upload dialog's exact
+contractual confirmation, then upload the accepted source only within the
+permitted route and verify its uploaded identity and anonymous playback. Continue ordinary
 technical work automatically. Keep Devpost fields untouched until final
 materials are stable, audited and within the owner's publication authority.
