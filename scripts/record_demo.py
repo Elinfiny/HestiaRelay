@@ -230,8 +230,8 @@ def main():
             str(raw_path),
             "-vf",
             "pad=1440:1120:0:0:color=0x172C24,subtitles=qa-artifacts/demo/captions.srt:"
-            "force_style='FontName=DejaVu Sans,FontSize=14,PrimaryColour=&HFFFFFF,"
-            "Outline=0,Alignment=2,MarginV=10'",
+            "force_style='FontName=DejaVu Sans,FontSize=7,PrimaryColour=&HFFFFFF,"
+            "Outline=0,Alignment=2,MarginV=6'",
             "-c:v",
             "libx264",
             "-pix_fmt",
@@ -261,6 +261,7 @@ def main():
     report = {
         "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "run_id": os.environ.get("GITHUB_RUN_ID"),
+        "encoder": subprocess.check_output(["ffmpeg", "-version"], text=True).splitlines()[0],
         "duration_seconds": duration,
         "status": "DRAFT_FOR_OWNER_VISUAL_REVIEW",
         "audio": "none; English captions",

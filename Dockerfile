@@ -1,4 +1,4 @@
-FROM python:3.12.14-slim-bookworm@sha256:782412e85d0f0984994c290652577d4018aff08145c85b262bb63dc0c7522254
+FROM python:3.12.14-slim-trixie@sha256:78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -8,9 +8,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     AWS_EC2_METADATA_DISABLED=true
 
 WORKDIR /app
-COPY requirements-proof.txt ./
-RUN python -m pip install --no-cache-dir -r requirements-proof.txt \
+COPY requirements-runtime.txt ./
+RUN python -m pip install --no-cache-dir --only-binary=:all: pip==26.2 \
+    && python -m pip install --no-cache-dir --only-binary=:all: -r requirements-runtime.txt \
     && python -m pip check \
+    && python -m pip uninstall --yes pip \
     && groupadd --gid 10001 hestia \
     && useradd --uid 10001 --gid 10001 --no-create-home hestia \
     && mkdir /data \

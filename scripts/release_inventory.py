@@ -69,6 +69,42 @@ def main():
         )
         + "\n"
     )
+    # Preserve upstream notices, including symlinked Debian copyright files which
+    # package-level SBOM license inference can miss. No credentials exist in the image.
+    notice_code = """
+import hashlib, importlib.metadata, json
+from pathlib import Path
+paths = list(Path('/usr/share/doc').glob('*/copyright'))
+paths += list(Path('/usr/share/common-licenses').glob('*'))
+paths += [Path('/usr/local/lib/python3.12/LICENSE.txt')]
+for package in importlib.metadata.distributions():
+    for file in package.files or []:
+        if any(word in str(file).lower() for word in ['license', 'notice', 'copying']):
+            paths.append(Path(package.locate_file(file)))
+notices = {}
+for path in paths:
+    if path.is_file() and path.stat().st_size < 2000000:
+        data = path.read_bytes()
+        notices[str(path)] = {'sha256': hashlib.sha256(data).hexdigest(),
+                             'text': data.decode('utf-8', errors='replace')}
+print(json.dumps(notices, indent=2))
+"""
+    (OUT / "upstream-notices.json").write_text(
+        command(
+            "docker",
+            "run",
+            "--rm",
+            "--network=none",
+            "--read-only",
+            "--cap-drop=ALL",
+            "--security-opt=no-new-privileges",
+            "hestiarelay:judge",
+            "python",
+            "-c",
+            notice_code,
+        )
+        + "\n"
+    )
     statuses = dict(
         zip(
             [

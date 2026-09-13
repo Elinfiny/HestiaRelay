@@ -111,14 +111,13 @@ jobs:
       - name: Build the application image
         run: |
           mkdir -p qa-artifacts
-          docker buildx imagetools inspect python:3.12.14-slim-trixie > qa-artifacts/candidate-base.txt
           docker build --pull --tag hestiarelay:judge .
           cp Dockerfile qa-artifacts/Dockerfile
           cp /tmp/hestiarelay-inspector/package-lock.json qa-artifacts/inspector-package-lock.json
       - name: Verify the real container and clients
         run: python scripts/container_qa.py --inspector /tmp/hestiarelay-inspector/node_modules/.bin/mcp-inspector
       - name: Install build audit coverage
-        run: python -m pip install cfn-lint==1.56.3 setuptools
+        run: python -m pip install cfn-lint==1.56.3 setuptools==84.0.0
       - name: Audit release image, build chain and Git history
         run: bash scripts/release_audit.sh
       - name: Save container and browser evidence

@@ -46,7 +46,7 @@ def volume():
 
 
 @contextmanager
-def container(image, data_volume, label):
+def container(image, data_volume, label, database="/data/hestiarelay.db"):
     name = "hestia-qa-" + uuid4().hex
     try:
         docker(
@@ -71,6 +71,8 @@ def container(image, data_volume, label):
             f"type=volume,source={data_volume},target=/data",
             "--env",
             "HESTIA_BEDROCK_MODEL_ID=",
+            "--env",
+            f"HESTIA_STATE_DB={database}",
             "--env",
             "AWS_EC2_METADATA_DISABLED=true",
             image,
@@ -206,6 +208,38 @@ def main():
         with container(args.image, persistent, "consent-recovery") as url:
             assert state(url) == final
 
+        # Verify recovery with the actual image's SQLite library, without a package installer.
+        recovery_args = [
+            "run",
+            "--rm",
+            "--network=none",
+            "--read-only",
+            "--cap-drop=ALL",
+            "--security-opt=no-new-privileges",
+            "--mount",
+            f"type=volume,source={persistent},target=/data",
+            args.image,
+            "python",
+            "-m",
+            "hestiarelay.recovery",
+        ]
+        backup = json.loads(
+            docker(*recovery_args, "backup", "/data/hestiarelay.db", "/data/backup.db")
+        )
+        restored_backup = json.loads(
+            docker(
+                *recovery_args,
+                "restore",
+                "/data/backup.db",
+                "/data/restored.db",
+                "--sha256",
+                backup["sha256"],
+            )
+        )
+        assert backup["state_sha256"] == restored_backup["state_sha256"]
+        with container(args.image, persistent, "backup-restore", "/data/restored.db") as url:
+            assert state(url) == final
+
     @contextmanager
     def browser_server(path):
         with volume() as data_volume, container(args.image, data_volume, path.stem) as url:
@@ -220,8 +254,9 @@ def main():
         "base_image_reference": Path("Dockerfile").read_text().splitlines()[0].split()[1],
         "image_user": image["Config"]["User"],
         "dependency_lock_sha256": hashlib.sha256(
-            Path("requirements-proof.txt").read_bytes()
+            Path("requirements-runtime.txt").read_bytes()
         ).hexdigest(),
+        "container_backup_restore": "PASS",
         "canonical_mcp_sessions": 3,
         "sdk_negotiated_versions": versions,
         "container_recreations_with_same_volume": 2,
