@@ -6,7 +6,13 @@ from contextlib import closing, contextmanager
 from contextvars import ContextVar
 from pathlib import Path
 
+from pydantic import ValidationError
+
 from hestiarelay.models import HouseholdState
+
+
+class StateUnavailableError(RuntimeError):
+    """Persisted state is invalid; preserve it for explicit verified recovery."""
 
 
 class SQLiteStateStore:
@@ -65,7 +71,10 @@ class SQLiteStateStore:
             ).fetchone()
         if not row:
             return HouseholdState()
-        return HouseholdState.model_validate_json(row[0])
+        try:
+            return HouseholdState.model_validate_json(row[0])
+        except ValidationError as error:
+            raise StateUnavailableError("Saved household state is unavailable.") from error
 
     def save(self, state: HouseholdState) -> None:
         with self.connection() as connection:

@@ -121,7 +121,7 @@ incidents into claims of an AWS or YouTube outage unless the evidence says so.
 
 | Criterion | Best evidence |
 | --- | --- |
-| Technical Implementation | Three-session/restart tests, real MCP clients, exact consent invalidation, 150-test baseline, browser/container recovery evidence |
+| Technical Implementation | Three-session/restart tests, real MCP clients, exact consent invalidation, 156-test confirmation suite, browser/container recovery evidence |
 | Design | One clear dinner story, visible planner provenance, exact proposal scope, readable desktop and 390px layouts |
 | Potential Impact | Less repeated household context and fewer missed constraints are concrete hypotheses for user testing, not measured adoption |
 | Quality of Idea | Persistent context and revocable consent solve a gap that grows across conversations rather than within one prompt |

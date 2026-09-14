@@ -2,17 +2,49 @@
 
 from __future__ import annotations
 
+import asyncio
 import csv
 import hashlib
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+import httpx2
+from mcp import ClientSession
+from mcp.client.streamable_http import streamable_http_client
 from playwright.sync_api import expect, sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tests"))
 from test_mcp_http import running_server  # noqa: E402
+
+
+async def add_incomplete_estimates(url):
+    """Exercise real MCP payloads that must remain inspectable in the browser."""
+    payloads = [
+        {"estimate_only": True},
+        {"estimate_only": True, "items": "rice"},
+        {"estimate_only": True, "items": None},
+        {"estimate_only": True, "items": ["Rice"], "estimated_total_usd": "not a number"},
+    ]
+    async with (
+        httpx2.AsyncClient(trust_env=False) as http_client,
+        streamable_http_client(url + "/mcp", http_client=http_client) as streams,
+        ClientSession(*streams) as client,
+    ):
+        await client.initialize()
+        for number, payload in enumerate(payloads, start=1):
+            result = await client.call_tool(
+                "propose_household_action",
+                {
+                    "kind": "purchase",
+                    "description": f"Incomplete estimate {number}",
+                    "payload_json": json.dumps(payload),
+                },
+            )
+            assert not result.is_error
+    return payloads
 
 
 def main(server_factory=running_server, output_dir="qa-artifacts"):
@@ -80,6 +112,28 @@ def main(server_factory=running_server, output_dir="qa-artifacts"):
                 expect(page.locator("#proposals")).to_contain_text(
                     "Proposal rejected. Nothing executed."
                 )
+                # Sync Playwright owns this thread's event loop; run the MCP client
+                # on a separate worker and propagate failures to the same QA gate.
+                with ThreadPoolExecutor(max_workers=1) as worker:
+                    payloads = worker.submit(
+                        asyncio.run, add_incomplete_estimates(url)
+                    ).result(timeout=30)
+                page.reload()
+                expect(page.get_by_role("status")).to_contain_text("Ready when you are")
+                expect(page.locator("#error")).to_be_hidden()
+                expect(page.locator("#proposals .proposal")).to_have_count(6)
+                expect(page.get_by_text(
+                    "Estimate details are incomplete. Inspect the exact proposal scope below.",
+                    exact=True,
+                )).to_have_count(4)
+                page.get_by_role(
+                    "button", name="Reject this proposal: Incomplete estimate 1", exact=True
+                ).click()
+                expect(page.get_by_role("status")).to_contain_text("Rejection saved")
+                current = context.request.get(url + "/api/state").json()["state"]
+                assert [p["payload"] for p in current["proposals"][-4:]] == payloads
+                assert current["proposals"][-4]["status"] == "rejected"
+                assert all(p["execution"] == "not_executed" for p in current["proposals"])
                 page.get_by_label("Your next message").fill("")
                 page.keyboard.press("Tab")
                 focus = page.evaluate("document.activeElement.id")
@@ -96,6 +150,7 @@ def main(server_factory=running_server, output_dir="qa-artifacts"):
                         "approve_reject": "PASS",
                         "reload": "PASS",
                         "fresh_browser_context": "PASS",
+                        "incomplete_mcp_estimate_rendering": "PASS",
                         "horizontal_overflow": overflow,
                         "keyboard_focus": focus,
                         "console_errors": errors,
