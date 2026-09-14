@@ -1,131 +1,86 @@
 # HestiaRelay work state
 
-Canonical main at the start of this follow-up:
-`e65c978d9bc9d3f4734e94eee3a330cbae928289` (PR #21).
-Main CI [34819059218](https://github.com/Elinfiny/HestiaRelay/actions/runs/34819059218)
-is verified SUCCESS, all four jobs at that exact SHA. The narrated publication,
-queue recovery and presentation-audit packages are integrated. The completed
-recovery watcher is disabled and must not be resumed.
+Canonical main before this final-readiness package:
+`df4d8cf54e37dc674c18350b95e0cd0900e7de12` (PR #22). Post-merge main CI
+[34828630607](https://github.com/Elinfiny/HestiaRelay/actions/runs/34828630607)
+is verified SUCCESS, all four jobs at that exact SHA.
 
-Current branch: `feature/playback-and-protection-audit-v1`, from the canonical
-main above. This follow-up's final head, merge SHA and post-merge CI belong in
-[Issue #16](https://github.com/Elinfiny/HestiaRelay/issues/16), preserving this
-at-writing checkpoint instead of guessing a self-referential future SHA.
+Current branch: `feature/final-submission-readiness-v1`, created from that
+canonical main. Its final head, PR, merge SHA and post-merge CI must be recorded
+in [Issue #16](https://github.com/Elinfiny/HestiaRelay/issues/16) after they
+exist; this file does not guess future identifiers.
 
 ## Current phase
 
-Phase 5: close the narrated playback evidence and verify provider-enforced
-delivery through `main`. Issue #16 stays OPEN. Private eligibility, refreshed
-security evidence and final submission remain separate gates. Devpost Project
-Details story and video fields are untouched.
+Final technical audit and submission preparation. Devpost remains untouched.
+Issue #16 stays OPEN until the entrant completes the private eligibility and
+representation declarations, the security evidence is refreshed after its
+September 27 expiry, the final form is submitted and the received entry is read
+back.
 
-Completed before this follow-up PR:
-- Fresh review of rules, resources, overview, updates and incorporated Devpost
-  terms; [requirement-to-evidence matrix](COMPETITION_AUDIT.md).
-- Natural English README, story, judging map and tool-by-tool feedback; stale
-  draft status and implied mandatory AgentCore/Strands requirements corrected.
-- Existing YouTube description saved without internal approval wording,
-  independently read back in a second Studio page. Same video/title/Public state.
-- Repository About description corrected to a guided Alexa+ simulation with
-  real MCP and exact consent; GitHub API confirms the saved value.
-- Exact English narrated render accepted, uploaded once and confirmed Public at
-  [NC2oy4x9Xdw](https://www.youtube.com/watch?v=NC2oy4x9Xdw). YouTube reports
-  processing complete, 1:28 and no copyright issues. The natural description,
-  English language, correct audience, no paid promotion and AI-use disclosure
-  are saved. [Publication receipt](evidence/narrated-video-publication-20260914.json).
-- The SRT chooser timed out twice without accepting a file. The exact transcript
-  was saved through YouTube Auto-sync. Studio first reported processing, then
-  independently confirmed the selectable English track Published. Burned-in
-  English captions remain visible in the video itself.
-- The creator subsequently played the narrated public video to the end in Brave
-  and reported visible presentation and subtitles, audible sound and no observed
-  problem. This is PASS, human-reported, not executor media telemetry.
-- Studio still labels the separate title-and-description language row Romanian,
-  although both saved fields and the video itself are English. The public copy
-  remains English; recheck this hidden classification at the final metadata gate.
-- The presentation baseline passed Ruff, 150 application tests at 98.11%
-  coverage and all four main CI jobs. Source/service/consent code is unchanged.
-  This documentation follow-up still requires fresh PR and post-merge main CI.
+## Completed gates
 
-## Exact videos and decision boundary
+- Public MIT repository, English run instructions and a real Streamable HTTP
+  MCP server that shares the application service and SQLite state.
+- Canonical three-session story, exact approval/rejection, context invalidation,
+  restart and container-recreation persistence, and no simulated external
+  purchase, payment, message or account effect.
+- Public 1:28 narrated demonstration at
+  [NC2oy4x9Xdw](https://www.youtube.com/watch?v=NC2oy4x9Xdw), with English
+  narration and captions. The creator reported full Brave playback with visible
+  presentation/subtitles and audible sound. This is human-reported playback,
+  not automated stream telemetry.
+- Baseline main CI: four successful jobs, 150 tests, 98.11% application
+  coverage, desktop and 390px browser checks, real MCP clients, container
+  recovery, dependency/secret/image scans and a scoped release review.
+- `Protect main` ruleset 23281588 is active: required up-to-date PR and four
+  GitHub Actions checks, resolved conversations, no bypass actor, and deletion/
+  force-push protection.
+- Fresh September 14 comparison against the official rules, resources and
+  overview. The Alexa+ simulation route, AWS Builder and Open Source materials
+  are mapped in [the competition audit](COMPETITION_AUDIT.md).
+- Final local audit before this branch found no dependency advisory or secret
+  match. It identified and is remediating source-static-analysis findings and
+  obsolete GitHub Action runtimes rather than accepting them as final-state
+  warnings.
 
-The preserved original video, now **Unlisted**, is
-[HestiaRelay's accepted silent demonstration](https://www.youtube.com/watch?v=_YTQcGxBMrA),
-87.84 seconds, silent with English captions, SHA-256
-`95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
-Its visibility was changed once from Public to Unlisted on 2026-09-14 after the
-narrated version was accepted. A fresh independent Studio page read back
-`Visibility / Unlisted` at `2026-09-14T09:22:09.385Z`; the video was not deleted
-or re-uploaded. The original SRT and historical capture metadata remain
-unchanged. The creator reported viewing it to the end, signed out in Brave,
-with readable English text. This is human-reported acceptance, not executor
-media telemetry.
+## Deliberate limits
 
-Hosted playback run 34749218515 attempt 2 remains FAILURE/BLOCKED at YouTube's
-real bot gate. Its JSON and screenshot are preserved; no bypass or additional
-retry is included. PR #18 had four successful CI jobs and the separately
-authorized human playback method, not five successful automated jobs.
-See [publication history](VIDEO_PUBLICATION.md) and
-[playback receipt](evidence/video-playback-20260913.json).
+- Alexa+ is simulated. MCP is implemented and interoperable. AgentCore and
+  Strands are not integrated.
+- The demonstration uses deterministic planning. One historical Nova Micro
+  Converse call was verified on September 12, 2026 and is not presented as a
+  current release call.
+- The prototype is one fictional household, guided English input and local or
+  controlled judge execution. It is not a public multi-tenant deployment or a
+  food-safety system.
+- Release applicability decisions expose 44 high and one unknown raw container
+  records behind exact non-reachability findings. They expire **2026-09-27**;
+  this is not a zero-CVE claim and the evidence must be refreshed before entry.
 
-The accepted narrated demonstration has SHA-256
-`e35a707ee24b8c39ad4d2e50ff21b8ec9f1ed1ae5e66ea4de7e284a3dee3d73c`.
-Only the caption band changes visually; no app event is invented or reordered.
-The voice is stock synthetic English, not Alexa or an imitation of the creator.
-Measured app-region SSIM is 0.999246 after re-encoding; audio measures -16.37
-LUFS and -1.41 dBFS true peak. Selected captions/frames were inspected. The
-creator accepted this exact file and authorized publication. YouTube confirms it
-Public as `NC2oy4x9Xdw`; the initial authenticated watch-page readback matched
-title, channel and duration but did not prove complete playback. A later,
-separate creator report now records complete Brave playback with presentation,
-sound and subtitles working through the end. Authentication state and measured
-media ranges were not supplied for that observation.
+## Open blockers
 
-## Validated application and audit limits
+- Devpost requires an authenticated entrant session. The form redirected to
+  sign-in; no field was viewed as authenticated, edited or submitted.
+- Age, residence, conflicts, employer/team authority, originality and rights are
+  private entrant declarations. A public repository cannot establish them.
+- Current security findings must be refreshed after September 27 and before the
+  October 23 deadline.
 
-The baseline demonstrates canonical three-session continuity, exact approval/
-rejection and context invalidation, SQLite restart/recreation persistence,
-real SDK/TCP MCP and Inspector 2.6.0 protocol 2025-11-25 interoperability,
-desktop 1440px/mobile 390px Chromium, TLS/Host/Origin/CSRF/session boundaries,
-and real container backup/restore. It does not certify every physical device
-or a screen reader. Optional judge mode disables remote MCP.
+## Competition readiness
 
-[Release scope](RELEASE_AUDIT.md) and
-[original receipt](evidence/release-20260913.json) preserve the historical
-image's raw findings: 0 critical, 44 high, 48 medium, 57 low and 1 unknown.
-Nine exact source/component/control-bound decisions classify 45 high/unknown
-records as unreachable in the reviewed runtime; they expire **2026-09-27**.
-This is neither a zero-CVE image nor independent third-party certification.
-Refresh them before final submission. GitHub ruleset **Protect main** (ID
-`23281588`) is active for the default branch. It requires the four GitHub
-Actions checks, an up-to-date pull request and resolved review conversations,
-blocks deletion and force pushes, and has no bypass actor. GitHub reads canonical
-main as `protected: true`; see [the provider receipt](BRANCH_PROTECTION.md).
+The technical package is strong for the Alexa+ continuity story and Open Source
+mini-challenge. AWS Builder evidence is real but intentionally narrow. Potential
+impact is framed as a testable household benefit, not measured adoption. The
+entry is not yet called submitted or eligible.
 
-No new AWS inference/resource/spending is authorized. The one historical Nova
-Micro Converse call ran September 12 at source
-`56dd5ad6375a668645eec7d8018430479f308267`: 222 input tokens, 230 output tokens,
-1,114.44 ms. Its build passed 83 tests at 98.86% at that historical source.
-Temporary stack/project/role/log-group cleanup was verified at
-2026-09-12T20:59:47.983512+00:00. [Original evidence](evidence/bedrock-20260912.json)
-is not a new proof of the current release. Promotional credits and actual final
-billing remain unconfirmed.
+## Next executable package
 
-## Competition readiness and next executable package
-
-Technical presentation is prepared for Alexa+ simulation, with Open Source and
-a narrowly documented AWS Builder entry. Live Alexa+, AgentCore, Strands,
-public application hosting and measured real-user impact are not demonstrated.
-No extra cloud framework or new AWS call is necessary for this chosen route.
-
-Finish this follow-up's evidence update, diff audit, exact-head four-job CI and
-the first merge through the active `main` ruleset; verify post-merge main CI and
-record actual results in Issue #16. Preserve both videos and their separate
-history.
-
-Then finish the actual entry: privately verify eligibility/representation/
-rights and account registration, recheck live rules and links, refresh expiring
-security evidence, select the intended categories, fill the audited final
-materials and verify the received submission. Current deadline: **October 23,
-2026, 22:00 Bucharest**. No eligibility or final submission receipt is silently
-marked PASS, and personal data never belongs in this public repository.
+Finish this branch's source, CI and copy corrections; run the complete local
+gates; publish through a protected pull request; require all four exact-head CI
+jobs; audit the diff; merge through the ruleset; verify post-merge main CI; and
+record the receipt in Issue #16. Near the final gate, refresh the release review,
+authenticate to Devpost privately, map the live form to
+[the prepared package](FINAL_SUBMISSION_PACKAGE.md), confirm the declarations,
+submit once and verify the received entry. Current deadline: **October 23, 2026,
+22:00 Bucharest**.

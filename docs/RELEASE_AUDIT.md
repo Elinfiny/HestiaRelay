@@ -1,4 +1,4 @@
-# Release audit — Phase 4B
+# Release audit
 
 Scope: source, full fetched Git history, pinned runtime/proof dependencies,
 resolved CI build tools, Inspector npm dependencies, the actual container OS,
@@ -37,9 +37,10 @@ records. No high/critical ignore list was introduced.
   application packages: 32 exact packages. Proof/testing remains separate.
   Build with patched pip 26.2 and binary wheels; remove pip after `pip check`.
   The runtime does not need a package installer or pytest.
-- Existing Actions tags were mutable. Pin their verified current commit IDs
-  without changing the selected major versions or increasing permissions.
-  GitHub's Node 24 default remains enabled; no insecure runtime override is used.
+- GitHub Actions are pinned to immutable commits. The final-readiness package
+  moves checkout, setup-python, setup-node and upload-artifact to their current
+  Node.js 24 releases without increasing workflow permissions or using an
+  insecure runtime override.
 
 This is targeted remediation prompted by measured findings. No application
 schema, planner model, consent contract or AWS adapter behavior changed. Rollback
@@ -49,8 +50,9 @@ and full backup/restore checks gate the base change.
 ## Reproduction and evidence
 
 CI executes Gitleaks 8.30.1 (full `--all` Git history and decoded/archive artifact
-scan, redacted reports), pip-audit 2.10.1 (strict PyPI advisory lookup), npm audit,
-and Trivy 0.74.0 (image OS/Python advisories and CycloneDX SBOM). Scanner release
+scan, redacted reports), pip-audit 2.10.1 (strict PyPI advisory lookup), Bandit
+1.8.6 (Python source analysis), npm audit, and Trivy 0.74.0 (image OS/Python
+advisories and CycloneDX SBOM). Scanner release
 archives are verified against their upstream SHA-256 digests before execution.
 No automatic dependency fix, blanket ignore, or `continue-on-error` gate is used.
 Exit codes, database identity, OS package versions, installed build dependency
@@ -94,8 +96,14 @@ There are no critical or vendor-fix-available records. Raw residuals remain:
 48 medium and 57 low records. This is not a zero-CVE or public-deployment
 attestation. The SBOM has 124 components; 158 upstream notice files supplement
 license inference, including all four library entries with missing inferred
-licenses. Final documentation CI and post-merge delivery are recorded in Issue
-#14; owner visual approval is still required for final submission publication.
+licenses.
+
+The later protected-main baseline is
+[34828630607](https://github.com/Elinfiny/HestiaRelay/actions/runs/34828630607),
+four successful jobs at `df4d8cf`. Complete manual Brave playback of the current
+narrated video was reported with presentation, captions and sound working. The
+final-readiness branch still requires its own exact-head CI and post-merge main
+CI; their real identifiers belong in Issue #16 after they exist.
 
 Primary tooling references, checked 2026-09-13:
 [Gitleaks](https://github.com/gitleaks/gitleaks),

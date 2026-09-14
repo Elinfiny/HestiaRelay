@@ -114,6 +114,7 @@ print(json.dumps(notices, indent=2))
                 "artifact_secrets",
                 "python_advisories",
                 "build_advisories",
+                "source_static_analysis",
                 "npm_advisories",
                 "image_scan",
                 "sbom",

@@ -1,8 +1,8 @@
 # Competition and presentation audit
 
-Reviewed September 14, 2026 UTC, from main
-`74f880047d520e3ae5eb48d6c25743bfa5d4ffea`, on
-`feature/narrated-video-publication-v1`. This is an executor self-review,
+Reviewed September 14, 2026 UTC, from protected main
+`df4d8cf54e37dc674c18350b95e0cd0900e7de12`, on
+`feature/final-submission-readiness-v1`. This is a project self-review,
 not independent certification or a completed entry.
 
 ## Sources and deadline
@@ -32,8 +32,8 @@ security receipts is an internal audit expiry, not the contest deadline.
 | MCP route, if claimed | SDK/TCP and Inspector proof negotiate 2025-11-25 over Streamable HTTP. | Implemented in addition to the simulation; do not imply live Alexa onboarding or remote multi-household authorization. |
 | Public source and open-source license | Public repository, README/run instructions, MIT LICENSE and detected license metadata. | Verified at baseline; fresh PR/main CI verifies the delivered source. |
 | English-accessible presentation | English app, story, instructions, narration and burned-in captions. | Exact narrated render accepted and published; Studio later confirmed the selectable English track Published. |
-| Working public video under three minutes | [Published 87.84-second narrated YouTube recording](https://www.youtube.com/watch?v=NC2oy4x9Xdw); Studio and the public watch page show the expected title, channel and 1:28 duration. | PASS, human-reported: the creator played the narrated video to the end in Brave and reported visible presentation/subtitles, audible sound and no problem. This is not executor telemetry; the original's evidence is not transferred. |
-| Video material rights | Original app capture, fictional data, no added music or borrowed promotional footage. New stock narration has pinned model provenance and notices. | Technical provenance reviewed; creator's final rights/representation declaration remains required. |
+| Working public video under three minutes | [Published 87.84-second narrated YouTube recording](https://www.youtube.com/watch?v=NC2oy4x9Xdw); Studio and the public watch page show the expected title, channel and 1:28 duration. | PASS, human-reported: full Brave playback reached the end with visible presentation/subtitles, audible sound and no observed problem. This is not automated stream telemetry. |
+| Video material rights | Original app capture, fictional data, no added music or borrowed promotional footage. Stock narration has pinned model provenance and notices. | Technical provenance reviewed; the entrant's final rights/representation declaration remains required. |
 | Product feedback for tools used | [Tool-by-tool notes](PRODUCT_FEEDBACK.md) cover use, onboarding, what worked, problems and reuse decisions. | Expanded from the earlier grouped draft; copy the final factual version into the required field. |
 | Track and mini-challenge selection | Alexa+ primary; AWS Builder and Open Source intended. | Selection in the actual form is not yet verified. |
 | AWS Builder explanation and feedback | Optional Converse adapter and one historical Nova Micro call; usage, source and cleanup receipts. | Real but narrow evidence. No new invocation, current cloud hosting or broad service adoption is claimed. |
@@ -64,7 +64,9 @@ No new contractual acceptance or submission has been performed by this audit.
 | Repository About implied broader AWS orchestration. | Changed to “Household plans that persist across conversations: an Alexa+ simulation with real MCP and exact consent.” | GitHub repository API readback confirmed the saved value. |
 | Checklist implied AgentCore/Strands and an end-to-end live AWS demo were required. | Distinguish official requirements, implemented proof and optional future work. | Fresh official rules/resources comparison. |
 | Feedback grouped several tools without answering each requested dimension. | Expanded per-tool feedback, with limitations grounded in the actual work. | Source/dependency/workflow inventory comparison. |
-| Public footage contained a draft-review footer and had no narration. | Preserve the accepted original; create a separately identified narrated version with a clean caption band. | Source hash, scene timing, audio and frame verification in the narration receipt; creator acceptance and Public publication are recorded separately. |
+| Earlier footage contained a draft-review footer and had no narration. | Keep it out of the judge path and publish a separately identified narrated version with a clean caption band. | Source hash, scene timing, audio and frame verification in the narration receipt; the narrated video is Public and the earlier version is Unlisted. |
+| Python source had six Bandit findings around a controlled Git subprocess and a fixed temporary marker. | Use an absolute Git path, keep only narrow documented suppressions for fixed arguments and move the replay marker into the build checkout. Add Bandit to the release gate. | Local Bandit report must contain zero findings; exact-head CI preserves the JSON report. |
+| GitHub emitted Node.js 20 deprecation warnings for older action releases. | Move each action to its current immutable Node.js 24 commit without increasing permissions. | Exact-head CI must run the four protected checks without that deprecation path. |
 | Studio labels the separate title-and-description language row Romanian. | Preserve the already-saved English public copy and record the hidden classification for final metadata review. | Public and Studio readbacks confirm English text; the video-language and subtitle rows are English. |
 
 ## Technical and supply-chain audit scope
@@ -77,9 +79,9 @@ directory, and makes no network call or publication request. Model downloads
 are public and documented separately. Media dependencies are excluded from the
 application image and audited separately.
 
-The baseline main CI is [34789675472](https://github.com/Elinfiny/HestiaRelay/actions/runs/34789675472),
-four successful jobs at `74f8800`. Baseline application evidence is 150 passing
-tests and 98.11% coverage. This package requires its own Ruff, tests, browser/
+The baseline main CI is [34828630607](https://github.com/Elinfiny/HestiaRelay/actions/runs/34828630607),
+four successful jobs at `df4d8cf`. Baseline application evidence is 150 passing
+tests and 98.11% coverage. This package requires its own Ruff, Bandit, tests, browser/
 container/proof jobs, advisory/secret reports, diff audit and post-merge CI;
 exact new results belong in the closing Issue #16 receipt, not a guessed SHA here.
 
