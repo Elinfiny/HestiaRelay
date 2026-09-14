@@ -1,6 +1,6 @@
 # See HestiaRelay work
 
-[Watch the 1:28 demonstration](https://www.youtube.com/watch?v=_YTQcGxBMrA),
+[Watch the 1:28 narrated demonstration](https://www.youtube.com/watch?v=NC2oy4x9Xdw),
 then try the [Python setup](../README.md#local-setup) or
 [Docker instructions](CONTAINER_GUIDE.md). No AWS account is needed for the
 default demonstration.
@@ -59,10 +59,13 @@ the documented Python dependencies, Chromium and FFmpeg are installed. It adds
 captions outside the application image; it does not inject application data or
 responses. CI preserves the recording, actual MCP output, screenshots and hashes.
 
-The accepted original's exact identity and complete signed-out Brave viewing
-report are in the [publication record](VIDEO_PUBLICATION.md). The separate
-automated YouTube check stopped at a bot challenge; that failed result remains
-in the [playback receipt](evidence/video-playback-20260913.json).
+The narrated demonstration's exact identity and publication readback are in the
+[publication record](VIDEO_PUBLICATION.md). The accepted silent original and its
+complete signed-out Brave viewing report remain in the historical record. The
+separate automated YouTube check for that original stopped at a bot challenge;
+that failed result remains in the
+[playback receipt](evidence/video-playback-20260913.json) and is not attributed
+to the narrated video.
 GitHub artifact downloads may require sign-in; the public video above is the
 viewing route. The [requirements audit](COMPETITION_AUDIT.md) tracks final
 submission readiness.

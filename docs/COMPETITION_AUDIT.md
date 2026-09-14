@@ -1,8 +1,8 @@
 # Competition and presentation audit
 
-Reviewed September 13, 2026 UTC (September 14 in Bucharest), from main
-`bd1bef108152b1faaaaaee6c9fc3966905acfd43`, on
-`feature/judge-presentation-audit-v1`. This is an executor self-review,
+Reviewed September 14, 2026 UTC, from main
+`74f880047d520e3ae5eb48d6c25743bfa5d4ffea`, on
+`feature/narrated-video-publication-v1`. This is an executor self-review,
 not independent certification or a completed entry.
 
 ## Sources and deadline
@@ -31,8 +31,8 @@ security receipts is an internal audit expiry, not the contest deadline.
 | Working Alexa+ entry | Guided browser simulation uses the real application and persistent household service. | The rules expressly allow a simulation alternative. A live Alexa+ integration is not required for this route. |
 | MCP route, if claimed | SDK/TCP and Inspector proof negotiate 2025-11-25 over Streamable HTTP. | Implemented in addition to the simulation; do not imply live Alexa onboarding or remote multi-household authorization. |
 | Public source and open-source license | Public repository, README/run instructions, MIT LICENSE and detected license metadata. | Verified at baseline; fresh PR/main CI verifies the delivered source. |
-| English-accessible presentation | English app, story, instructions, captions and prepared narration. | Existing public recording is accepted; new audio candidate requires final visual/listening acceptance. |
-| Working public video under three minutes | Published 87.84-second YouTube recording; complete signed-out viewing and readable English reported in Brave. | Original passes the approved human method. Hosted bot-gate failure remains a failure; a new local render is not yet public. |
+| English-accessible presentation | English app, story, instructions, narration and burned-in captions. | Exact narrated render accepted and published; Studio later confirmed the selectable English track Published. |
+| Working public video under three minutes | [Published 87.84-second narrated YouTube recording](https://www.youtube.com/watch?v=NC2oy4x9Xdw); Studio and the public watch page show the expected title, channel and 1:28 duration. | Public metadata passes. Complete streamed playback of this new video remains a separate evidence gate; the original's human result and hosted bot-gate failure are not transferred. |
 | Video material rights | Original app capture, fictional data, no added music or borrowed promotional footage. New stock narration has pinned model provenance and notices. | Technical provenance reviewed; creator's final rights/representation declaration remains required. |
 | Product feedback for tools used | [Tool-by-tool notes](PRODUCT_FEEDBACK.md) cover use, onboarding, what worked, problems and reuse decisions. | Expanded from the earlier grouped draft; copy the final factual version into the required field. |
 | Track and mini-challenge selection | Alexa+ primary; AWS Builder and Open Source intended. | Selection in the actual form is not yet verified. |
@@ -60,11 +60,12 @@ No new contractual acceptance or submission has been performed by this audit.
 | Finding | Correction | Verification |
 | --- | --- | --- |
 | README called the accepted public video a draft awaiting approval. | Present the working dinner story and existing public demo; technical review history is linked separately. | Diff review and current publication receipts. |
-| Public description exposed internal “owner accepted” language. | Saved conversational English focused on the demonstration, with accurate simulation and consent limits. | Separate Studio page read back the exact [description](YOUTUBE_DESCRIPTION.txt), with Save disabled. |
+| Public description exposed internal approval language. | Saved conversational English focused on the demonstration, with accurate simulation and consent limits. | Separate Studio page read back the exact [description](YOUTUBE_DESCRIPTION.txt), with Save disabled. |
 | Repository About implied broader AWS orchestration. | Changed to “Household plans that persist across conversations: an Alexa+ simulation with real MCP and exact consent.” | GitHub repository API readback confirmed the saved value. |
 | Checklist implied AgentCore/Strands and an end-to-end live AWS demo were required. | Distinguish official requirements, implemented proof and optional future work. | Fresh official rules/resources comparison. |
 | Feedback grouped several tools without answering each requested dimension. | Expanded per-tool feedback, with limitations grounded in the actual work. | Source/dependency/workflow inventory comparison. |
-| Public footage contained a draft-review footer and had no narration. | Preserve the accepted original; prepare a separately identified narrated candidate with a clean caption band. Future recordings also use a product-focused closing caption. | Source hash, scene timing, audio and frame verification in the narration receipt; final human review remains open. |
+| Public footage contained a draft-review footer and had no narration. | Preserve the accepted original; create a separately identified narrated version with a clean caption band. | Source hash, scene timing, audio and frame verification in the narration receipt; creator acceptance and Public publication are recorded separately. |
+| Studio labels the separate title-and-description language row Romanian. | Preserve the already-saved English public copy and record the hidden classification for final metadata review. | Public and Studio readbacks confirm English text; the video-language and subtitle rows are English. |
 
 ## Technical and supply-chain audit scope
 
@@ -76,8 +77,8 @@ directory, and makes no network call or publication request. Model downloads
 are public and documented separately. Media dependencies are excluded from the
 application image and audited separately.
 
-The baseline main CI is [34787002311](https://github.com/Elinfiny/HestiaRelay/actions/runs/34787002311),
-four successful jobs at `bd1bef1`. Baseline application evidence is 150 passing
+The baseline main CI is [34789675472](https://github.com/Elinfiny/HestiaRelay/actions/runs/34789675472),
+four successful jobs at `74f8800`. Baseline application evidence is 150 passing
 tests and 98.11% coverage. This package requires its own Ruff, tests, browser/
 container/proof jobs, advisory/secret reports, diff audit and post-merge CI;
 exact new results belong in the closing Issue #16 receipt, not a guessed SHA here.
@@ -90,16 +91,18 @@ broadened or extended. Main currently reports no GitHub-enforced branch
 protection. The executor uses guarded PR merges and reads CI, but this does
 not substitute for a provider-enforced repository policy.
 
-No new AWS operation, credential, account permission, charge, upload, channel
-change or Devpost edit is included. No private project material was imported.
-Historical failed playback evidence and approvals retain their original hashes.
+This follow-up includes one authorized YouTube upload and Public publication on
+the existing channel. It includes no new AWS operation, credential, permission
+expansion, charge, other channel change or Devpost edit. No private project
+material was imported. Historical failed playback evidence and approvals retain
+their original hashes.
 
 ## Exit decision
 
-This package can establish technical and editorial readiness of the reviewed
-candidate. **Final submission readiness is still pending** until the exact
-narrated candidate is accepted (or the existing accepted recording is retained),
-private eligibility/rights declarations are completed, live rules and expiring
-security evidence are refreshed, and the actual form is submitted and read back.
+This package establishes acceptance and publication of the narrated candidate.
+**Final submission readiness is still pending** until the new public stream is
+completely observed, private eligibility/rights declarations are completed,
+live rules and expiring security evidence are refreshed, and the actual form is
+submitted and read back.
 These are concrete remaining gates, not a prediction about organizer acceptance
 or winning. Issue #16 stays OPEN.

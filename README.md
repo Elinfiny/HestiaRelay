@@ -6,7 +6,7 @@ Dinner plans change between conversations. HestiaRelay keeps the guest list,
 budget, preferences and unfinished tasks together, so the next conversation
 starts with what you already know.
 
-[Published demonstration — 1:28, English captions](https://www.youtube.com/watch?v=_YTQcGxBMrA).
+[Published demonstration — 1:28, English narration and captions](https://www.youtube.com/watch?v=NC2oy4x9Xdw).
 See three separate sessions, a real server restart and decisions that stay with
 the plan. This working prototype is a **guided Alexa+ web simulation** backed by
 a real MCP server. It runs without AWS credentials. There is no live Alexa+

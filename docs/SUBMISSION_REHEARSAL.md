@@ -6,11 +6,11 @@ This is a repository checklist, not a completed submission. Devpost Project
 Details story and video fields remain untouched.
 
 The [complete requirement audit](COMPETITION_AUDIT.md) is the current checklist.
-The [English narrated candidate](NARRATION_GUIDE.md) is separately prepared for
-final review. Its hash and technical checks are in the
-[narration receipt](evidence/narration-20260913.json). Until that new candidate is
-accepted and published, the existing public recording below remains the
-submission video reference. Its previous playback result applies only to it.
+The [English narrated candidate](NARRATION_GUIDE.md) was accepted and published
+after its hash and technical checks were recorded in the
+[narration receipt](evidence/narration-20260913.json). It is now the intended
+submission video reference. The original recording below remains preserved; its
+previous playback result applies only to that original.
 
 ## Existing accepted recording
 
@@ -22,7 +22,7 @@ submission video reference. Its previous playback result applies only to it.
   only four documentation files differ between that head and merged main.
 - Duration: **87.84 seconds**. Audio: none; English captions.
 - MP4 SHA-256: `95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
-- Owner visual decision: **ACCEPTED on 2026-09-13**; see the
+- Creator visual decision: **ACCEPTED on 2026-09-13**; see the
   [approval receipt](evidence/video-approval-20260913.json). A later CI recording
   is a different artifact and must not silently replace this candidate.
 
@@ -71,12 +71,12 @@ eligibility and final acceptance remain organizer decisions.
 | --- | --- |
 | Primary track | Alexa+; guided text simulation with an additional working MCP server |
 | Source and license | Public [repository](https://github.com/Elinfiny/HestiaRelay), MIT; anonymous repository/README/license reads pass in CI |
-| Working demonstration | Exact candidate above; owner acceptance recorded |
-| Public video | CONFIRMED Public: [same accepted recording](https://www.youtube.com/watch?v=_YTQcGxBMrA); original SRT saved ([receipt](evidence/video-publication-20260913.json)) |
-| Complete signed-out playback | PASS, human-reported by the owner in Brave, with readable English text; owner-approved replacement method and failed hosted bot-gate result are separate in the [playback receipt](evidence/video-playback-20260913.json) |
+| Working demonstration | Exact candidate above; creator acceptance recorded |
+| Public video | CONFIRMED Public: [accepted narrated recording](https://www.youtube.com/watch?v=NC2oy4x9Xdw); publication and caption state in the [new receipt](evidence/narrated-video-publication-20260914.json) |
+| Complete public playback | PENDING for the new narrated stream. The original has a separate human-reported signed-out Brave PASS; its failed hosted bot-gate result remains in the [historical playback receipt](evidence/video-playback-20260913.json). |
 | Product feedback | Evidence-based [draft notes](PRODUCT_FEEDBACK.md); no Devpost field written |
 | AWS Builder | One historical Bedrock Converse on 2026-09-12; original source and usage in [receipt](evidence/bedrock-20260912.json) |
-| Open Source | Owner **Elinfiny**; [implementation contribution PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), [release contribution PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15), same public repository |
+| Open Source | Creator **Elinfiny**; [implementation contribution PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), [release contribution PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15), same public repository |
 | Four judging criteria | [Evidence map](JUDGE_EVIDENCE_MAP.md); household benefit remains an unmeasured hypothesis |
 | Final story, media and submission | Story and video metadata prepared from stable behavior; Devpost untouched |
 | Personal eligibility / representation | UNKNOWN; verify privately at the actual submission gate, never infer from a username |
@@ -86,17 +86,21 @@ Mini-challenge targets are AWS Builder and Open Source. The rules limit awards
 to one primary-track prize and one mini-challenge prize per project; targeting
 both does not imply eligibility to receive both mini-challenge prizes.
 
-## Publication handoff after the visual decision
+## Publication result after the visual decision
 
-The owner's acceptance is recorded against the MP4 digest above. If revisions are
-requested, retain this candidate and produce a separately identified replacement.
-The permitted YouTube upload is published Public under the exact publication
-and upload-terms authorization already received. Studio recovery preserved the
-same video and metadata. The owner subsequently confirmed viewing to the end,
-signed out in Brave, with readable English text. This accepted human observation
-does not turn the hosted bot-gate failure into an automated PASS or certify a
-selectable caption track. A new narrated candidate needs its own exact final
-review and publication readback before replacing this reference.
+The creator accepted the narrated MP4 digest and explicitly approved publication.
+It was uploaded once to the existing channel and published Public as
+`NC2oy4x9Xdw`; YouTube reported complete processing and no copyright issue. The
+natural English description contains no internal approval language. English is
+set as the video language, and the exact transcript was saved through YouTube
+auto-sync after the native SRT transfer control timed out. Studio first reported
+that processing could take hours, then independently showed the selectable
+English track Published. Burned-in English captions remain in the video itself.
+
+The original's signed-out Brave viewing does not turn the hosted bot-gate
+failure into an automated PASS and does not certify the new stream. The new
+narrated version needs its own complete public playback observation before final
+submission. Any later replacement would require a new exact review and receipt.
 Never replace a failed upload with a claim of publication or use CI download
 access as evidence of public playback. Any platform authentication or new
 publication permission gate must concern the prepared, exact action.

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-09-14T07:10:44Z",
+  "repository": {
+    "baseline_main_sha": "74f880047d520e3ae5eb48d6c25743bfa5d4ffea",
+    "baseline_ci_run": 34789675472,
+    "baseline_ci_jobs": {
+      "expected": 4,
+      "completed_successfully": 4,
+      "head_sha": "74f880047d520e3ae5eb48d6c25743bfa5d4ffea"
+    }
+  },
+  "approval": {
+    "reported_text": "Aprob publicarea",
+    "english_meaning": "I approve publication",
+    "scope": "the exact narrated candidate identified by the source SHA-256",
+    "provenance": "creator report in the project conversation",
+    "limit": "acceptance and publication authorization, not public-stream playback telemetry"
+  },
+  "source": {
+    "filename": "hestiarelay-narrated.mp4",
+    "size_bytes": 5138988,
+    "duration_seconds": 87.84,
+    "sha256": "e35a707ee24b8c39ad4d2e50ff21b8ec9f1ed1ae5e66ea4de7e284a3dee3d73c",
+    "video": "H.264, 1440x1120",
+    "audio": "AAC, 48 kHz mono; stock synthetic English narration",
+    "burned_in_english_captions": true,
+    "technical_receipt": "narration-20260913.json"
+  },
+  "youtube": {
+    "channel_name": "Tomescu Marius",
+    "channel_id": "UCFNZRod5B5_zl5U2C6UbBGg",
+    "video_id": "NC2oy4x9Xdw",
+    "short_url": "https://youtu.be/NC2oy4x9Xdw",
+    "watch_url": "https://www.youtube.com/watch?v=NC2oy4x9Xdw",
+    "title": "HestiaRelay | A household plan that survives the next conversation",
+    "visibility": "Public",
+    "published_date_display": "Sep 14, 2026",
+    "duration_display": "1:28",
+    "upload_complete": true,
+    "processing_complete": true,
+    "copyright_check": "No issues found",
+    "audience": "not made for kids",
+    "paid_promotion": false,
+    "ai_use_disclosed": true,
+    "video_language": "English",
+    "title_and_description_text_language": "English",
+    "studio_title_and_description_language_label": "Romanian"
+  },
+  "captions": {
+    "source_srt_sha256": "0362d1c2598e18a4dabfccfc12a37c2d3bf0cc1dafd45392f6c2b1bd7b80bc3a",
+    "native_srt_import": "not completed; two file-chooser transfers timed out and fresh readback showed no accepted file",
+    "saved_method": "YouTube Auto-sync from the exact twelve-scene English transcript",
+    "studio_readback": "Changes saved, processing may take a few hours",
+    "public_selectable_track_at_initial_readback": "unavailable while processing",
+    "subsequent_studio_readback_utc": "2026-09-14T07:26:27Z",
+    "subsequent_studio_status": "English (video language) — Published Sep 14, 2026",
+    "selectable_english_track_final_status": "Published",
+    "burned_in_english_captions": true,
+    "subsequent_public_player_readback_utc": "2026-09-14T07:35:28Z",
+    "public_player_caption_control_at_subsequent_readback": "unavailable while media readyState remained 0"
+  },
+  "public_readback": {
+    "post_redirect_url": "https://www.youtube.com/watch?v=NC2oy4x9Xdw",
+    "matching_title": true,
+    "matching_channel": true,
+    "duration_seconds_reported_by_player": 88,
+    "ai_disclosure_visible": true,
+    "authenticated_creator_session": true,
+    "initial_media_state": {
+      "current_time_seconds": 0,
+      "ready_state": 0,
+      "muted": false,
+      "paused": false,
+      "media_error": null
+    },
+    "complete_streamed_playback": "not proven by this readback"
+  },
+  "history": {
+    "original_video_id": "_YTQcGxBMrA",
+    "original_source_sha256": "95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd",
+    "original_preserved": true,
+    "original_human_playback_result_transferred": false,
+    "duplicate_video_uploads": 0
+  },
+  "external_effects": {
+    "video_uploads_in_this_action": 1,
+    "publish_clicks": 1,
+    "devpost_edits": 0,
+    "aws_calls_or_resources": 0,
+    "channel_permission_or_identity_changes": 0
+  }
+}

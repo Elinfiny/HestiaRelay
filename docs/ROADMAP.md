@@ -94,11 +94,11 @@ records have narrow non-reachability decisions that expire September 27, 2026.
 
 **Gate:** submission checklist 100% PASS before Devpost submit.
 
-Current package: `feature/judge-presentation-audit-v1`, tracked in Issue #16.
+Current follow-up: `feature/narrated-video-publication-v1`, tracked in Issue #16.
 Natural English story, public description, complete requirements mapping,
-tool-by-tool feedback and a separate narrated candidate are prepared.
+tool-by-tool feedback and the accepted narrated demonstration are prepared.
 See `COMPETITION_AUDIT.md` for verified items and remaining final gates.
-Final visual/listening acceptance, private eligibility/rights declarations,
-refreshed expiring audit evidence and the received Devpost submission remain
-open. No public hosting, new AWS operation or additional framework is required
-to complete the chosen simulation route.
+Narrated publication is complete. Complete public-stream observation, private
+eligibility/rights declarations, refreshed expiring audit evidence and the
+received Devpost submission remain open. No public app hosting, new AWS operation
+or additional framework is required to complete the chosen simulation route.
