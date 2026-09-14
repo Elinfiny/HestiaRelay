@@ -79,6 +79,11 @@
       "finding": "Historical silent-video and internal approval wording was too prominent in judge-facing documentation",
       "change": "Current narrated video is the sole judge path; the older Unlisted recording is reduced to a factual audit note and internal approval wording is absent from current submission copy",
       "result": "Stale judge-wording scan passed"
+    },
+    {
+      "finding": "The optional hosted playback script still targeted the earlier Unlisted recording and its pull-request trigger would produce a known YouTube bot-gate failure unrelated to application correctness",
+      "change": "Point the script at the current narrated video and retain it as an explicit manual evidence workflow rather than a branch or pull-request gate",
+      "result": "No bot check is bypassed and no blocked observation can be represented as PASS"
     }
   ],
   "competition_rules": {

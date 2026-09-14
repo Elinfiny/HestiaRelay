@@ -16,7 +16,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-URL = "https://www.youtube.com/watch?v=_YTQcGxBMrA"
+URL = "https://www.youtube.com/watch?v=NC2oy4x9Xdw"
 TITLE = "HestiaRelay | A household plan that survives the next conversation"
 OUTPUT = Path("qa-public-video")
 MEDIA = """() => {

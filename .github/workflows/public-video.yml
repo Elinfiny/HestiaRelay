@@ -1,10 +1,6 @@
 name: Public video playback
 
 on:
-  pull_request:
-    paths:
-      - scripts/verify_public_video.py
-      - .github/workflows/public-video.yml
   workflow_dispatch:
 
 permissions:
