@@ -1,22 +1,21 @@
 # HestiaRelay work state
 
 Canonical main at the start of this follow-up:
-`74f880047d520e3ae5eb48d6c25743bfa5d4ffea` (PR #20).
-Main CI [34789675472](https://github.com/Elinfiny/HestiaRelay/actions/runs/34789675472)
-is verified SUCCESS, all four jobs at that exact SHA. The earlier publication,
+`e65c978d9bc9d3f4734e94eee3a330cbae928289` (PR #21).
+Main CI [34819059218](https://github.com/Elinfiny/HestiaRelay/actions/runs/34819059218)
+is verified SUCCESS, all four jobs at that exact SHA. The narrated publication,
 queue recovery and presentation-audit packages are integrated. The completed
 recovery watcher is disabled and must not be resumed.
 
-Current branch: `feature/narrated-video-publication-v1`, from the canonical main
-above. This follow-up's final head, merge SHA and post-merge CI belong in
+Current branch: `feature/playback-and-protection-audit-v1`, from the canonical
+main above. This follow-up's final head, merge SHA and post-merge CI belong in
 [Issue #16](https://github.com/Elinfiny/HestiaRelay/issues/16), preserving this
 at-writing checkpoint instead of guessing a self-referential future SHA.
 
 ## Current phase
 
-Phase 5: publish the accepted narrated demonstration and keep the submission
-inventory exact. Issue #16 stays OPEN. The creator explicitly accepted the exact
-narrated candidate and approved publication. Private eligibility, refreshed
+Phase 5: close the narrated playback evidence and establish provider-enforced
+protection for `main`. Issue #16 stays OPEN. Private eligibility, refreshed
 security evidence and final submission remain separate gates. Devpost Project
 Details story and video fields are untouched.
 
@@ -38,6 +37,9 @@ Completed before this follow-up PR:
   was saved through YouTube Auto-sync. Studio first reported processing, then
   independently confirmed the selectable English track Published. Burned-in
   English captions remain visible in the video itself.
+- The creator subsequently played the narrated public video to the end in Brave
+  and reported visible presentation and subtitles, audible sound and no observed
+  problem. This is PASS, human-reported, not executor media telemetry.
 - Studio still labels the separate title-and-description language row Romanian,
   although both saved fields and the video itself are English. The public copy
   remains English; recheck this hidden classification at the final metadata gate.
@@ -70,7 +72,10 @@ Measured app-region SSIM is 0.999246 after re-encoding; audio measures -16.37
 LUFS and -1.41 dBFS true peak. Selected captions/frames were inspected. The
 creator accepted this exact file and authorized publication. YouTube confirms it
 Public as `NC2oy4x9Xdw`; the initial authenticated watch-page readback matched
-title, channel and duration but did not prove a complete streamed playback.
+title, channel and duration but did not prove complete playback. A later,
+separate creator report now records complete Brave playback with presentation,
+sound and subtitles working through the end. Authentication state and measured
+media ranges were not supplied for that observation.
 
 ## Validated application and audit limits
 
@@ -106,10 +111,10 @@ a narrowly documented AWS Builder entry. Live Alexa+, AgentCore, Strands,
 public application hosting and measured real-user impact are not demonstrated.
 No extra cloud framework or new AWS call is necessary for this chosen route.
 
-Finish this follow-up's diff audit, exact-head four-job CI and guarded PR merge;
-verify its post-merge main CI and record actual results in Issue #16. Recheck the
-new public stream and selectable captions without transferring the original
-video's human playback evidence. Preserve both videos and their separate history.
+Finish this follow-up's playback receipt, provider-enforced `main` protection,
+diff audit, exact-head four-job CI and guarded PR merge; verify post-merge main
+CI and record actual results in Issue #16. Preserve both videos and their
+separate history.
 
 Then finish the actual entry: privately verify eligibility/representation/
 rights and account registration, recheck live rules and links, refresh expiring

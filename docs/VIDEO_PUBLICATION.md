@@ -1,10 +1,10 @@
 # Video publication package
 
 Updated 2026-09-14. This package preserves the accepted original and records the
-separately accepted narrated publication. **The narrated video is Public; its
-complete streamed playback is not yet claimed.** The original's human Brave
-playback and hosted automated bot-gate result remain historical evidence only.
-Devpost story/video fields remain untouched.
+separately accepted narrated publication. **The narrated video is Public and its
+complete playback is PASS under a creator-reported Brave observation.** The
+original's separate human Brave playback and hosted automated bot-gate result
+remain historical evidence only. Devpost story/video fields remain untouched.
 
 ## Current narrated demonstration
 
@@ -33,6 +33,13 @@ processing was pending. A later independent Studio readback showed **English
 acceptance and Public metadata are not complete streamed-playback telemetry.
 The full technical and evidence boundary is in
 [the narrated publication receipt](evidence/narrated-video-publication-20260914.json).
+
+After publication, the creator reported playing this narrated video all the way
+to the end in Brave. The presentation remained visible, audio was audible,
+subtitles were visible and no problem was observed. This closes the playback
+gate as **PASS, human-reported** for video `NC2oy4x9Xdw`. Authentication state,
+browser version and measured media ranges were not supplied, so this is not
+presented as executor telemetry or independent third-party assurance.
 
 Studio labels the visible title-and-description row Romanian even though both
 saved fields are English and the video's language is English. This hidden
@@ -200,5 +207,5 @@ voice, output and verification limits.
 
 The exact narrated candidate was accepted, uploaded once and published as the
 current demonstration. Its metadata describes English narration and captions.
-The original remains Public and preserved as history; its human playback result
-is not transferred to the narrated video.
+The original remains Public and preserved as history; it was not deleted or
+republished. Its human playback result is not transferred to the narrated video.
