@@ -87,9 +87,11 @@ The retained [release audit](RELEASE_AUDIT.md) is scoped to a fictional,
 single-household prototype. Its image scan contains unfixed high-severity
 package records and exact, expiring non-reachability decisions. It is not a
 zero-CVE claim. Their expiry remains **September 27, 2026**; no exception was
-broadened or extended. Main currently reports no GitHub-enforced branch
-protection. The executor uses guarded PR merges and reads CI, but this does
-not substitute for a provider-enforced repository policy.
+broadened or extended. GitHub ruleset **Protect main** (ID `23281588`) is active
+for the default branch and requires the four repository CI checks from GitHub
+Actions, an up-to-date pull request, resolved review conversations, deletion
+protection and force-push protection, with no bypass actor. The effective-state
+readback is recorded in [the branch-protection receipt](BRANCH_PROTECTION.md).
 
 This follow-up includes one authorized YouTube upload and Public publication on
 the existing channel. It includes no new AWS operation, credential, permission

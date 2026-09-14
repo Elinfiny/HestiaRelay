@@ -207,5 +207,8 @@ voice, output and verification limits.
 
 The exact narrated candidate was accepted, uploaded once and published as the
 current demonstration. Its metadata describes English narration and captions.
-The original remains Public and preserved as history; it was not deleted or
-republished. Its human playback result is not transferred to the narrated video.
+After the narrated version was accepted, the original was changed once from
+Public to **Unlisted** and preserved as history. A fresh independent Studio page
+read back `Visibility / Unlisted` at `2026-09-14T09:22:09.385Z`. It was not
+deleted or republished, and its human playback result is not transferred to the
+narrated video.

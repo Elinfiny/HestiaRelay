@@ -14,8 +14,8 @@ at-writing checkpoint instead of guessing a self-referential future SHA.
 
 ## Current phase
 
-Phase 5: close the narrated playback evidence and establish provider-enforced
-protection for `main`. Issue #16 stays OPEN. Private eligibility, refreshed
+Phase 5: close the narrated playback evidence and verify provider-enforced
+delivery through `main`. Issue #16 stays OPEN. Private eligibility, refreshed
 security evidence and final submission remain separate gates. Devpost Project
 Details story and video fields are untouched.
 
@@ -49,13 +49,17 @@ Completed before this follow-up PR:
 
 ## Exact videos and decision boundary
 
-The preserved original public video is
+The preserved original video, now **Unlisted**, is
 [HestiaRelay's accepted silent demonstration](https://www.youtube.com/watch?v=_YTQcGxBMrA),
 87.84 seconds, silent with English captions, SHA-256
 `95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
-The original SRT and historical capture metadata remain unchanged. The creator
-reported viewing it to the end, signed out in Brave, with readable English text.
-This is human-reported acceptance, not executor media telemetry.
+Its visibility was changed once from Public to Unlisted on 2026-09-14 after the
+narrated version was accepted. A fresh independent Studio page read back
+`Visibility / Unlisted` at `2026-09-14T09:22:09.385Z`; the video was not deleted
+or re-uploaded. The original SRT and historical capture metadata remain
+unchanged. The creator reported viewing it to the end, signed out in Brave,
+with readable English text. This is human-reported acceptance, not executor
+media telemetry.
 
 Hosted playback run 34749218515 attempt 2 remains FAILURE/BLOCKED at YouTube's
 real bot gate. Its JSON and screenshot are preserved; no bypass or additional
@@ -92,8 +96,11 @@ image's raw findings: 0 critical, 44 high, 48 medium, 57 low and 1 unknown.
 Nine exact source/component/control-bound decisions classify 45 high/unknown
 records as unreachable in the reviewed runtime; they expire **2026-09-27**.
 This is neither a zero-CVE image nor independent third-party certification.
-Refresh them before final submission. Main reports no provider-enforced branch
-protection; the guarded PR/CI process remains required.
+Refresh them before final submission. GitHub ruleset **Protect main** (ID
+`23281588`) is active for the default branch. It requires the four GitHub
+Actions checks, an up-to-date pull request and resolved review conversations,
+blocks deletion and force pushes, and has no bypass actor. GitHub reads canonical
+main as `protected: true`; see [the provider receipt](BRANCH_PROTECTION.md).
 
 No new AWS inference/resource/spending is authorized. The one historical Nova
 Micro Converse call ran September 12 at source
@@ -111,10 +118,10 @@ a narrowly documented AWS Builder entry. Live Alexa+, AgentCore, Strands,
 public application hosting and measured real-user impact are not demonstrated.
 No extra cloud framework or new AWS call is necessary for this chosen route.
 
-Finish this follow-up's playback receipt, provider-enforced `main` protection,
-diff audit, exact-head four-job CI and guarded PR merge; verify post-merge main
-CI and record actual results in Issue #16. Preserve both videos and their
-separate history.
+Finish this follow-up's evidence update, diff audit, exact-head four-job CI and
+the first merge through the active `main` ruleset; verify post-merge main CI and
+record actual results in Issue #16. Preserve both videos and their separate
+history.
 
 Then finish the actual entry: privately verify eligibility/representation/
 rights and account registration, recheck live rules and links, refresh expiring
