@@ -4,7 +4,7 @@ set -euo pipefail
 out=qa-artifacts/release
 mkdir -p "$out" /tmp/hestia-audit-bin
 python -m venv /tmp/hestia-audit-tools
-/tmp/hestia-audit-tools/bin/pip install pip-audit==2.10.1
+/tmp/hestia-audit-tools/bin/pip install pip-audit==2.10.1 bandit==1.8.6
 curl --fail --silent --show-error --location --max-time 120 -o /tmp/hestia-trivy.tar.gz https://github.com/aquasecurity/trivy/releases/download/v0.74.0/trivy_0.74.0_Linux-64bit.tar.gz
 printf '%s\n' '2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a  /tmp/hestia-trivy.tar.gz' | sha256sum --check
 curl --fail --silent --show-error --location --max-time 120 -o /tmp/hestia-gitleaks.tar.gz https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
@@ -24,6 +24,8 @@ python_status=$?
 python -m pip freeze --all --exclude-editable > "$out/build-requirements.txt"
 /tmp/hestia-audit-tools/bin/pip-audit --strict --disable-pip --no-deps -r "$out/build-requirements.txt" -f json -o "$out/build-advisories.json"
 build_status=$?
+/tmp/hestia-audit-tools/bin/bandit -q -r src -f json -o "$out/source-static-analysis.json"
+source_status=$?
 npm audit --prefix /tmp/hestiarelay-inspector --json > "$out/npm-advisories.json"
 npm_status=$?
 trivy image --scanners vuln --format json --output "$out/image-advisories.json" --exit-code 0 hestiarelay:judge
@@ -32,5 +34,5 @@ trivy image --format cyclonedx --scanners license --license-full --output "$out/
 sbom_status=$?
 trivy --version --format json > "$out/scanner-version.json"
 set -e
-export HESTIA_SCAN_STATUSES="$history_status $artifact_status $python_status $build_status $npm_status $image_status $sbom_status"
+export HESTIA_SCAN_STATUSES="$history_status $artifact_status $python_status $build_status $source_status $npm_status $image_status $sbom_status"
 python scripts/release_inventory.py

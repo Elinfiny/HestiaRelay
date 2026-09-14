@@ -171,6 +171,8 @@ pytest --cov=hestiarelay --cov-report=term-missing
 GitHub Actions runs these checks on PRs and main, plus Chromium at 1440×1000
 and 390×844. The browser suite clicks through the real simulator, tests consent
 and reload, and exports screenshots, traces and console-error evidence.
+The release job also runs Bandit 1.8.6 against Python source and preserves its
+JSON report with the dependency, secret, container and license evidence.
 `tests/test_mcp_http.py` exercises a real SDK client over TCP across separate
 sessions and an actual server-process restart. It prints negotiated protocol
 versions; a target alone is not interoperability evidence.
@@ -180,7 +182,9 @@ See [demo and validation guide](docs/DEMO_GUIDE.md) for precise steps and limits
 ## Explore the project
 
 Start with the [project story](docs/SUBMISSION_STORY.md) and
-[judge evidence map](docs/JUDGE_EVIDENCE_MAP.md). For a closer look:
+[judge evidence map](docs/JUDGE_EVIDENCE_MAP.md). The audited field copy and
+final private-gate checklist are in the
+[submission package](docs/FINAL_SUBMISSION_PACKAGE.md). For a closer look:
 
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — product and technical boundaries
 - [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) — consent, privacy, and execution risks

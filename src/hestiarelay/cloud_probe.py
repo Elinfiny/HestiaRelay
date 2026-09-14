@@ -6,7 +6,9 @@ import hashlib
 import json
 import os
 import re
-import subprocess
+
+# Fixed-argument Git verification is the only subprocess use; no shell or user input.
+import subprocess  # nosec B404
 from collections.abc import Mapping
 from pathlib import Path
 
@@ -15,6 +17,8 @@ from botocore.config import Config
 from botocore.exceptions import BotoCoreError, ClientError
 
 from hestiarelay.aws_probe import run_probe
+
+GIT = "/usr/bin/git"
 
 
 def validate_gate(env: Mapping[str, str], actual_commit: str) -> None:
@@ -47,10 +51,15 @@ def execute(env: Mapping[str, str] | None = None, marker: Path | None = None) ->
     # The default cannot create an AWS client, even outside a Git checkout.
     if env.get("HESTIA_EXECUTION_APPROVED") != "YES":
         raise ValueError("explicit_execution_approval_required")
-    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    # The absolute binary and arguments are constant, not supplied by the caller.
+    commit = subprocess.check_output(  # nosec B603
+        [GIT, "rev-parse", "HEAD"], text=True
+    ).strip()
     validate_gate(env, commit)
-    subprocess.run(
-        ["git", "diff", "--quiet", "HEAD", "--", "src", "requirements-proof.txt"], check=True
+    # The absolute binary and arguments are constant, not supplied by the caller.
+    subprocess.run(  # nosec B603
+        [GIT, "diff", "--quiet", "HEAD", "--", "src", "requirements-proof.txt"],
+        check=True,
     )
     identity = boto3.client(
         "sts",
@@ -58,7 +67,7 @@ def execute(env: Mapping[str, str] | None = None, marker: Path | None = None) ->
         config=Config(connect_timeout=3, read_timeout=12, retries={"max_attempts": 0}),
     ).get_caller_identity()
     verify_identity(env["HESTIA_ROLE_ARN"], identity)
-    marker = Path("/tmp/hestiarelay-proof-attempt") if marker is None else marker
+    marker = Path.cwd() / ".hestiarelay-proof-attempt" if marker is None else marker
     # Re-running the command in this build must not spend again after an ambiguous result.
     with marker.open("x") as attempt:
         attempt.write(env["HESTIA_REQUEST_SHA256"])

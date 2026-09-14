@@ -1,112 +1,60 @@
-# Submission rehearsal — candidate review
+# Submission rehearsal
 
-Updated during the September 13 UTC presentation review for
-[Issue #16](https://github.com/Elinfiny/HestiaRelay/issues/16).
-This is a repository checklist, not a completed submission. Devpost Project
-Details story and video fields remain untouched.
+This is the final dry run, not a completed Devpost submission. The current
+field-ready material is in [FINAL_SUBMISSION_PACKAGE.md](FINAL_SUBMISSION_PACKAGE.md).
 
-The [complete requirement audit](COMPETITION_AUDIT.md) is the current checklist.
-The [English narrated candidate](NARRATION_GUIDE.md) was accepted and published
-after its hash and technical checks were recorded in the
-[narration receipt](evidence/narration-20260913.json). It is now the intended
-submission video reference. The original recording below remains preserved; its
-previous playback result applies only to that original.
+## Judge path
 
-## Existing accepted recording
+1. Open the public [repository](https://github.com/Elinfiny/HestiaRelay) and
+   confirm the MIT license and Quick start.
+2. Watch the public narrated
+   [1:28 demonstration](https://www.youtube.com/watch?v=NC2oy4x9Xdw).
+3. Run the three built-in sessions with deterministic planning; no AWS account
+   is needed.
+4. Inspect the timeline, planner source and consent ledger.
+5. Restart the server with the same SQLite path and confirm that the household
+   and decisions return.
+6. Use the documented MCP client path to read the same household state over
+   Streamable HTTP.
 
-- Merged implementation: `a5180502d7b347ff41c696bc2c5104c91c69d896` (PR #15).
-- Selected recording: CI [34744690053](https://github.com/Elinfiny/HestiaRelay/actions/runs/34744690053),
-  `browser-qa` artifact `10313078678`, `demo/hestiarelay-candidate.mp4`.
-- Original recording checkout: `fae4f056d7d140d04958ce6e29b2ac339227eaa1`.
-  Its implementation head is `5c57917395adf3b247c77f06dcf9338557e826fe`;
-  only four documentation files differ between that head and merged main.
-- Duration: **87.84 seconds**. Audio: none; English captions.
-- MP4 SHA-256: `95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
-- Creator visual decision: **ACCEPTED on 2026-09-13**; see the
-  [approval receipt](evidence/video-approval-20260913.json). A later CI recording
-  is a different artifact and must not silently replace this candidate.
+## Video sequence
 
-The [release receipt](evidence/release-20260913.json) preserves ZIP digests,
-inner-file verification, technical visual review and actual MCP results.
-GitHub may require authentication to download CI artifacts; this is not the
-public video URL required for final submission.
-
-## Watch sequence
-
-| Approximate time | Actual demonstration | Claim supported |
+| Time | What the judge sees | Evidence |
 | --- | --- | --- |
-| 0:07 | Six guests, Friday evening, $120 | A saved household goal |
-| 0:13 | New session adds Ana's nut allergy constraint | Existing context is recovered without resubmitting the goal |
-| 0:19 | New session asks about readiness | Goal, budget, people, preferences and tasks persist |
-| 0:27 | Planner source shown | Deterministic simulation is explicitly identified |
-| 0:33–0:49 | Exact proposal, approval, actual server restart | Scoped consent and state survive restart; nothing is executed |
-| 0:57–1:04 | Changed context and rejected proposal | Earlier approval does not become general permission |
-| 1:11 | Real MCP receipt from the same running household | Streamable HTTP tool call and protocol 2025-11-25 |
+| 0:07 | Six guests, Friday evening and a $120 budget | A saved household goal |
+| 0:13 | A new session adds Ana's nut-allergy constraint | Earlier context is recovered |
+| 0:19 | A third session asks if the household is ready | Goal, people, budget, preferences and tasks persist |
+| 0:27 | Deterministic planner source | The no-credentials path is explicit |
+| 0:33–0:49 | Exact proposal, approval and a real restart | Consent and state survive restart; nothing external executes |
+| 0:57–1:04 | Changed context and rejection | Old consent is not general permission |
+| 1:11 | A real MCP client reads the same household | Streamable HTTP and protocol 2025-11-25 |
 
-## Reproduction handoff
+## Rehearsal verdict
 
-The [README](../README.md) supplies the Python path;
-the [container guide](CONTAINER_GUIDE.md) supplies the non-root Docker path.
-Use fictional details. Default operation requires no AWS credentials. A judge
-can follow the three built-in session buttons and inspect the saved context,
-planner source and consent ledger. Restart with the same SQLite database to
-preserve the household; a new database intentionally starts a new household.
-
-CI independently exercises real MCP/Inspector clients, separate sessions,
-container recreation, desktop/mobile Chromium, authenticated TLS boundaries
-and backup/restore. This evidence does not certify every physical device or a
-screen reader. Optional authenticated judge mode disables remote MCP; local
-MCP interoperability is tested separately. No public app endpoint is claimed.
-
-## Submission acceptance inventory
-
-The [official rules](https://amazonappdev2026.devpost.com/rules), checked
-2026-09-13, allow an Alexa+ simulation. They require an English-compatible
-submission, public source, functioning demonstration, public YouTube/Vimeo
-video, product feedback and the selected track/challenge details. Repository
-and video can support evaluation without public application hosting. Personal
-eligibility and final acceptance remain organizer decisions.
-
-| Item | Current evidence / state |
+| Gate | State |
 | --- | --- |
-| Primary track | Alexa+; guided text simulation with an additional working MCP server |
-| Source and license | Public [repository](https://github.com/Elinfiny/HestiaRelay), MIT; anonymous repository/README/license reads pass in CI |
-| Working demonstration | Exact candidate above; creator acceptance recorded |
-| Public video | CONFIRMED Public: [accepted narrated recording](https://www.youtube.com/watch?v=NC2oy4x9Xdw); publication and caption state in the [new receipt](evidence/narrated-video-publication-20260914.json) |
-| Complete public playback | PASS, human-reported for the narrated stream: the creator played `NC2oy4x9Xdw` to the end in Brave and reported visible presentation and subtitles, audible sound and no observed problem. Authentication state and measured playback ranges were not supplied. The original retains its separate evidence. |
-| Product feedback | Evidence-based [draft notes](PRODUCT_FEEDBACK.md); no Devpost field written |
-| AWS Builder | One historical Bedrock Converse on 2026-09-12; original source and usage in [receipt](evidence/bedrock-20260912.json) |
-| Open Source | Creator **Elinfiny**; [implementation contribution PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), [release contribution PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15), same public repository |
-| Four judging criteria | [Evidence map](JUDGE_EVIDENCE_MAP.md); household benefit remains an unmeasured hypothesis |
-| Final story, media and submission | Story and video metadata prepared from stable behavior; Devpost untouched |
-| Personal eligibility / representation | UNKNOWN; verify privately at the actual submission gate, never infer from a username |
-| Current-source security and CI | Phase 4B evidence is dated and scoped; refresh before final submission; applicability decisions expire **2026-09-27** |
+| English project copy | Ready in repository |
+| Public source and license | PASS |
+| Public narrated video under three minutes | PASS; creator-reported complete Brave playback |
+| Reproducible no-AWS route | PASS |
+| Alexa+ simulation disclosure | PASS |
+| Exact consent and no false side effects | PASS |
+| Product feedback | Prepared |
+| Open Source details | Prepared |
+| AWS Builder details | Prepared; historical one-call scope is explicit |
+| Current four-job CI | Must pass on the final exact branch and merged main |
+| Security evidence | Refresh required after 2026-09-27 |
+| Entrant eligibility and rights | Private declaration required |
+| Devpost form and received receipt | Not yet completed |
 
-Mini-challenge targets are AWS Builder and Open Source. The rules limit awards
-to one primary-track prize and one mini-challenge prize per project; targeting
-both does not imply eligibility to receive both mini-challenge prizes.
+The earlier silent recording is preserved as unlisted technical history and is
+not the submission video. It is not promoted in the judge path.
 
-## Publication result after the visual decision
+## Final protected gate
 
-The creator accepted the narrated MP4 digest and explicitly approved publication.
-It was uploaded once to the existing channel and published Public as
-`NC2oy4x9Xdw`; YouTube reported complete processing and no copyright issue. The
-natural English description contains no internal approval language. English is
-set as the video language, and the exact transcript was saved through YouTube
-auto-sync after the native SRT transfer control timed out. Studio first reported
-that processing could take hours, then independently showed the selectable
-English track Published. Burned-in English captions remain in the video itself.
-
-The original's signed-out Brave viewing does not turn the hosted bot-gate
-failure into an automated PASS and is not transferred to the new stream. The
-narrated version now has its own creator-reported complete Brave playback PASS:
-presentation, sound and subtitles were observed through the end with no reported
-problem. Any later replacement would require a new exact review and receipt.
-Never replace a failed upload with a claim of publication or use CI download
-access as evidence of public playback. Any platform authentication or new
-publication permission gate must concern the prepared, exact action.
-
-Before final submission, recheck the live rules, all mandatory items and every
-external link. Rebuild and rerun the existing gates on the selected source;
-resolve any new findings rather than reusing expired applicability decisions.
-No additional AWS call, resource, charge or public app hosting is included.
+Immediately before submitting, recheck the live rules, deadline and every
+external link; refresh the release evidence; confirm the exact selected track
+and mini-challenges; privately complete the entrant declarations; paste only the
+audited English copy; preview the entry; submit once; and read back the received
+submission. Do not turn a browser timeout, upload acknowledgement or draft save
+into a claim of successful submission.

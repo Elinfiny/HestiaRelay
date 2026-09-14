@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "captured_utc": "2026-09-14T10:28:15Z",
+  "operation": "final-submission-readiness",
+  "repository": "https://github.com/Elinfiny/HestiaRelay",
+  "base_main": "df4d8cf54e37dc674c18350b95e0cd0900e7de12",
+  "branch": "feature/final-submission-readiness-v1",
+  "branch_head": "RECORDED_IN_ISSUE_16_AFTER_PUBLICATION",
+  "baseline_ci": {
+    "run_id": 34828630607,
+    "source_sha": "df4d8cf54e37dc674c18350b95e0cd0900e7de12",
+    "jobs_successful": 4,
+    "jobs_total": 4
+  },
+  "local_validation": {
+    "ruff": "PASS",
+    "pytest": {
+      "status": "PASS",
+      "tests": 150,
+      "statements": 901,
+      "missed": 17,
+      "coverage_percent": 98.11,
+      "warning": "Starlette TestClient imports the deprecated anyio.abc.BlockingPortal alias; non-fatal upstream compatibility warning"
+    },
+    "bandit_1_8_6": {
+      "status": "PASS",
+      "findings": 0,
+      "errors": 0,
+      "narrow_suppressions": [
+        "B404: subprocess import is limited to fixed Git verification",
+        "B603: two calls use /usr/bin/git with constant argument arrays and shell disabled"
+      ]
+    },
+    "dependency_advisories": {
+      "runtime_lock": {
+        "status": "PASS",
+        "dependencies": 32
+      },
+      "proof_lock": {
+        "status": "PASS",
+        "dependencies": 43
+      },
+      "media_lock": {
+        "status": "PASS",
+        "dependencies": 16
+      },
+      "pip_check": "PASS"
+    },
+    "syntax_and_structure": {
+      "python_compile": "PASS",
+      "shell_parse": "PASS",
+      "json_files": 18,
+      "json_parse": "PASS",
+      "workflow_yaml_files": 2,
+      "workflow_yaml_parse": "PASS",
+      "markdown_local_links": "PASS",
+      "github_action_refs_immutable_40_hex": "PASS",
+      "git_diff_check": "PASS"
+    },
+    "secret_pattern_scan": {
+      "current_tree": "PASS",
+      "git_history": "PASS",
+      "limits": "Pattern scan supplements, but does not replace, the full Gitleaks CI gate"
+    },
+    "judge_claims_review": "PASS_WITH_EXPLICIT_LIMITS"
+  },
+  "remediations": [
+    {
+      "finding": "Six Bandit findings in the managed cloud proof helper",
+      "change": "Absolute Git path, constant arguments, narrow documented suppressions, checkout-local exclusive replay marker, and blocking Bandit JSON report in release CI",
+      "result": "Local Bandit results and errors are both empty"
+    },
+    {
+      "finding": "GitHub Actions warned that older action releases used deprecated Node.js 20",
+      "change": "Pinned checkout 7.0.1, setup-python 7.0.0, setup-node 7.0.0 and upload-artifact 7.0.1 to their immutable Node.js 24 commits",
+      "result": "Requires exact-head GitHub-hosted CI readback"
+    },
+    {
+      "finding": "Historical silent-video and internal approval wording was too prominent in judge-facing documentation",
+      "change": "Current narrated video is the sole judge path; the older Unlisted recording is reduced to a factual audit note and internal approval wording is absent from current submission copy",
+      "result": "Stale judge-wording scan passed"
+    },
+    {
+      "finding": "The optional hosted playback script still targeted the earlier Unlisted recording and its pull-request trigger would produce a known YouTube bot-gate failure unrelated to application correctness",
+      "change": "Point the script at the current narrated video and retain it as an explicit manual evidence workflow rather than a branch or pull-request gate",
+      "result": "No bot check is bypassed and no blocked observation can be represented as PASS"
+    },
+    {
+      "finding": "Pull-request workflow runs were associated with the PR head but checkout used GitHub's synthetic merge commit by default",
+      "change": "Every protected CI job now checks out github.event.pull_request.head.sha explicitly, falls back to github.sha on main pushes, and disables persisted checkout credentials",
+      "result": "Final artifact source_commit must equal the reviewed PR head; strict branch protection separately requires the branch to be up to date"
+    }
+  ],
+  "competition_rules": {
+    "reviewed_utc_date": "2026-09-14",
+    "rules_url": "https://amazonappdev2026.devpost.com/rules",
+    "resources_url": "https://amazonappdev2026.devpost.com/resources",
+    "overview_url": "https://amazonappdev2026.devpost.com/",
+    "deadline": "2026-10-23T12:00:00-07:00",
+    "deadline_bucharest": "2026-10-23T22:00:00+03:00",
+    "selected_route": "Alexa+ guided simulation; working MCP is additional evidence",
+    "intended_mini_challenges": [
+      "AWS Builder",
+      "Open Source"
+    ],
+    "video_requirement": "Public YouTube or Vimeo, English, under three minutes",
+    "feedback_requirement": "Product feedback for each development tool, API or SDK used"
+  },
+  "public_video": {
+    "url": "https://www.youtube.com/watch?v=NC2oy4x9Xdw",
+    "duration": "00:01:28",
+    "language": "English",
+    "narration": true,
+    "captions": true,
+    "human_playback": "PASS_REPORTED_IN_BRAVE",
+    "automated_stream_telemetry": false
+  },
+  "release_security": {
+    "existing_applicability_review_expires": "2026-09-27",
+    "refresh_before_submission": "REQUIRED",
+    "raw_container_findings_hidden": false,
+    "zero_cve_claim": false,
+    "public_deployment_claim": false
+  },
+  "provider_controls": {
+    "main_ruleset_id": 23281588,
+    "main_protected": true,
+    "required_checks": [
+      "validate",
+      "browser",
+      "cloud-proof-package",
+      "container-judge"
+    ],
+    "bypass_actors": 0,
+    "force_push_blocked": true,
+    "deletion_blocked": true
+  },
+  "external_effects": {
+    "devpost_fields_changed": false,
+    "devpost_submitted": false,
+    "new_aws_call_or_resource": false,
+    "youtube_upload_or_visibility_change": false
+  },
+  "remaining_gates": [
+    "Exact-head pull-request CI and post-merge main CI",
+    "Security applicability refresh after 2026-09-27",
+    "Private entrant eligibility, representation and rights declarations",
+    "Authenticated Devpost field mapping, preview, one submission and received-entry readback"
+  ],
+  "verdict": "TECHNICAL_PACKAGE_READY_FOR_PROTECTED_CI; FINAL_SUBMISSION_NOT_YET_CLAIMED"
+}

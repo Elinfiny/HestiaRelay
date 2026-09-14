@@ -2,7 +2,7 @@
 
 The narration tells the same Friday-dinner story over the actual accepted
 recording. It uses a stock synthetic voice, not Alexa or a clone of the
-creator's voice. No music is added. All application frames remain in their
+entrant's voice. No music is added. All application frames remain in their
 original order and at their original dimensions; only the 120px caption band
 is replaced and an audio track is added. H.264 re-encoding changes bytes.
 
@@ -78,10 +78,9 @@ apply. Preserve the source notices with any redistributed authoring bundle.
 ## Acceptance and publication
 
 Technical checks cover integrity, timings, non-clipping, stream formats,
-loudness, frame similarity and caption visibility. The creator accepted the
-exact candidate identified above and explicitly approved its publication. The
-same file was uploaded once and YouTube confirmed it Public at
+loudness, frame similarity and caption visibility. The exact reviewed file was
+uploaded once and YouTube confirmed it Public at
 [the narrated demonstration](https://www.youtube.com/watch?v=NC2oy4x9Xdw).
 See the [publication receipt](evidence/narrated-video-publication-20260914.json).
-The accepted original remains preserved; its human playback result is not
-transferred to this separate video.
+The earlier source remains preserved; its separate playback history does not
+replace the narrated video's own complete Brave playback result.

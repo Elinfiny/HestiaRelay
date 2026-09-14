@@ -2,7 +2,7 @@
 
 Updated 2026-09-14. GitHub ruleset **Protect main** (ID `23281588`) is active
 and targets only the default branch. A fresh API readback reports canonical
-main `e65c978d9bc9d3f4734e94eee3a330cbae928289` as `protected: true`.
+main `df4d8cf54e37dc674c18350b95e0cd0900e7de12` as `protected: true`.
 
 ## Effective rule
 
@@ -27,7 +27,7 @@ GitHub's saved-ruleset readback confirms an empty bypass list,
 `current_user_can_bypass: never`, strict up-to-date checks, and GitHub Actions
 integration ID `15368` for all four required checks. The rule was created at
 `2026-09-14T12:20:15.271+03:00`; both the ruleset endpoint and branch endpoint
-were read back after the save. PR #22 is the first guarded delivery after the
-rule was activated. Its exact-head checks, protected merge result and post-merge
-main CI belong in Issue #16 so the receipt can record actual, non-self-referential
-commit and run identities.
+were read back after the save. PR #22 was the first guarded delivery after the
+rule was activated. It merged as `df4d8cf54e37dc674c18350b95e0cd0900e7de12`
+after exact-head CI passed, and post-merge main CI 34828630607 passed all four
+jobs. Issue #16 preserves the provider receipt.
