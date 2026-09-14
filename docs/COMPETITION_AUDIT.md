@@ -32,7 +32,7 @@ security receipts is an internal audit expiry, not the contest deadline.
 | MCP route, if claimed | SDK/TCP and Inspector proof negotiate 2025-11-25 over Streamable HTTP. | Implemented in addition to the simulation; do not imply live Alexa onboarding or remote multi-household authorization. |
 | Public source and open-source license | Public repository, README/run instructions, MIT LICENSE and detected license metadata. | Verified at baseline; fresh PR/main CI verifies the delivered source. |
 | English-accessible presentation | English app, story, instructions, narration and burned-in captions. | Exact narrated render accepted and published; Studio later confirmed the selectable English track Published. |
-| Working public video under three minutes | [Published 87.84-second narrated YouTube recording](https://www.youtube.com/watch?v=NC2oy4x9Xdw); Studio and the public watch page show the expected title, channel and 1:28 duration. | Public metadata passes. Complete streamed playback of this new video remains a separate evidence gate; the original's human result and hosted bot-gate failure are not transferred. |
+| Working public video under three minutes | [Published 87.84-second narrated YouTube recording](https://www.youtube.com/watch?v=NC2oy4x9Xdw); Studio and the public watch page show the expected title, channel and 1:28 duration. | PASS, human-reported: the creator played the narrated video to the end in Brave and reported visible presentation/subtitles, audible sound and no problem. This is not executor telemetry; the original's evidence is not transferred. |
 | Video material rights | Original app capture, fictional data, no added music or borrowed promotional footage. New stock narration has pinned model provenance and notices. | Technical provenance reviewed; creator's final rights/representation declaration remains required. |
 | Product feedback for tools used | [Tool-by-tool notes](PRODUCT_FEEDBACK.md) cover use, onboarding, what worked, problems and reuse decisions. | Expanded from the earlier grouped draft; copy the final factual version into the required field. |
 | Track and mini-challenge selection | Alexa+ primary; AWS Builder and Open Source intended. | Selection in the actual form is not yet verified. |
@@ -87,9 +87,11 @@ The retained [release audit](RELEASE_AUDIT.md) is scoped to a fictional,
 single-household prototype. Its image scan contains unfixed high-severity
 package records and exact, expiring non-reachability decisions. It is not a
 zero-CVE claim. Their expiry remains **September 27, 2026**; no exception was
-broadened or extended. Main currently reports no GitHub-enforced branch
-protection. The executor uses guarded PR merges and reads CI, but this does
-not substitute for a provider-enforced repository policy.
+broadened or extended. GitHub ruleset **Protect main** (ID `23281588`) is active
+for the default branch and requires the four repository CI checks from GitHub
+Actions, an up-to-date pull request, resolved review conversations, deletion
+protection and force-push protection, with no bypass actor. The effective-state
+readback is recorded in [the branch-protection receipt](BRANCH_PROTECTION.md).
 
 This follow-up includes one authorized YouTube upload and Public publication on
 the existing channel. It includes no new AWS operation, credential, permission
@@ -100,9 +102,9 @@ their original hashes.
 ## Exit decision
 
 This package establishes acceptance and publication of the narrated candidate.
-**Final submission readiness is still pending** until the new public stream is
-completely observed, private eligibility/rights declarations are completed,
-live rules and expiring security evidence are refreshed, and the actual form is
-submitted and read back.
+**Final submission readiness is still pending** until private eligibility/rights
+declarations are completed, live rules and expiring security evidence are
+refreshed, and the actual form is submitted and read back. The narrated public
+stream gate is now PASS under the scoped creator-reported Brave observation.
 These are concrete remaining gates, not a prediction about organizer acceptance
 or winning. Issue #16 stays OPEN.

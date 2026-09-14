@@ -73,7 +73,7 @@ eligibility and final acceptance remain organizer decisions.
 | Source and license | Public [repository](https://github.com/Elinfiny/HestiaRelay), MIT; anonymous repository/README/license reads pass in CI |
 | Working demonstration | Exact candidate above; creator acceptance recorded |
 | Public video | CONFIRMED Public: [accepted narrated recording](https://www.youtube.com/watch?v=NC2oy4x9Xdw); publication and caption state in the [new receipt](evidence/narrated-video-publication-20260914.json) |
-| Complete public playback | PENDING for the new narrated stream. The original has a separate human-reported signed-out Brave PASS; its failed hosted bot-gate result remains in the [historical playback receipt](evidence/video-playback-20260913.json). |
+| Complete public playback | PASS, human-reported for the narrated stream: the creator played `NC2oy4x9Xdw` to the end in Brave and reported visible presentation and subtitles, audible sound and no observed problem. Authentication state and measured playback ranges were not supplied. The original retains its separate evidence. |
 | Product feedback | Evidence-based [draft notes](PRODUCT_FEEDBACK.md); no Devpost field written |
 | AWS Builder | One historical Bedrock Converse on 2026-09-12; original source and usage in [receipt](evidence/bedrock-20260912.json) |
 | Open Source | Creator **Elinfiny**; [implementation contribution PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), [release contribution PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15), same public repository |
@@ -98,9 +98,10 @@ that processing could take hours, then independently showed the selectable
 English track Published. Burned-in English captions remain in the video itself.
 
 The original's signed-out Brave viewing does not turn the hosted bot-gate
-failure into an automated PASS and does not certify the new stream. The new
-narrated version needs its own complete public playback observation before final
-submission. Any later replacement would require a new exact review and receipt.
+failure into an automated PASS and is not transferred to the new stream. The
+narrated version now has its own creator-reported complete Brave playback PASS:
+presentation, sound and subtitles were observed through the end with no reported
+problem. Any later replacement would require a new exact review and receipt.
 Never replace a failed upload with a claim of publication or use CI download
 access as evidence of public playback. Any platform authentication or new
 publication permission gate must concern the prepared, exact action.

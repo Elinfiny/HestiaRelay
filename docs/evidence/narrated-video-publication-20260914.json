@@ -76,12 +76,40 @@
     },
     "complete_streamed_playback": "not proven by this readback"
   },
+  "creator_complete_playback": {
+    "reported_date_utc": "2026-09-14",
+    "video_id": "NC2oy4x9Xdw",
+    "browser": "Brave",
+    "played_to_end": true,
+    "presentation_visible": true,
+    "audio_audible": true,
+    "subtitles_visible": true,
+    "problems_observed": "none reported",
+    "authentication_state": "not specified for this observation",
+    "result": "PASS, human-reported",
+    "provenance": "creator report in the project conversation",
+    "limit": "creator acceptance evidence, not executor media telemetry or independent third-party assurance"
+  },
   "history": {
     "original_video_id": "_YTQcGxBMrA",
     "original_source_sha256": "95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd",
     "original_preserved": true,
+    "original_current_visibility": "Unlisted",
+    "original_visibility_readback_utc": "2026-09-14T09:22:09.385Z",
+    "original_visibility_readback": "YouTube Studio Visibility / Unlisted in a fresh independent Studio page",
+    "original_deleted": false,
     "original_human_playback_result_transferred": false,
     "duplicate_video_uploads": 0
+  },
+  "follow_up_20260914": {
+    "video_id": "_YTQcGxBMrA",
+    "visibility_change": "Public to Unlisted",
+    "save_actions": 1,
+    "initial_studio_readback": "Visibility / Unlisted",
+    "independent_studio_readback_utc": "2026-09-14T09:22:09.385Z",
+    "independent_studio_readback": "Visibility / Unlisted",
+    "deleted": false,
+    "reuploaded": false
   },
   "external_effects": {
     "video_uploads_in_this_action": 1,
