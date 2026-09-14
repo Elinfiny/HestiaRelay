@@ -99,12 +99,17 @@ function render() {
     const card = element("article", undefined, "proposal");
     card.append(element("span", `${proposal.risk.toUpperCase()} · ${proposal.status}`, "badge "+proposal.risk), element("h3", proposal.description));
     card.append(element("p", `Exact proposal: ${proposal.action_id}`, "small"));
-    if (proposal.payload.estimate_only) {
+    const estimate = proposal.payload;
+    const completeEstimate = estimate.estimate_only === true &&
+      typeof estimate.estimated_total_usd === "number" && Number.isFinite(estimate.estimated_total_usd) && estimate.estimated_total_usd >= 0 &&
+      Array.isArray(estimate.items) && estimate.items.length > 0 && estimate.items.every(item => typeof item === "string" && item.trim()) &&
+      typeof estimate.merchant === "string" && estimate.merchant.trim();
+    if (completeEstimate) {
       card.append(element("p", `${money(proposal.payload.estimated_total_usd)} · illustrative estimate only`));
       card.append(element("p", `Suggested basket: ${proposal.payload.items.join(", ")}.`));
       card.append(element("p", `Merchant: ${proposal.payload.merchant}. Ingredients and cross-contact remain unverified.`, "small"));
       if (state.goal?.budget_usd != null) card.append(element("p", proposal.payload.estimated_total_usd > state.goal.budget_usd ? "This estimate exceeds your saved budget. Revise before any real purchase." : `${money(state.goal.budget_usd - proposal.payload.estimated_total_usd)} below the budget, before any unquoted costs.`, "small"));
-    }
+    } else if (estimate.estimate_only) card.append(element("p", "Estimate details are incomplete. Inspect the exact proposal scope below.", "small"));
     const scope = element("details");
     scope.append(element("summary", "Inspect the exact proposal scope"), element("pre", JSON.stringify(proposal.payload, null, 2)));
     card.append(scope);

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib
 import json
+import sqlite3
 from uuid import uuid4
 
 import pytest
@@ -145,3 +146,34 @@ def test_mcp_and_http_share_domain_state(server, client):
     reply = server.send_simulator_message(session, str(uuid4()), CANONICAL_MESSAGES[2])
     assert reply["state"]["goal"]["goal_id"] == initial["goal"]["goal_id"]
     assert len(client.get("/api/state").json()["state"]["turns"]) == 1
+
+
+@pytest.mark.parametrize("damage", ["invalid_json", "invalid_state", "invalid_database"])
+@pytest.mark.parametrize("method", ["GET", "POST"])
+def test_unavailable_saved_state_returns_json_and_recovers(server, damage, method):
+    server.engine.start_goal(title="Dinner", when="Friday", people=6, budget_usd=120)
+    path = server.engine.store.path
+    before = server.service.snapshot()
+    backup = path.read_bytes()
+    if damage == "invalid_database":
+        path.write_bytes(b"not a database: PRIVATE_STATE_DETAIL")
+    else:
+        value = "{PRIVATE_STATE_DETAIL" if damage == "invalid_json" else '{"goal": {}}'
+        with sqlite3.connect(path) as connection:
+            connection.execute("UPDATE household_state SET state_json=?", (value,))
+    damaged = path.read_bytes()
+    with TestClient(
+        server.app, base_url="http://127.0.0.1", raise_server_exceptions=False
+    ) as client:
+        response = (
+            client.get("/api/state")
+            if method == "GET"
+            else client.post("/api/session", json={"session_id": str(uuid4())})
+        )
+        assert response.status_code == 503
+        assert response.json() == {"error": "State unavailable; no completion claimed."}
+        assert response.headers["cache-control"] == "no-store"
+        assert "PRIVATE_STATE_DETAIL" not in response.text
+        assert path.read_bytes() == damaged
+        path.write_bytes(backup)
+        assert client.get("/api/state").json() == before

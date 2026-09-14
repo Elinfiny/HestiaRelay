@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import sqlite3
 from pathlib import Path
 from uuid import UUID
 
@@ -13,6 +14,7 @@ from starlette.responses import FileResponse, JSONResponse
 
 from hestiarelay.access import ingress_headers
 from hestiarelay.service import HouseholdService
+from hestiarelay.store import StateUnavailableError
 
 STATIC = Path(__file__).parent / "static"
 
@@ -34,6 +36,16 @@ class DecisionInput(BaseModel):
 
 
 def register_web(mcp, service: HouseholdService):
+    async def invoke(handler, **data):
+        # Handle storage failures before Starlette can start a generic 500 response.
+        # Invalid persisted state is distinct from invalid fields in a new request.
+        try:
+            return JSONResponse(await run_in_threadpool(handler, **data))
+        except (OSError, sqlite3.Error, StateUnavailableError):
+            return JSONResponse(
+                {"error": "State unavailable; no completion claimed."}, status_code=503
+            )
+
     @mcp.custom_route("/", methods=["GET"])
     async def index(request: Request):
         return FileResponse(STATIC / "index.html")
@@ -47,7 +59,7 @@ def register_web(mcp, service: HouseholdService):
 
     @mcp.custom_route("/api/state", methods=["GET"])
     async def state(request: Request):
-        return JSONResponse(await run_in_threadpool(service.snapshot))
+        return await invoke(service.snapshot)
 
     async def command(request: Request, schema, handler):
         if request.headers.get("content-type", "").split(";")[0] != "application/json":
@@ -59,7 +71,7 @@ def register_web(mcp, service: HouseholdService):
                 return JSONResponse({"error": "Request too large"}, status_code=413)
         try:
             data = schema.model_validate_json(body).model_dump(mode="json")
-            return JSONResponse(await run_in_threadpool(handler, **data))
+            return await invoke(handler, **data)
         except ValidationError:
             return JSONResponse({"error": "Invalid input fields."}, status_code=422)
         except KeyError:

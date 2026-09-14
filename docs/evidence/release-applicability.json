@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "reviewed": "2026-09-13",
+  "reviewed": "2026-09-14",
   "expires": "2026-09-27",
   "scope": "Only the recorded non-root, read-only fictional-household container; invalid for public deployment or changed source/dependencies. Raw findings remain published.",
   "source_sha256": {
@@ -16,8 +16,8 @@
     "src/hestiarelay/recovery.py": "097a1f5305389a0ea3566eb85b6c68ff15ccb2d848610bcf76c954d920d5445b",
     "src/hestiarelay/server.py": "532353bdccf292e86aaf02e6e4425e96cabf96bfb5c7a37433bddc08ef7552be",
     "src/hestiarelay/service.py": "c6000fa38932a790cf581220a29f596ba4c3cb2f5a5652d0677fe0bdecb317fd",
-    "src/hestiarelay/store.py": "5f822d66ec234debc4432ed623fae8d82d04fa1d8f505e250e47377ddf0c2dad",
-    "src/hestiarelay/web.py": "0e719538217a466f8ae28b55cfbdd5161b7fb789a05cc34810db5db87aaac55a"
+    "src/hestiarelay/store.py": "bcf4595b9d75b0b7f7d63c467d27203267fbfae39ab1e514a245914f9db5a781",
+    "src/hestiarelay/web.py": "5d9ac678416ad6fa5e3d9bcafe48a78ce204b73cd8126759c48050c621e929a2"
   },
   "required_surface": {
     "uid": 10001,
