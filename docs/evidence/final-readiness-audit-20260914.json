@@ -84,6 +84,11 @@
       "finding": "The optional hosted playback script still targeted the earlier Unlisted recording and its pull-request trigger would produce a known YouTube bot-gate failure unrelated to application correctness",
       "change": "Point the script at the current narrated video and retain it as an explicit manual evidence workflow rather than a branch or pull-request gate",
       "result": "No bot check is bypassed and no blocked observation can be represented as PASS"
+    },
+    {
+      "finding": "Pull-request workflow runs were associated with the PR head but checkout used GitHub's synthetic merge commit by default",
+      "change": "Every protected CI job now checks out github.event.pull_request.head.sha explicitly, falls back to github.sha on main pushes, and disables persisted checkout credentials",
+      "result": "Final artifact source_commit must equal the reviewed PR head; strict branch protection separately requires the branch to be up to date"
     }
   ],
   "competition_rules": {
