@@ -89,7 +89,7 @@ messaging integration would need its own consent-bound execution adapter.
 ## Submission references
 
 - Primary track: **Alexa+**. Mini-challenges: **Open Source** and **AWS Builder**.
-- [Watch the public demonstration](https://www.youtube.com/watch?v=_YTQcGxBMrA).
+- [Watch the public narrated demonstration](https://www.youtube.com/watch?v=NC2oy4x9Xdw).
 - [Public MIT source and run instructions](https://github.com/Elinfiny/HestiaRelay).
 - GitHub username: **Elinfiny**. Contribution: [implementation PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3),
   [release PR #15](https://github.com/Elinfiny/HestiaRelay/pull/15).

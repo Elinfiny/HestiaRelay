@@ -251,3 +251,28 @@ Record only real issues encountered while building HestiaRelay. Each entry must 
 - **Evidence:** [Playback receipt](evidence/video-playback-20260913.json), artifact
   10325769333, original result JSON and screenshot hashes.
 - **Status:** automated route remains blocked; scoped human evidence accepted.
+
+## F-011 — YouTube Studio SRT chooser resets the browser-control session
+
+- **Date:** 2026-09-14
+- **Area:** YouTube Studio caption authoring
+- **Task attempted:** Attach the reviewed 1,438-byte English SRT to the newly
+  uploaded narrated video.
+- **Steps:** Set English as the video language, choose Subtitles > Add > Upload
+  file > With timing, and select the synchronized SRT through the documented
+  browser file chooser.
+- **Expected:** Studio imports the existing twelve timed captions.
+- **Actual:** The file was visible at the documented shared path, but both
+  `setFiles` attempts timed out and reset the browser-control session. Fresh
+  readback still showed the pre-selection dialog, disabled save controls and no
+  imported rows; no uncertain effect or duplicate track was inferred.
+- **Severity:** bounded authoring-tool failure; the video upload was unaffected.
+- **Workaround:** Cancel the unchanged chooser and use YouTube Auto-sync with
+  the exact twelve-scene English transcript. Studio saved it and generated
+  timed rows, then reported that processing may take a few hours. A later
+  independent Studio readback showed the English track Published. Burned-in
+  English captions remain visible independently of that track.
+- **Evidence:** [Narrated publication receipt](evidence/narrated-video-publication-20260914.json),
+  source SRT SHA-256 `0362d1c2598e18a4dabfccfc12a37c2d3bf0cc1dafd45392f6c2b1bd7b80bc3a`.
+- **Status:** resolved through a native Studio authoring route; the selectable
+  English track is Published.

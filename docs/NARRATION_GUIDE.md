@@ -11,7 +11,8 @@ unchanged at SHA-256
 `95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
 Its original SRT remains separately preserved. See
 [publication history](VIDEO_PUBLICATION.md) for the accepted public recording.
-A narrated render is a new candidate, not automatic publication approval.
+The reviewed render was later accepted and published separately; that result
+does not rewrite the original source or its publication history.
 
 ## Isolated authoring setup
 
@@ -74,10 +75,13 @@ rights guarantee. The candidate has no claimed human narrator, celebrity voice,
 live Alexa response or new AWS call. Final entrant rights declarations still
 apply. Preserve the source notices with any redistributed authoring bundle.
 
-## Acceptance
+## Acceptance and publication
 
 Technical checks cover integrity, timings, non-clipping, stream formats,
-loudness, frame similarity and caption visibility. Final listening and visual
-acceptance belongs to the exact candidate presented for review. The existing
-public URL remains authoritative until a separately accepted publication action
-succeeds and is read back.
+loudness, frame similarity and caption visibility. The creator accepted the
+exact candidate identified above and explicitly approved its publication. The
+same file was uploaded once and YouTube confirmed it Public at
+[the narrated demonstration](https://www.youtube.com/watch?v=NC2oy4x9Xdw).
+See the [publication receipt](evidence/narrated-video-publication-20260914.json).
+The accepted original remains preserved; its human playback result is not
+transferred to this separate video.

@@ -1,27 +1,26 @@
 # HestiaRelay work state
 
-Canonical main at the start of this package:
-`bd1bef108152b1faaaaaee6c9fc3966905acfd43` (PR #19).
-Main CI [34787002311](https://github.com/Elinfiny/HestiaRelay/actions/runs/34787002311)
-is verified SUCCESS, all four jobs at that SHA. PR #18 merged earlier at
-`9b41158373dd89d34fc4e9ef41c3be8d48a43a9d`; its post-merge CI 34786227088
-also passed. Those publication/recovery tasks are complete. The recovery watcher
-is disabled and must not be resumed for this editorial package.
+Canonical main at the start of this follow-up:
+`74f880047d520e3ae5eb48d6c25743bfa5d4ffea` (PR #20).
+Main CI [34789675472](https://github.com/Elinfiny/HestiaRelay/actions/runs/34789675472)
+is verified SUCCESS, all four jobs at that exact SHA. The earlier publication,
+queue recovery and presentation-audit packages are integrated. The completed
+recovery watcher is disabled and must not be resumed.
 
-Current branch: `feature/judge-presentation-audit-v1`, from the canonical main
-above. The package's final head, merge SHA and post-merge CI belong in
+Current branch: `feature/narrated-video-publication-v1`, from the canonical main
+above. This follow-up's final head, merge SHA and post-merge CI belong in
 [Issue #16](https://github.com/Elinfiny/HestiaRelay/issues/16), preserving this
 at-writing checkpoint instead of guessing a self-referential future SHA.
 
 ## Current phase
 
-Phase 5: make the judge presentation clear, prepare English narration, and audit
-the entire submission inventory. Issue #16 stays OPEN. The latest instruction
-authorizes this work end-to-end and natural public copy. Final visual/listening
-acceptance of a new exact video and private eligibility/final submission remain
-separate gates. Devpost Project Details story and video fields are untouched.
+Phase 5: publish the accepted narrated demonstration and keep the submission
+inventory exact. Issue #16 stays OPEN. The creator explicitly accepted the exact
+narrated candidate and approved publication. Private eligibility, refreshed
+security evidence and final submission remain separate gates. Devpost Project
+Details story and video fields are untouched.
 
-Completed in this package before its PR:
+Completed before this follow-up PR:
 - Fresh review of rules, resources, overview, updates and incorporated Devpost
   terms; [requirement-to-evidence matrix](COMPETITION_AUDIT.md).
 - Natural English README, story, judging map and tool-by-tool feedback; stale
@@ -30,19 +29,26 @@ Completed in this package before its PR:
   independently read back in a second Studio page. Same video/title/Public state.
 - Repository About description corrected to a guided Alexa+ simulation with
   real MCP and exact consent; GitHub API confirms the saved value.
-- Separate English narrated candidate rendered from the preserved real capture.
-  Twelve scenes at normal speech speed, 87.84 seconds, H.264/AAC, English captions.
-  [Receipt](evidence/narration-20260913.json) and [reproduction](NARRATION_GUIDE.md).
-- Ruff PASS; 150 application tests PASS, 98.11% coverage. Source/service/consent
-  code is unchanged. Fresh PR/main CI and its security reports remain required
-  before this package is called integrated.
-- Added an isolated narration-dependency advisory gate to the existing validate
-  job; local PyPI advisory access timed out and is not counted as a passed scan.
+- Exact English narrated render accepted, uploaded once and confirmed Public at
+  [NC2oy4x9Xdw](https://www.youtube.com/watch?v=NC2oy4x9Xdw). YouTube reports
+  processing complete, 1:28 and no copyright issues. The natural description,
+  English language, correct audience, no paid promotion and AI-use disclosure
+  are saved. [Publication receipt](evidence/narrated-video-publication-20260914.json).
+- The SRT chooser timed out twice without accepting a file. The exact transcript
+  was saved through YouTube Auto-sync. Studio first reported processing, then
+  independently confirmed the selectable English track Published. Burned-in
+  English captions remain visible in the video itself.
+- Studio still labels the separate title-and-description language row Romanian,
+  although both saved fields and the video itself are English. The public copy
+  remains English; recheck this hidden classification at the final metadata gate.
+- The presentation baseline passed Ruff, 150 application tests at 98.11%
+  coverage and all four main CI jobs. Source/service/consent code is unchanged.
+  This documentation follow-up still requires fresh PR and post-merge main CI.
 
 ## Exact videos and decision boundary
 
-The existing public video is
-[HestiaRelay's accepted demonstration](https://www.youtube.com/watch?v=_YTQcGxBMrA),
+The preserved original public video is
+[HestiaRelay's accepted silent demonstration](https://www.youtube.com/watch?v=_YTQcGxBMrA),
 87.84 seconds, silent with English captions, SHA-256
 `95eeb6f2dea2a8dd3287eb91368a99f98b86398a94746a26fb21d289316c47bd`.
 The original SRT and historical capture metadata remain unchanged. The creator
@@ -56,13 +62,15 @@ authorized human playback method, not five successful automated jobs.
 See [publication history](VIDEO_PUBLICATION.md) and
 [playback receipt](evidence/video-playback-20260913.json).
 
-The new narrated candidate has SHA-256
+The accepted narrated demonstration has SHA-256
 `e35a707ee24b8c39ad4d2e50ff21b8ec9f1ed1ae5e66ea4de7e284a3dee3d73c`.
 Only the caption band changes visually; no app event is invented or reordered.
 The voice is stock synthetic English, not Alexa or an imitation of the creator.
 Measured app-region SSIM is 0.999246 after re-encoding; audio measures -16.37
-LUFS and -1.41 dBFS true peak. Selected captions/frames were inspected.
-Final listening/visual acceptance remains PENDING. It is not uploaded or public.
+LUFS and -1.41 dBFS true peak. Selected captions/frames were inspected. The
+creator accepted this exact file and authorized publication. YouTube confirms it
+Public as `NC2oy4x9Xdw`; the initial authenticated watch-page readback matched
+title, channel and duration but did not prove a complete streamed playback.
 
 ## Validated application and audit limits
 
@@ -98,11 +106,10 @@ a narrowly documented AWS Builder entry. Live Alexa+, AgentCore, Strands,
 public application hosting and measured real-user impact are not demonstrated.
 No extra cloud framework or new AWS call is necessary for this chosen route.
 
-Finish this branch's diff audit, exact-head four-job CI and guarded PR merge;
-verify its post-merge main CI and record actual results in Issue #16.
-Present the exact narrated candidate for the final visual/listening decision
-required by the project mandate. Preserve the accepted public original until
-a separately accepted publication action succeeds.
+Finish this follow-up's diff audit, exact-head four-job CI and guarded PR merge;
+verify its post-merge main CI and record actual results in Issue #16. Recheck the
+new public stream and selectable captions without transferring the original
+video's human playback evidence. Preserve both videos and their separate history.
 
 Then finish the actual entry: privately verify eligibility/representation/
 rights and account registration, recheck live rules and links, refresh expiring

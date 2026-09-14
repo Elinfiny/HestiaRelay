@@ -2,7 +2,7 @@ Dinner plans change between conversations. HestiaRelay keeps the thread.
 
 Start with six guests on Friday and a $120 budget. Come back later to add Ana's nut allergy. Then ask, "Are we ready for Friday?" The plan, the details and the unfinished tasks are still there, even after restarting the server.
 
-This demo shows the working browser app, three separate sessions, approval and rejection of exact proposals, and a real MCP client reading the same household. English captions are included.
+This 88-second walkthrough shows the working browser app, three separate sessions, approval and rejection of exact proposals, and a real MCP client reading the same household. English narration and captions are included.
 
 HestiaRelay is a guided Alexa+ experience simulation with a deterministic planner, not a live Alexa+ connection. Approvals record decisions; they do not make purchases, send messages or change accounts. The household is fictional, and planning advice does not verify food safety.
 
