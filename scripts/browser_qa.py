@@ -7,6 +7,7 @@ import csv
 import hashlib
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -111,7 +112,12 @@ def main(server_factory=running_server, output_dir="qa-artifacts"):
                 expect(page.locator("#proposals")).to_contain_text(
                     "Proposal rejected. Nothing executed."
                 )
-                payloads = asyncio.run(add_incomplete_estimates(url))
+                # Sync Playwright owns this thread's event loop; run the MCP client
+                # on a separate worker and propagate failures to the same QA gate.
+                with ThreadPoolExecutor(max_workers=1) as worker:
+                    payloads = worker.submit(
+                        asyncio.run, add_incomplete_estimates(url)
+                    ).result(timeout=30)
                 page.reload()
                 expect(page.get_by_role("status")).to_contain_text("Ready when you are")
                 expect(page.locator("#error")).to_be_hidden()
