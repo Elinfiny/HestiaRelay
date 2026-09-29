@@ -6,6 +6,27 @@ upstream license notices and the recorded judge candidate. A clean scan means
 no finding in the named database and scope at that time; it cannot prove the
 absence of every vulnerability. Public hosting remains a separate gate.
 
+## Maintenance status — September 29, 2026
+
+The September 14 [submission receipt](https://github.com/Elinfiny/HestiaRelay/issues/16#issuecomment-5664077580)
+confirms the existing Alexa+, AWS Builder and Open Source entry. Current GitHub
+metadata still reports all four jobs of main CI 34840888593 as successful;
+that run completed on September 14.
+
+The applicability review in `evidence/release-applicability.json` expired on
+September 27. Its 14 source hashes still match the reviewed baseline, but that
+alone does not renew runtime assurance. The nine previously scoped advisory
+identities remain listed as vulnerable for the relevant Trixie versions in the
+Debian tracker. Before renewal, bind fresh scanner and installed-package data
+to the exact image, remeasure its required runtime controls, and review every
+material result. Do not extend the date without that evidence or reinterpret
+historical totals as current findings. The dated receipts below are preserved.
+
+Current anonymous project access and complete narrated-video playback still
+need a fresh supported observation. A failed automated fetch does not prove
+that either resource is unavailable. No live Alexa+ integration or public
+multi-household deployment is claimed by this maintenance update.
+
 ## Preserved baseline and actual findings
 
 Accepted main before this package: `61496e94cb22dd1b444f72607982b1af6652b7e8`,
@@ -86,7 +107,7 @@ The image is built and tested in CI; no binary image registry release is made
 by this package. A future binary distribution must retain notices and meet the
 source-availability requirements of its included OS components.
 
-## Current result
+## Historical result — September 13, 2026
 
 CI [34744690053](https://github.com/Elinfiny/HestiaRelay/actions/runs/34744690053)
 passed all four jobs. The [reviewed receipt](evidence/release-20260913.json)
@@ -98,12 +119,17 @@ attestation. The SBOM has 124 components; 158 upstream notice files supplement
 license inference, including all four library entries with missing inferred
 licenses.
 
-The later protected-main baseline is
+The subsequent protected-main baseline was
 [34828630607](https://github.com/Elinfiny/HestiaRelay/actions/runs/34828630607),
-four successful jobs at `df4d8cf`. Complete manual Brave playback of the current
-narrated video was reported with presentation, captions and sound working. The
-final-readiness branch still requires its own exact-head CI and post-merge main
-CI; their real identifiers belong in Issue #16 after they exist.
+four successful jobs at `df4d8cf`. Complete manual Brave playback of the narrated
+video was reported at that time. The final-readiness work later completed with
+PR CI [34840515580](https://github.com/Elinfiny/HestiaRelay/actions/runs/34840515580)
+and post-merge main CI
+[34840888593](https://github.com/Elinfiny/HestiaRelay/actions/runs/34840888593)
+at `acb483be217ca8d3fe9fbf0a0c7d392da60690a3`. The
+[September 14 technical receipt](https://github.com/Elinfiny/HestiaRelay/issues/16#issuecomment-5663569728)
+records 156 tests and 98.14% coverage. These are historical results, not a new
+security scan or playback check.
 
 Primary tooling references, checked 2026-09-13:
 [Gitleaks](https://github.com/gitleaks/gitleaks),

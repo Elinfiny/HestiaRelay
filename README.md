@@ -13,7 +13,8 @@ a real MCP server. It runs without AWS credentials. There is no live Alexa+
 connection, and approval never makes a purchase or sends a message.
 
 Built for the **Alexa+ track** of the Amazon Developer Hackathon 2026, with
-**Open Source** and **AWS Builder** mini-challenge entries in preparation.
+**Open Source** and **AWS Builder** mini-challenge entries submitted on
+September 14, 2026. See the [submission receipt](https://github.com/Elinfiny/HestiaRelay/issues/16#issuecomment-5664077580).
 
 ## Core scenario
 
@@ -198,8 +199,11 @@ final private-gate checklist are in the
 **The working demonstration is public.** Continuity, MCP/container
 interoperability, optional authenticated judge mode and state recovery are implemented.
 See the [judge evidence map](docs/JUDGE_EVIDENCE_MAP.md) and
-[reviewed release receipt](docs/evidence/release-20260913.json) for evidence and
-remaining gates. The [publication record](docs/VIDEO_PUBLICATION.md) separates
+[current maintenance status](docs/RELEASE_AUDIT.md#maintenance-status--september-29-2026)
+for dated evidence and remaining gates. The last verified main CI is
+[34840888593](https://github.com/Elinfiny/HestiaRelay/actions/runs/34840888593),
+completed on September 14. The scoped security applicability review expired
+on September 27; fresh image and runtime evidence are required before renewal. The [publication record](docs/VIDEO_PUBLICATION.md) separates
 confirmed human viewing from the hosted playback check that YouTube blocked.
 
 **Historical live Bedrock proof verified.** One authorized Nova Micro

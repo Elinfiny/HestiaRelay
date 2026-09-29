@@ -91,7 +91,7 @@ def main():
             page.locator("video").wait_for(state="attached")
             sample = check(page, report)
             if sample and sample["paused"]:
-                play = page.get_by_role("button", name=re.compile(r"^Play(?: \(k\))?$"))
+                play = page.get_by_role("button", name=re.compile(r"^Play(?: \(k\)| keyboard shortcut k)?$"))
                 for button in play.all():
                     if button.is_visible():
                         button.click()
