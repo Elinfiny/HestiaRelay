@@ -11,8 +11,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends --only-upgrade \
        gzip=1.13-1+deb13u1 libc-bin=2.41-12+deb13u4 libc6=2.41-12+deb13u4 \
-       libpcre2-8-0=10.46-1~deb13u2 libsqlite3-0=3.46.1-7+deb13u2 \
+       libpcre2-8-0=10.46-1~deb13u3 libsqlite3-0=3.46.1-7+deb13u2 \
        perl-base=5.40.1-6+deb13u1 \
+       libssl3t64=3.5.7-1~deb13u3 openssl=3.5.7-1~deb13u3 openssl-provider-legacy=3.5.7-1~deb13u3 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
