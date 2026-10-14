@@ -16,7 +16,8 @@ mcp-types==2.2.0
 opentelemetry-api==1.44.0
 pydantic==2.13.5
 pydantic-core==2.46.5
-pyjwt==2.14.0
+# Official PyPI wheel SHA256: 7a3742debf6b879e912dbb9819ceec1594be812452b78c5f2e2dfc56564954f8
+pyjwt==2.15.0
 python-dateutil==2.9.0.post0
 python-multipart==0.0.32
 referencing==0.37.0
@@ -28,5 +29,6 @@ starlette==1.6.0
 truststore==0.10.4
 typing-extensions==4.16.0
 typing-inspection==0.4.4
-urllib3==2.7.0
+# Official PyPI wheel SHA256: 0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3
+urllib3==2.8.0
 uvicorn==0.52.4

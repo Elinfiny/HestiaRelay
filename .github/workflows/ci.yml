@@ -126,15 +126,15 @@ jobs:
         run: |
           python -m pip install -e ".[dev]" playwright==1.62.0
           python -m playwright install --with-deps chromium
-          npm install --prefix /tmp/hestiarelay-inspector --no-audit --no-fund @modelcontextprotocol/inspector@2.6.0
+          npm ci --prefix tools/inspector --ignore-scripts --no-audit --no-fund
       - name: Build the application image
         run: |
           mkdir -p qa-artifacts
           docker build --pull --tag hestiarelay:judge .
           cp Dockerfile qa-artifacts/Dockerfile
-          cp /tmp/hestiarelay-inspector/package-lock.json qa-artifacts/inspector-package-lock.json
+          cp tools/inspector/package-lock.json qa-artifacts/inspector-package-lock.json
       - name: Verify the real container and clients
-        run: python scripts/container_qa.py --inspector /tmp/hestiarelay-inspector/node_modules/.bin/mcp-inspector
+        run: python scripts/container_qa.py --inspector tools/inspector/node_modules/.bin/mcp-inspector
       - name: Install build audit coverage
         run: python -m pip install cfn-lint==1.56.3 setuptools==84.0.0
       - name: Audit release image, build chain and Git history
