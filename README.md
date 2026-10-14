@@ -192,7 +192,7 @@ final private-gate checklist are in the
 - [`docs/SCORING_MATRIX.md`](docs/SCORING_MATRIX.md) — explicit mapping to judging criteria
 - [`docs/FRICTION_LOG.md`](docs/FRICTION_LOG.md) — reproducible developer-experience findings for bonus judging
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — gated implementation sequence
-- [`AGENTS.md`](AGENTS.md) — repository operating contract for AI-assisted development
+- [`AGENTS.md`](AGENTS.md) — repository operating contract
 
 ## Status
 
