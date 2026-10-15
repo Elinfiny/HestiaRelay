@@ -1,0 +1,196 @@
+# INACTIVE proposal. Activation/one-use tag/PR event/cost admission require independent review.
+name: Runtime reduction35 experimental canary - security remains OPEN
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: write
+concurrency:
+  group: hestia-runtime-reduction35-once
+  cancel-in-progress: false
+jobs:
+  isolated-runtime-canary:
+    if: >-
+      github.repository == 'Elinfiny/HestiaRelay' &&
+      github.repository_owner == 'Elinfiny' && github.actor == 'Elinfiny' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.head_ref == 'review/hestia-runtime-reduction35-20261015' &&
+      github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Source identity and exact implementation pins
+        env:
+          ACTUAL_HEAD: ${{ github.event.pull_request.head.sha }}
+          ACTUAL_REPOSITORY: ${{ github.repository }}
+          ACTUAL_OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os, pathlib, subprocess
+          assert os.environ['ACTUAL_REPOSITORY'] == 'Elinfiny/HestiaRelay'
+          assert os.environ['ACTUAL_OWNER'] == 'Elinfiny'
+          assert os.environ['GITHUB_RUN_ATTEMPT'] == '1'
+          head = subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+          assert head == os.environ['ACTUAL_HEAD']
+          expected = {
+              'Dockerfile':'70cf3bf917b41948071ba0e2627a0c5b0e3dfa2640929ca504cb60b46f36f8e8',
+              'requirements-runtime.txt':'ddbb3d65fc0cdc08d2e5bdecb561173b9f58c0945d534b742c5979b070d6fa68',
+              'scripts/native_surface_probe.py':'642530112b7fdfc79689d06509be8623b2a25b22874577de10ebffed8383cdfa',
+              'experiments/runtime_reduction35/prepare_runtime.py':'d07750d997695e098347e0d1fe1f5f1c1680015adc278aab2c85fd6cd6374b1a',
+              'tests/test_runtime_reduction35.py':'ae4792d9c553ea8a13121c1cff2f37a32cebd7e7f00a108f6433e73ce858fecf',
+              'experiments/runtime_reduction35/Dockerfile':'1f981261e57ebfab015a43f78f77a7981c697aaf3e5e60240741a7d8478f68f4',
+          }
+          for name,pin in expected.items():
+              assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() == pin, name
+          binding = {'source_commit':head,
+                     'source_tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),
+                     'run_id':os.environ['GITHUB_RUN_ID'], 'run_attempt':os.environ['GITHUB_RUN_ATTEMPT'],
+                     'repository':os.environ['ACTUAL_REPOSITORY'], 'implementation_pins':expected}
+          pathlib.Path('binding35.json').write_text(json.dumps(binding,sort_keys=True)+'\n')
+          print(json.dumps(binding,sort_keys=True))
+          PY
+      - name: Consume one create-only durable nonce before any build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ACTUAL_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          # Exactly one POST; HTTP failure/timeout/unknown => fail, no retry/delete/reseed.
+          body=json.dumps({'ref':'refs/tags/HESTIA-RUNTIME-REDUCTION35-20261015-ONCE',
+                           'sha':os.environ['ACTUAL_HEAD']}).encode()
+          req=urllib.request.Request('https://api.github.com/repos/Elinfiny/HestiaRelay/git/refs',
+              data=body,method='POST',headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],
+              'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'})
+          with urllib.request.urlopen(req,timeout=15) as response:
+              original=response.read(65537); status=response.status
+          assert status == 201 and len(original)<=65536
+          result=json.loads(original)
+          assert result['ref']=='refs/tags/HESTIA-RUNTIME-REDUCTION35-20261015-ONCE'
+          assert result['object']['sha']==os.environ['ACTUAL_HEAD']
+          print(json.dumps({'one_use_ref':result['ref'],'source':result['object']['sha'],
+                            'state':'CONSUMED_NEVER_REARM'},sort_keys=True))
+          PY
+      - name: Install declared development and inspector tools - no cache
+        env:
+          AWS_EC2_METADATA_DISABLED: 'true'
+        run: |
+          set -euo pipefail
+          python -m pip install --no-cache-dir -e '.[dev]' playwright==1.62.0
+          python -m playwright install --with-deps chromium
+          npm ci --prefix tools/inspector --ignore-scripts --no-audit --no-fund
+      - name: Required real source regression gates - offline injected adapters
+        env:
+          AWS_EC2_METADATA_DISABLED: 'true'
+          AWS_ACCESS_KEY_ID: ''
+          AWS_SECRET_ACCESS_KEY: ''
+          AWS_SESSION_TOKEN: ''
+        run: |
+          set -euo pipefail
+          ruff check .
+          pytest --cov=hestiarelay --cov-report=term-missing
+      - name: Pinned detector installation
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 120 -o /tmp/trivy35.tar.gz https://github.com/aquasecurity/trivy/releases/download/v0.74.0/trivy_0.74.0_Linux-64bit.tar.gz
+          printf '%s\n' '2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a  /tmp/trivy35.tar.gz' | sha256sum --check
+          mkdir /tmp/trivy35
+          tar -xzf /tmp/trivy35.tar.gz -C /tmp/trivy35 trivy
+          /tmp/trivy35/trivy --version
+      - name: Baseline then isolated candidate build and actual same-image QA
+        env:
+          DOCKER_BUILDKIT: '1'
+          AWS_EC2_METADATA_DISABLED: 'true'
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os, pathlib, shutil, subprocess, time
+          root=pathlib.Path('canary35-evidence');root.mkdir()
+          deadline=time.monotonic()+900
+          seq=0
+          def call(argv,label,limit=180,cap=16777216):
+              global seq
+              assert time.monotonic()<deadline
+              seq+=1
+              try:
+                  p=subprocess.run(argv,capture_output=True,timeout=min(limit,deadline-time.monotonic()))
+                  out,err,code=p.stdout,p.stderr,p.returncode
+              except subprocess.TimeoutExpired as e:
+                  out,err,code=e.stdout or b'',e.stderr or b'',None
+              # Original full streams/exit before caps/deadline/conversion. No retry.
+              base=root/f'{seq:02d}-{label}'
+              base.with_suffix('.stdout').write_bytes(out)
+              base.with_suffix('.stderr').write_bytes(err)
+              receipt={'label':label,'argv':argv,'exit':code,'stdout_bytes':len(out),
+                       'stderr_bytes':len(err),'stdout_sha256':hashlib.sha256(out).hexdigest(),
+                       'stderr_sha256':hashlib.sha256(err).hexdigest()}
+              base.with_suffix('.json').write_text(json.dumps(receipt,sort_keys=True)+'\n')
+              print(json.dumps(receipt,sort_keys=True),flush=True)
+              assert code==0 and time.monotonic()<=deadline and len(out)<=cap and len(err)<=cap,label
+              return out
+          binding=json.loads(pathlib.Path('binding35.json').read_text())
+          images={}
+          for label,dockerfile in [('baseline','Dockerfile'),('candidate','experiments/runtime_reduction35/Dockerfile')]:
+              iid=root/(label+'.iid')
+              call(['docker','build','--pull=false','--progress=plain','--iidfile',str(iid),
+                    '-f',dockerfile,'-t','hestiarelay:'+label+'35','.'],label+'-build',300)
+              image=iid.read_text().strip()
+              assert image.startswith('sha256:') and len(image)==71
+              selected=json.loads(call(['docker','image','inspect','--format','{{json .Id}}',image],label+'-image'))
+              assert selected==image
+              images[label]={'image_id':image,**binding}
+              # Existing QA actually checks health, MCP StreamableHTTP negotiation,
+              # consent, Host/Origin, restart, backup/restore and offline adapters.
+              call(['python','scripts/container_qa.py','--image',image,'--inspector',
+                    'tools/inspector/node_modules/.bin/mcp-inspector'],label+'-qa',240)
+              qa=pathlib.Path('qa-artifacts')
+              assert qa.is_dir()
+              shutil.move(str(qa),str(root/(label+'-qa')))
+              packages=call(['docker','run','--rm','--network=none','--read-only','--cap-drop=ALL',
+                   '--security-opt=no-new-privileges','--entrypoint','dpkg-query',image,
+                   '-W','-f=${binary:Package}\t${Version}\t${Architecture}\n'],label+'-packages')
+              (root/(label+'-packages.tsv')).write_bytes(packages)
+              if label=='candidate':
+                  reduction=call(['docker','run','--rm','--network=none','--read-only','--cap-drop=ALL',
+                      '--entrypoint','python',image,'-c',
+                      'from pathlib import Path; print(Path("/reduction35-evidence/result.json").read_text())'],
+                      'candidate-reduction-receipt')
+                  assert json.loads(reduction)['security_acceptance'] is False
+              report=root/(label+'-raw-vulnerabilities.json')
+              call(['/tmp/trivy35/trivy','image','--scanners','vuln','--format','json',
+                    '--exit-code','0','--output',str(report),image],label+'-detector',180)
+              # No artifact upload/cache/registry push. Public raw findings go to job logs.
+              raw=report.read_bytes();assert len(raw)<=8388608
+              print(label+' RAW_VULNERABILITIES '+raw.decode(),flush=True)
+              for public in [root/(label+'-packages.tsv'),root/(label+'-qa/native-surface-observation.json'),
+                             root/(label+'-qa/container-qa.json')]:
+                  original=public.read_bytes();assert len(original)<=2097152
+                  print(label+' PUBLIC_EVIDENCE '+public.name+' '+original.decode(),flush=True)
+          def findings(label):
+              doc=json.loads((root/(label+'-raw-vulnerabilities.json')).read_text())
+              return {(v.get('PkgName'),v.get('InstalledVersion'),v['VulnerabilityID'])
+                      for result in doc.get('Results',[]) for v in result.get('Vulnerabilities',[]) }
+          before,after=findings('baseline'),findings('candidate')
+          diff={'images':images,'baseline_findings':len(before),'candidate_findings':len(after),
+                'removed_records':[{'key':list(x),'disposition':'REMOVED_RECORD_NOT_NOT_AFFECTED_WAIVER'}
+                                   for x in sorted(before-after)],
+                'remaining_records':[list(x) for x in sorted(before&after)],
+                'new_records':[list(x) for x in sorted(after-before)],
+                'security_acceptance':False,'GCC_headers_Perl_FileTemp_provenance':'OPEN',
+                'native_scope':'Preserve actual probe status/limits; truncated UNKNOWN is not absence'}
+          (root/'differential.json').write_text(json.dumps(diff,sort_keys=True)+'\n')
+          print(json.dumps(diff,sort_keys=True),flush=True)
+          PY
+      - name: Original ordinary required checks remain pending
+        if: always()
+        run: |
+          printf '%s\n' 'Experimental canary only. Four ordinary required checks are not PASS when skipped. Security applicability, header/Perl consumers and release remain OPEN.'
