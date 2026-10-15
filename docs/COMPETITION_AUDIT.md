@@ -1,5 +1,16 @@
 # Competition and presentation audit
 
+## Status note — October 15, 2026
+
+The September 14 assessment below is preserved as a dated record, including
+its original pending items. The later [submission receipt](https://github.com/Elinfiny/HestiaRelay/issues/16#issuecomment-5664077580)
+confirms the existing entry and selected categories; do not submit it again.
+This note does not renew the security applicability that expired September 27,
+claim a fresh full public-video playback, or approve an unmerged maintenance
+branch. Those remain separately evidenced review boundaries.
+
+## Preserved assessment — September 14, 2026
+
 Reviewed September 14, 2026 UTC, from protected main
 `df4d8cf54e37dc674c18350b95e0cd0900e7de12`, on
 `feature/final-submission-readiness-v1`. This is a project self-review,

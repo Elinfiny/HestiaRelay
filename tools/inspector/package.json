@@ -1,0 +1,7 @@
+{
+  "name": "hestiarelay-inspector-validation",
+  "private": true,
+  "dependencies": {
+    "@modelcontextprotocol/inspector": "2.9.0"
+  }
+}
