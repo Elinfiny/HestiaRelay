@@ -1,4 +1,4 @@
-"""Six inert cases for the actual experimental helper; never native APT qualification."""
+"""Eight inert methods for corrected36; never native APT qualification."""
 
 import importlib.util
 import json
@@ -32,16 +32,25 @@ def rows():
     return result
 
 
-def encode(records):
-    return ''.join('\t'.join([k, *v]) + '\n' for k, v in records.items()).encode()
+def encode(records, aliases=False):
+    lines = []
+    for name, fields in records.items():
+        binary = name + ':amd64' if aliases and fields[1] == 'amd64' else name
+        lines.append('\t'.join([name, binary, *fields]) + '\n')
+    return ''.join(lines).encode()
 
 
-def plan():
-    return ('Reading package lists...\nBuilding dependency tree...\n'
+def plan(aliases=False):
+    body = ('Reading package lists...\nBuilding dependency tree...\n'
             'Reading state information...\nThe following packages will be REMOVED:\n'
             '  apt* libapt-pkg7.0* sqv* libstdc++6*\n'
             '0 upgraded, 0 newly installed, 4 to remove and 0 not upgraded.\n'
-            + ''.join(f'Purg {name} [1.0]\n' for name in HELPER.TARGETS)).encode()
+            + ''.join(f'Purg {name} [1.0]\n' for name in HELPER.TARGETS))
+    if aliases:
+        for name in sorted(HELPER.TARGETS, key=len, reverse=True):
+            body = body.replace(name + '*', name + ':amd64*')
+            body = body.replace('Purg ' + name + ' ', 'Purg ' + name + ':amd64 ')
+    return body.encode()
 
 
 class FakeAPT:
@@ -58,11 +67,12 @@ class FakeAPT:
         self.calls.append((argv, stage))
         out, err, code, now = b'', b'', 0, 0
         if stage == 'inventory-before':
-            out = encode(self.before)
+            out = encode(self.before, self.mode == 'aliases')
         elif stage == 'inventory-after':
-            out = encode({k:v for k,v in self.before.items() if k not in HELPER.TARGETS})
+            out = encode({k:v for k,v in self.before.items() if k not in HELPER.TARGETS},
+                         self.mode == 'aliases')
         elif stage == 'simulate':
-            out = plan()
+            out = plan(self.mode == 'aliases')
             if self.mode == 'extra':
                 out += b'Remv libgcc-s1 [1.0]\n'
             if self.mode == 'solver':
@@ -134,6 +144,87 @@ class RuntimeReduction35Tests(unittest.TestCase):
 
     def test_original_nonzero_unknown_failstop(self):
         self.exercise('nonzero')
+
+
+    def test_native_alias_schema_and_failclosed_subcases36(self):
+        # Bounded schema inputs only; no real dpkg or architecture inference.
+        records = rows()
+        records['ca-certificates'][1] = 'all'
+        raw = encode(records, aliases=True)
+        actual = HELPER.inventory(raw)
+        self.assertEqual(actual['libgcc-s1'][8], 'libgcc-s1:amd64')
+        self.assertEqual(actual['ca-certificates'][8], 'ca-certificates')
+        self.assertEqual(actual['libgcc-s1'][9], next(x for x in raw.decode().splitlines()
+                                if x.startswith('libgcc-s1\t')))
+        # Each row retains exact raw text, not a generic colon normalization.
+        for line in raw.decode().splitlines():
+            self.assertEqual(actual[line.split('\t')[0]][9], line)
+        first = raw.decode().splitlines()[0]
+        malformed = [raw.replace(b':amd64', b':arm64', 1),
+                     raw.replace(b'\tamd64\t', b'\tarm64\t', 1),
+                     raw + (first + '\n').encode(),
+                     raw + (first.replace(':amd64', '') + '\n').encode()]
+        for bad in malformed:
+            with self.assertRaises(HELPER.Refusal):
+                HELPER.inventory(bad)
+        # Same identity checks apply to dependencies and solver operations.
+        badrows = HELPER.inventory(raw)
+        badrows['libgcc-s1'][5] = 'gcc-14-base:arm64 (= 1.0)'
+        with self.assertRaises(HELPER.Refusal):
+            HELPER.guard_packages(badrows)
+        with self.assertRaises(HELPER.Refusal):
+            HELPER.parse_plan(plan(True) + b'Remv libgcc-s1:amd64 [1.0]\n', actual)
+        adapter = FakeAPT('aliases')
+        ACTIVE[0] = True
+        try:
+            outcome = HELPER.reduce_image(adapter)
+        finally:
+            ACTIVE[0] = False
+        self.assertEqual(outcome['removed'], list(HELPER.TARGETS))
+        self.assertEqual(adapter.purges, 1)
+        print(json.dumps({'case':'native-alias36','status':'PASS','bad_inputs':4,
+                          'raw_fields_retained':True,'purge_calls':adapter.purges,
+                          'scope':'INERT_ONLY_NOT_NATIVE_DPKG'}), flush=True)
+
+    def test_root_receipt_argv_and_branch_pins36(self):
+        import ast
+        import hashlib
+        import textwrap
+        root = SOURCE.parents[2]
+        text = (root/'workflow_candidates/hestia-runtime-reduction35.yml.disabled').read_text()
+        step = text.split('      - name: Baseline then isolated candidate build', 1)[1]
+        inline = textwrap.dedent(step.split("          python - <<'PY'\n", 1)[1]
+                                 .split('\n          PY\n', 1)[0])
+        parsed = ast.parse(inline)
+        receipts = []
+        for call in ast.walk(parsed):
+            if not isinstance(call, ast.Call) or not call.args:
+                continue
+            if not isinstance(call.func, ast.Name) or call.func.id != 'call':
+                continue
+            if len(call.args) > 1 and isinstance(call.args[1], ast.Constant):
+                if call.args[1].value == 'candidate-reduction-receipt':
+                    receipts.append(call.args[0])
+        self.assertEqual(len(receipts), 1)
+        # Explicit static model: only literal argv fields, image variable stays symbolic.
+        argv = [x.value if isinstance(x, ast.Constant) else 'ACTUAL_IMAGE_ID'
+                for x in receipts[0].elts]
+        self.assertEqual(argv.count('--user'), 1)
+        self.assertEqual(argv[argv.index('--user') + 1], '0:0')
+        for flag in ('--network=none','--read-only','--cap-drop=ALL',
+                     '--security-opt=no-new-privileges'):
+            self.assertIn(flag, argv)
+        self.assertIn('review/hestia-runtime-reduction36-20261015', text)
+        patch = (root/'workflow_candidates/hestia-ci-canary-isolation35.patch').read_text()
+        self.assertEqual(patch.count('review/hestia-runtime-reduction36-20261015'), 4)
+        self.assertNotIn('review/hestia-runtime-reduction35-20261015', patch)
+        for path in [SOURCE, Path(__file__)]:
+            self.assertIn(hashlib.sha256(path.read_bytes()).hexdigest(), text)
+        self.assertIn('refs/tags/HESTIA-RUNTIME-REDUCTION35-20261015-ONCE', text)
+        self.assertIn('USER 10001:10001',
+                      (root/'experiments/runtime_reduction35/Dockerfile').read_text())
+        print(json.dumps({'case':'receipt-static36','status':'PASS',
+                          'argv':argv,'scope':'STATIC_MODEL_NOT_NATIVE_DOCKER'}), flush=True)
 
 
 if __name__ == '__main__':

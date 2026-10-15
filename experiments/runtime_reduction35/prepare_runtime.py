@@ -16,7 +16,7 @@ from pathlib import Path
 TARGETS = ('apt', 'libapt-pkg7.0', 'sqv', 'libstdc++6')
 REQUIRED = ('gcc-14-base', 'libgcc-s1', 'libc6', 'libssl3t64', 'openssl',
             'libsqlite3-0', 'ca-certificates', 'perl-base')
-QUERY = ('/usr/bin/dpkg-query', '-W', '-f=${binary:Package}\t${Version}\t'
+QUERY = ('/usr/bin/dpkg-query', '-W', '-f=${Package}\t${binary:Package}\t${Version}\t'
          '${Architecture}\t${db:Status-Abbrev}\t${Essential}\t${Protected}\t'
          '${Depends}\t${Pre-Depends}\n')
 SIMULATE = ('/usr/bin/apt-get', '--simulate', '--no-download', 'purge', *TARGETS)
@@ -45,22 +45,36 @@ def inventory(raw):
     rows = {}
     for line in raw.decode('utf-8', errors='strict').splitlines():
         fields = line.split('\t')
-        if len(fields) != 8:
+        if len(fields) != 9:
             raise Refusal('Unrecognized installed package record')
-        name, version, arch, status, essential, protected, depends, predepends = fields
-        if not re.fullmatch(PACKAGE, name) or not re.fullmatch(VERSION, version):
-            raise Refusal('Unrecognized package identity')
-        if arch not in ('amd64', 'all') or status != 'ii ' or name in rows:
-            raise Refusal('Unexpected architecture/status/duplicate')
+        base, binary, version, arch, status, essential, protected, depends, pre = fields
+        if not re.fullmatch(r'[a-z0-9][a-z0-9+.-]*', base):
+            raise Refusal('Invalid logical package base name')
+        if arch not in ('amd64', 'all') or not re.fullmatch(VERSION, version):
+            raise Refusal('Foreign/unknown architecture or version')
+        allowed = (base, base + ':amd64') if arch == 'amd64' else (base,)
+        if binary not in allowed or base in rows:
+            raise Refusal('Qualifier mismatch, duplicate or logical identity collision')
+        if status != 'ii ':
+            raise Refusal('Unexpected installed status')
         if essential not in ('', 'no', 'yes') or protected not in ('', 'no', 'yes'):
             raise Refusal('Unknown essential/protected state')
-        rows[name] = fields[1:]
-        # Multiarch aliases are not silently normalized or adopted.
-        if ':' in name:
-            raise Refusal('Multiarch dependency model not qualified')
+        # Retain every original field and the entire original record, byte-order exact.
+        rows[base] = [version, arch, status, essential, protected, depends, pre,
+                      base, binary, line]
     if not rows or len(rows) > 512:
         raise Refusal('Package inventory completeness bound')
     return rows
+
+
+def resolve_identity(token, rows):
+    # Bare logical name or EXACT independently observed binary alias only.
+    if token in rows:
+        return token
+    matches = [base for base, fields in rows.items() if token == fields[8]]
+    if len(matches) != 1:
+        raise Refusal('Unverified foreign/virtual/mismatched package identity')
+    return matches[0]
 
 
 def guard_packages(rows):
@@ -84,7 +98,7 @@ def guard_packages(rows):
                         + VERSION + r'\))?\s*', alternative)
                     if match is None:
                         raise Refusal('Unrepresentable dependency expression')
-                    if match[1].split(':')[0] in TARGETS:
+                    if resolve_identity(match[1], rows) in TARGETS:
                         raise Refusal('Remaining package depends on a target')
 
 
@@ -99,7 +113,10 @@ def parse_plan(raw, rows):
     while index < len(lines) and lines[index].startswith('  '):
         listed.extend(lines[index].split())
         index += 1
-    if len(listed) != 4 or set(listed) != {name + '*' for name in TARGETS}:
+    if any(not item.endswith('*') for item in listed):
+        raise Refusal('Unexpected removal token')
+    logical = [resolve_identity(item[:-1], rows) for item in listed]
+    if len(logical) != 4 or set(logical) != set(TARGETS):
         raise Refusal('Unexpected removal summary')
     if index >= len(lines) or not re.fullmatch(
             r'0 upgraded, 0 newly installed, 4 to remove and [0-9]+ not upgraded\.',
@@ -108,11 +125,14 @@ def parse_plan(raw, rows):
     removed = []
     for line in lines[index + 1:]:
         match = re.fullmatch(r'(?:Remv|Purg) (' + PACKAGE + r') \[(' + VERSION + r')\]', line)
-        if match is None or match[1] not in TARGETS:
+        if match is None:
             raise Refusal('Unknown/Conf/Inst/download/extra removal operation')
-        if rows[match[1]][0] != match[2] or match[1] in removed:
+        name = resolve_identity(match[1], rows)
+        if name not in TARGETS:
+            raise Refusal('Unknown/Conf/Inst/download/extra removal operation')
+        if rows[name][0] != match[2] or name in removed:
             raise Refusal('Version or duplicate removal drift')
-        removed.append(match[1])
+        removed.append(name)
     if len(removed) != 4 or set(removed) != set(TARGETS):
         raise Refusal('Incomplete removal plan')
     return tuple(removed)

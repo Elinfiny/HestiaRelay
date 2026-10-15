@@ -15,7 +15,7 @@ jobs:
       github.repository_owner == 'Elinfiny' && github.actor == 'Elinfiny' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.head.repo.fork == false &&
-      github.head_ref == 'review/hestia-runtime-reduction35-20261015' &&
+      github.head_ref == 'review/hestia-runtime-reduction36-20261015' &&
       github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -45,8 +45,8 @@ jobs:
               'Dockerfile':'70cf3bf917b41948071ba0e2627a0c5b0e3dfa2640929ca504cb60b46f36f8e8',
               'requirements-runtime.txt':'ddbb3d65fc0cdc08d2e5bdecb561173b9f58c0945d534b742c5979b070d6fa68',
               'scripts/native_surface_probe.py':'642530112b7fdfc79689d06509be8623b2a25b22874577de10ebffed8383cdfa',
-              'experiments/runtime_reduction35/prepare_runtime.py':'d07750d997695e098347e0d1fe1f5f1c1680015adc278aab2c85fd6cd6374b1a',
-              'tests/test_runtime_reduction35.py':'ae4792d9c553ea8a13121c1cff2f37a32cebd7e7f00a108f6433e73ce858fecf',
+              'experiments/runtime_reduction35/prepare_runtime.py':'f9b82d4c44bace3439610ef2457928cffbe2e43b2fe8a1b7c8b2210e84010cfc',
+              'tests/test_runtime_reduction35.py':'44925dc8eb20726a3041c353ed5ba4ab502ecb65f6d4238018edcde99660187e',
               'experiments/runtime_reduction35/Dockerfile':'1f981261e57ebfab015a43f78f77a7981c697aaf3e5e60240741a7d8478f68f4',
           }
           for name,pin in expected.items():
@@ -160,8 +160,8 @@ jobs:
                    '-W','-f=${binary:Package}\t${Version}\t${Architecture}\n'],label+'-packages')
               (root/(label+'-packages.tsv')).write_bytes(packages)
               if label=='candidate':
-                  reduction=call(['docker','run','--rm','--network=none','--read-only','--cap-drop=ALL',
-                      '--entrypoint','python',image,'-c',
+                  reduction=call(['docker','run','--rm','--network=none','--read-only','--cap-drop=ALL','--user','0:0',
+                      '--security-opt=no-new-privileges','--entrypoint','python',image,'-c',
                       'from pathlib import Path; print(Path("/reduction35-evidence/result.json").read_text())'],
                       'candidate-reduction-receipt')
                   assert json.loads(reduction)['security_acceptance'] is False
