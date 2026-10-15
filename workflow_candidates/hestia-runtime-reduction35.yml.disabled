@@ -15,7 +15,7 @@ jobs:
       github.repository_owner == 'Elinfiny' && github.actor == 'Elinfiny' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.head.repo.fork == false &&
-      github.head_ref == 'review/hestia-runtime-reduction37-20261016' &&
+      github.head_ref == 'review/hestia-runtime-reduction39-20261016' &&
       github.run_attempt == 1
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -42,6 +42,8 @@ jobs:
           head = subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
           assert head == os.environ['ACTUAL_HEAD']
           expected = {
+              'experiments/runtime_reduction35/consume_once38.py':'951393fde0cf27bc0c4c729ff88573a7c00e121116791070e83ed9b6ceef1fc6',
+              'tests/test_runtime_nonce38.py':'f31c2ea89ce80e4245b1f0078da3ac7d115b702ea4489616248cd0d19bfa7bdb',
               'Dockerfile':'70cf3bf917b41948071ba0e2627a0c5b0e3dfa2640929ca504cb60b46f36f8e8',
               'requirements-runtime.txt':'ddbb3d65fc0cdc08d2e5bdecb561173b9f58c0945d534b742c5979b070d6fa68',
               'scripts/native_surface_probe.py':'642530112b7fdfc79689d06509be8623b2a25b22874577de10ebffed8383cdfa',
@@ -63,23 +65,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           ACTUAL_HEAD: ${{ github.event.pull_request.head.sha }}
         run: |
-          python - <<'PY'
-          import json, os, urllib.request
-          # Exactly one POST; HTTP failure/timeout/unknown => fail, no retry/delete/reseed.
-          body=json.dumps({'ref':'refs/tags/HESTIA-RUNTIME-REDUCTION35-20261015-ONCE',
-                           'sha':os.environ['ACTUAL_HEAD']}).encode()
-          req=urllib.request.Request('https://api.github.com/repos/Elinfiny/HestiaRelay/git/refs',
-              data=body,method='POST',headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],
-              'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'})
-          with urllib.request.urlopen(req,timeout=15) as response:
-              original=response.read(65537); status=response.status
-          assert status == 201 and len(original)<=65536
-          result=json.loads(original)
-          assert result['ref']=='refs/tags/HESTIA-RUNTIME-REDUCTION35-20261015-ONCE'
-          assert result['object']['sha']==os.environ['ACTUAL_HEAD']
-          print(json.dumps({'one_use_ref':result['ref'],'source':result['object']['sha'],
-                            'state':'CONSUMED_NEVER_REARM'},sort_keys=True))
-          PY
+          python -B experiments/runtime_reduction35/consume_once38.py
       - name: Install declared development and inspector tools - no cache
         env:
           AWS_EC2_METADATA_DISABLED: 'true'
