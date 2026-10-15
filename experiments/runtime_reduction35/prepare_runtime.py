@@ -41,6 +41,29 @@ def checked_return(out, err, code, deadline, now):
     return out
 
 
+def package_paths(raw):
+    """Parse captured dpkg -L lists; only exactly empty delimiter rows are omitted."""
+    if not raw or len(raw) > MAX_STREAM or not raw.endswith(b'\n'):
+        raise Refusal('Empty/incomplete/overcap package path stream')
+    try:
+        text = raw.decode('utf-8', errors='strict')
+    except UnicodeError as error:
+        raise Refusal('Unknown package path encoding') from error
+    paths = set()
+    for line in text.split('\n'):
+        if line == '':
+            continue
+        if (not line.startswith('/') or '..' in Path(line).parts
+                or any(ord(char) < 32 or ord(char) == 127 for char in line)):
+            raise Refusal('Relative/traversal/control/diversion/unknown path row')
+        paths.add(line)  # Exact strings only; no stripping or path normalization.
+        if len(paths) > MAX_FILES:
+            raise Refusal('Package file count bound')
+    if not paths:
+        raise Refusal('Empty-only package path stream')
+    return paths
+
+
 def inventory(raw):
     rows = {}
     for line in raw.decode('utf-8', errors='strict').splitlines():
@@ -210,7 +233,7 @@ class NativeBuildAdapter:
 
     def manifest(self, packages):
         raw = self.command(('/usr/bin/dpkg-query','-L',*packages), 'protected-paths')
-        paths = set(raw.decode('utf-8',errors='strict').splitlines())
+        paths = package_paths(raw)
         # Include application and interpreter/wheels not owned by Debian packages.
         for root in ('/app','/usr/local/lib/python3.12','/usr/local/bin'):
             for directory, dirs, files in os.walk(root, followlinks=False):

@@ -1,4 +1,4 @@
-"""Eight inert methods for corrected36; never native APT qualification."""
+"""Ten inert methods for corrected37; never native APT qualification."""
 
 import importlib.util
 import json
@@ -214,9 +214,9 @@ class RuntimeReduction35Tests(unittest.TestCase):
         for flag in ('--network=none','--read-only','--cap-drop=ALL',
                      '--security-opt=no-new-privileges'):
             self.assertIn(flag, argv)
-        self.assertIn('review/hestia-runtime-reduction36-20261015', text)
+        self.assertIn('review/hestia-runtime-reduction37-20261016', text)
         patch = (root/'workflow_candidates/hestia-ci-canary-isolation35.patch').read_text()
-        self.assertEqual(patch.count('review/hestia-runtime-reduction36-20261015'), 4)
+        self.assertEqual(patch.count('review/hestia-runtime-reduction37-20261016'), 4)
         self.assertNotIn('review/hestia-runtime-reduction35-20261015', patch)
         for path in [SOURCE, Path(__file__)]:
             self.assertIn(hashlib.sha256(path.read_bytes()).hexdigest(), text)
@@ -225,6 +225,49 @@ class RuntimeReduction35Tests(unittest.TestCase):
                       (root/'experiments/runtime_reduction35/Dockerfile').read_text())
         print(json.dumps({'case':'receipt-static36','status':'PASS',
                           'argv':argv,'scope':'STATIC_MODEL_NOT_NATIVE_DOCKER'}), flush=True)
+
+
+    def test_package_path_separators37(self):
+        raw = b'/usr/bin/a\n\n/usr/lib/b\n/usr/bin/a\n\n'
+        self.assertEqual(HELPER.package_paths(raw), {'/usr/bin/a', '/usr/lib/b'})
+        self.assertEqual(HELPER.package_paths(b'/a space\n/a//b\n'),
+                         {'/a space', '/a//b'})
+        import ast
+        parsed = ast.parse(SOURCE.read_text())
+        adapter = next(n for n in parsed.body
+                       if isinstance(n, ast.ClassDef) and n.name == 'NativeBuildAdapter')
+        manifest = next(n for n in adapter.body
+                        if isinstance(n, ast.FunctionDef) and n.name == 'manifest')
+        calls = [n for n in ast.walk(manifest) if isinstance(n, ast.Call)
+                 and isinstance(n.func, ast.Name) and n.func.id == 'package_paths']
+        self.assertEqual(len(calls), 1)
+        self.assertIsInstance(calls[0].args[0], ast.Name)
+        self.assertEqual(calls[0].args[0].id, 'raw')
+        print(json.dumps({'case':'package-separators37','status':'PASS',
+                          'callsite':'actual NativeBuildAdapter.manifest raw->package_paths',
+                          'scope':'INERT_PARSER_STATIC_CALLSITE_NOT_NATIVE_DPKG'}), flush=True)
+
+    def test_package_path_invalid_diversion_caps37(self):
+        bad = [b'', b'\n\n', b'/incomplete', b'relative\n', b'/a\x00b\n',
+               b'/a/../b\n', b'   \n', b'locally diverted to: /x\n',
+               b'/a\tb\n', b'/a\r\n', b'\xff\n']
+        for raw in bad:
+            with self.assertRaises(HELPER.Refusal):
+                HELPER.package_paths(raw)
+        old_files, old_bytes = HELPER.MAX_FILES, HELPER.MAX_STREAM
+        try:
+            HELPER.MAX_FILES = 1
+            with self.assertRaises(HELPER.Refusal):
+                HELPER.package_paths(b'/a\n/b\n')
+            self.assertEqual(HELPER.package_paths(b'/a\n/a\n'), {'/a'})
+            HELPER.MAX_STREAM = 3
+            with self.assertRaises(HELPER.Refusal):
+                HELPER.package_paths(b'/too-long\n')
+        finally:
+            HELPER.MAX_FILES, HELPER.MAX_STREAM = old_files, old_bytes
+        print(json.dumps({'case':'package-invalid37','status':'PASS',
+                          'invalid_inputs':len(bad),'count_and_byte_caps':True,
+                          'scope':'INERT_ONLY_NO_NATIVE_COMMAND'}), flush=True)
 
 
 if __name__ == '__main__':
