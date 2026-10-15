@@ -289,7 +289,7 @@ jobs:
           stage.mkdir(mode=0o700, exist_ok=False)
           evidence = root / 'qa-artifacts' / ('perl16-' + runid)
           evidence.mkdir(mode=0o700, exist_ok=False)
-          expected = {'perl_scoped_inventory.py': '8b21a3e66c5c520c9c3f1dfd5b4058b5ec969e8f637cb1dec7317fb61613c516', 'healthcheck_qualification.py': '577380fe3339e8f00b9f447e847f65335ff8841937494015332d8880f399892d'}
+          expected = {'perl_scoped_inventory.py': '5369d540d9aa70d6a7db705e84259190c94dedaec133dfbb5f0b63dc56c7cb25', 'healthcheck_qualification.py': '7d7594691d0d6bff569f5fb1949343bd26e6a283b37a42863d758d3f5d736059'}
           audit = stage / 'audit'
           audit.mkdir(mode=0o755)
           for name, digest in expected.items():

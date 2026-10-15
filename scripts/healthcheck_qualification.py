@@ -5,25 +5,35 @@ is only healthcheck qualification, never a release/security acceptance gate.
 All subprocess originals and receipts precede parsing/checks; final process
 exit must be checked by the external owner before POST_RETURN is claimed.
 """
+
 import argparse
 import hashlib
 import io
 import json
 import os
-from pathlib import Path, PurePosixPath
 import selectors
 import shutil
-import stat
 import subprocess
 import tarfile
 import time
+from pathlib import Path, PurePosixPath
 
 BASE = "d3f15f3fa4347dc781e43479282c6372d80ddbc0"
 BEFORE = "70cf3bf917b41948071ba0e2627a0c5b0e3dfa2640929ca504cb60b46f36f8e8"
 AFTER = "a648a4fce31814b78ce01afde3691d96ff9cad755893321aa42404abbe8273bb"
 CODE = "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"
 EXPECTED_HEALTH = ["CMD", "python", "-c", CODE]
-EXPECTED_CMD = ["python", "-m", "uvicorn", "hestiarelay.server:app", "--host", "0.0.0.0", "--port", "8000", "--no-proxy-headers"]
+EXPECTED_CMD = [
+    "python",
+    "-m",
+    "uvicorn",
+    "hestiarelay.server:app",
+    "--host",
+    "0.0.0.0",
+    "--port",
+    "8000",
+    "--no-proxy-headers",
+]
 MAX_ORIGINAL_BYTES = 16 * 1024 * 1024
 
 
@@ -46,12 +56,21 @@ class CommandNotAccepted(RuntimeError):
 
 
 class NativeCommandOps:
-    """Real operations are used only by a separately admitted future runtime."""
+    "Real operations are used only by a separately admitted future runtime."
+
     now = staticmethod(time.monotonic)
     pause = staticmethod(time.sleep)
 
     def spawn(self, argv, cwd, env):
-        return subprocess.Popen(argv, cwd=cwd, env=env, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+        return subprocess.Popen(
+            argv,
+            cwd=cwd,
+            env=env,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            start_new_session=True,
+        )
 
     def streams(self, proc):
         return [(proc.stdout, 0, True), (proc.stderr, 1, True)]
@@ -88,23 +107,50 @@ class NativeCommandOps:
         mux.close()
 
 
-def finalize_command_retention(label, argv, output, state, ops, persist, buffers, observed, rc, operation_errors, stamps, deadline, work_deadline, drain_deadline, reserve, raw_complete, reasons, signal_attempts, owned_closed, cleanup=False):
-    """Originals/primary live in RAM before fallible I/O. RAM is not crash custody."""
+def finalize_command_retention(
+    label,
+    argv,
+    output,
+    state,
+    ops,
+    persist,
+    buffers,
+    observed,
+    rc,
+    operation_errors,
+    stamps,
+    deadline,
+    work_deadline,
+    drain_deadline,
+    reserve,
+    raw_complete,
+    reasons,
+    signal_attempts,
+    owned_closed,
+    cleanup=False,
+):
+    "Originals/primary live in RAM before fallible I/O. RAM is not crash custody."
     retention_errors = []
+
     def note(reason):
         if reason not in reasons:
             reasons.append(reason)
+
     def latch():
         if state.get("first_unknown") is None:
             state["first_unknown"] = {"label": label, "reasons": reasons.copy(), "returncode": rc}
+
     def fault(operation, error):
-        retention_errors.append({"operation": operation, "type": type(error).__name__, "message": str(error)})
+        retention_errors.append(
+            {"operation": operation, "type": type(error).__name__, "message": str(error)}
+        )
         note("RETENTION_OR_CLOCK_UNKNOWN")
         latch()
+
     def clock(phase):
         try:
             value = ops.now()
-            if not isinstance(value, (float, int)) or not __import__('math').isfinite(value):
+            if not isinstance(value, (float, int)) or not __import__("math").isfinite(value):
                 raise ValueError("nonfinite monotonic observation")
             stamps[phase] = value
             if value >= deadline:
@@ -115,16 +161,31 @@ def finalize_command_retention(label, argv, output, state, ops, persist, buffers
             stamps[phase] = None
             fault(phase, error)
             return None
-    original = {"label": label, "argv": argv, "returncode": rc, "operation_errors": operation_errors.copy(), "original_bytes_observed": observed.copy(), "retained_bytes": [len(x) for x in buffers], "sha256": [sha(x) for x in buffers], "phase_timestamps": stamps.copy()}
+
+    original = {
+        "label": label,
+        "argv": argv,
+        "returncode": rc,
+        "operation_errors": operation_errors.copy(),
+        "original_bytes_observed": observed.copy(),
+        "retained_bytes": [len(x) for x in buffers],
+        "sha256": [sha(x) for x in buffers],
+        "phase_timestamps": stamps.copy(),
+    }
     # First retain immutable originals and primary in memory, before fs/open/clock.
-    state.setdefault("originals_ram", {})[label] = {"stdout": bytes(buffers[0]), "stderr": bytes(buffers[1]), "metadata": original.copy(), "retention_errors": retention_errors}
+    state.setdefault("originals_ram", {})[label] = {
+        "stdout": bytes(buffers[0]),
+        "stderr": bytes(buffers[1]),
+        "metadata": original.copy(),
+        "retention_errors": retention_errors,
+    }
     if not raw_complete:
         note("RAW_OR_TERMINAL_INCOMPLETE")
     if rc != 0:
         note("NONZERO_OR_UNOBSERVED_ORIGINAL_RETURNCODE")
     if reasons:
         latch()
-    for suffix, data in zip(["stdout", "stderr"], buffers):
+    for suffix, data in zip(["stdout", "stderr"], buffers, strict=False):
         try:
             with (output / (label + "." + suffix)).open("xb") as handle:
                 handle.write(data)
@@ -137,7 +198,25 @@ def finalize_command_retention(label, argv, output, state, ops, persist, buffers
     except Exception as error:
         fault("original_metadata", error)
     clock("POST_RETENTION")
-    preliminary = dict(original, phase_timestamps=stamps.copy(), absolute_deadline=deadline, functional_deadline=work_deadline, drain_deadline=drain_deadline, drain_reserved_seconds=reserve, raw_complete=raw_complete, complete=raw_complete and rc == 0 and not reasons, verdict="UNKNOWN_NOT_ACCEPTED", reasons=reasons.copy(), signal_attempts=signal_attempts, terminal_observed=rc is not None, backend_stop="NOT_CLAIMED", owned_streams_closed_once=owned_closed, cleanup=cleanup, retention_errors=retention_errors.copy(), final_verdict=False)
+    preliminary = dict(
+        original,
+        phase_timestamps=stamps.copy(),
+        absolute_deadline=deadline,
+        functional_deadline=work_deadline,
+        drain_deadline=drain_deadline,
+        drain_reserved_seconds=reserve,
+        raw_complete=raw_complete,
+        complete=raw_complete and rc == 0 and not reasons,
+        verdict="UNKNOWN_NOT_ACCEPTED",
+        reasons=reasons.copy(),
+        signal_attempts=signal_attempts,
+        terminal_observed=rc is not None,
+        backend_stop="NOT_CLAIMED",
+        owned_streams_closed_once=owned_closed,
+        cleanup=cleanup,
+        retention_errors=retention_errors.copy(),
+        final_verdict=False,
+    )
     if preliminary["complete"]:
         preliminary["verdict"] = "TIMELY_EXIT0_PRELIMINARY"
     receipt_path = output / (label + ".receipt.json")
@@ -148,7 +227,16 @@ def finalize_command_retention(label, argv, output, state, ops, persist, buffers
         fault("receipt_persist", error)
     clock("POST_RECEIPT_PERSIST")
     accepted = raw_complete and rc == 0 and not reasons
-    final = dict(preliminary, phase_timestamps=stamps.copy(), complete=accepted, verdict="TIMELY_EXIT0_ACCEPTED" if accepted else "UNKNOWN_NOT_ACCEPTED", reasons=reasons.copy(), final_verdict=True, retention_errors=retention_errors, original_receipt=receipt_path.name)
+    final = dict(
+        preliminary,
+        phase_timestamps=stamps.copy(),
+        complete=accepted,
+        verdict="TIMELY_EXIT0_ACCEPTED" if accepted else "UNKNOWN_NOT_ACCEPTED",
+        reasons=reasons.copy(),
+        final_verdict=True,
+        retention_errors=retention_errors,
+        original_receipt=receipt_path.name,
+    )
     state.setdefault("calls", []).append(final)
     if not accepted:
         latch()
@@ -156,14 +244,34 @@ def finalize_command_retention(label, argv, output, state, ops, persist, buffers
             state.setdefault("cleanup_errors", []).append(final)
         # Distinct diagnostic, one best-effort attempt, no retry or new authority.
         try:
-            write(output / (label + ".closeout.json"), dict(final, administrative_only=True, new_functional_authority=False, original_not_rewritten=True))
+            write(
+                output / (label + ".closeout.json"),
+                dict(
+                    final,
+                    administrative_only=True,
+                    new_functional_authority=False,
+                    original_not_rewritten=True,
+                ),
+            )
         except Exception as error:
             fault("administrative_closeout", error)
         raise CommandNotAccepted(final)
     return bytes(buffers[0])
 
 
-def bounded_command(label, argv, timeout, output, state, *, ops=None, cwd=None, env=None, cleanup=False, persist=None):
+def bounded_command(
+    label,
+    argv,
+    timeout,
+    output,
+    state,
+    *,
+    ops=None,
+    cwd=None,
+    env=None,
+    cleanup=False,
+    persist=None,
+):
     """Absolute request/invoke/return deadlines with a reserved finite drain.
 
     Dependency injection is used by the one inert group. It does not qualify
@@ -173,15 +281,36 @@ def bounded_command(label, argv, timeout, output, state, *, ops=None, cwd=None, 
     persist = write if persist is None else persist
     try:
         pre_request = ops.now()
-        if not isinstance(pre_request, (float, int)) or not __import__('math').isfinite(pre_request):
+        if not isinstance(pre_request, (float, int)) or not __import__("math").isfinite(
+            pre_request
+        ):
             raise ValueError("nonfinite PRE_REQUEST clock")
     except Exception as error:
-        r = {"label": label, "argv": argv, "returncode": None, "complete": False, "raw_complete": False, "final_verdict": True, "verdict": "UNKNOWN_NOT_ACCEPTED", "reasons": ["PRE_REQUEST_CLOCK_UNKNOWN"], "retention_errors": [{"operation": "PRE_REQUEST", "type": type(error).__name__}], "backend_stop": "NOT_CLAIMED"}
-        state.setdefault("originals_ram", {})[label] = {"stdout": b"", "stderr": b"", "metadata": r.copy()}
+        r = {
+            "label": label,
+            "argv": argv,
+            "returncode": None,
+            "complete": False,
+            "raw_complete": False,
+            "final_verdict": True,
+            "verdict": "UNKNOWN_NOT_ACCEPTED",
+            "reasons": ["PRE_REQUEST_CLOCK_UNKNOWN"],
+            "retention_errors": [{"operation": "PRE_REQUEST", "type": type(error).__name__}],
+            "backend_stop": "NOT_CLAIMED",
+        }
+        state.setdefault("originals_ram", {})[label] = {
+            "stdout": b"",
+            "stderr": b"",
+            "metadata": r.copy(),
+        }
         if state.get("first_unknown") is None:
-            state["first_unknown"] = {"label": label, "reasons": r["reasons"].copy(), "returncode": None}
+            state["first_unknown"] = {
+                "label": label,
+                "reasons": r["reasons"].copy(),
+                "returncode": None,
+            }
         state.setdefault("calls", []).append(r)
-        raise CommandNotAccepted(r)
+        raise CommandNotAccepted(r) from error
     deadline = pre_request + max(0, timeout)
     reserve = min(0.25, max(0, timeout) / 10)
     work_deadline = deadline - reserve
@@ -264,7 +393,9 @@ def bounded_command(label, argv, timeout, output, state, *, ops=None, cwd=None, 
                     now = ops.now()
                     if now >= stop or polls > 20000:
                         break
-                    ready = ops.events(mux, min(0.05, stop - now)) if len(eof) < len(streams) else []
+                    ready = (
+                        ops.events(mux, min(0.05, stop - now)) if len(eof) < len(streams) else []
+                    )
                     if not ready and len(eof) == len(streams):
                         ops.pause(min(0.01, max(0, stop - ops.now())))
                     for stream, index in ready:
@@ -313,8 +444,34 @@ def bounded_command(label, argv, timeout, output, state, *, ops=None, cwd=None, 
             except Exception as error:
                 operation_errors.append("POST_RETURN_CLOCK:" + type(error).__name__)
                 note("POST_RETURN_CLOCK_UNKNOWN")
-        raw_complete = proc is not None and len(eof) == len(streams) and rc is not None and observed == [len(x) for x in buffers]
-        retained = finalize_command_retention(label, argv, output, state, ops, persist, buffers, observed, rc, operation_errors, stamps, deadline, work_deadline, drain_deadline, reserve, raw_complete, reasons, signal_attempts, sum(owned and id(stream) in closed for stream, _, owned in streams), cleanup)
+        raw_complete = (
+            proc is not None
+            and len(eof) == len(streams)
+            and rc is not None
+            and observed == [len(x) for x in buffers]
+        )
+        retained = finalize_command_retention(
+            label,
+            argv,
+            output,
+            state,
+            ops,
+            persist,
+            buffers,
+            observed,
+            rc,
+            operation_errors,
+            stamps,
+            deadline,
+            work_deadline,
+            drain_deadline,
+            reserve,
+            raw_complete,
+            reasons,
+            signal_attempts,
+            sum(owned and id(stream) in closed for stream, _, owned in streams),
+            cleanup,
+        )
     return retained
 
 
@@ -327,7 +484,17 @@ def main():
     args = ap.parse_args()
     out = args.output.resolve()
     out.mkdir(mode=0o700, parents=False, exist_ok=False)
-    result = {"schema": "HESTIA_HEALTHCHECK_QUALIFICATION_RESULT_V1", "status": "BLOCKED", "POST_RETURN": "REQUIRES_EXTERNAL_PROCESS_EXIT_AND_ARTIFACT_READBACK", "calls": [], "build_attempts": 0, "container_start_attempts": 0, "cleanup_attempts": 0, "security_release": "BLOCKED", "native_libraries_row_bindings": "NEW_IMAGE_UNMEASURED; OLD_POSIX_PROOF_NOT_INHERITED"}
+    result = {
+        "schema": "HESTIA_HEALTHCHECK_QUALIFICATION_RESULT_V1",
+        "status": "BLOCKED",
+        "POST_RETURN": "REQUIRES_EXTERNAL_PROCESS_EXIT_AND_ARTIFACT_READBACK",
+        "calls": [],
+        "build_attempts": 0,
+        "container_start_attempts": 0,
+        "cleanup_attempts": 0,
+        "security_release": "BLOCKED",
+        "native_libraries_row_bindings": "NEW_IMAGE_UNMEASURED; OLD_POSIX_PROOF_NOT_INHERITED",
+    }
     used = 0
     container_name = None
     image_id = None
@@ -338,12 +505,19 @@ def main():
     env = None
     docker = None
 
-    command_state = {"calls": result["calls"], "retained_bytes": 0, "first_unknown": None, "cleanup_issued": []}
+    command_state = {
+        "calls": result["calls"],
+        "retained_bytes": 0,
+        "first_unknown": None,
+        "cleanup_issued": [],
+    }
 
     def command(label, argv, timeout, cwd=None, cleanup=False):
         nonlocal used
         try:
-            return bounded_command(label, argv, timeout, out, command_state, cwd=cwd, env=env, cleanup=cleanup)
+            return bounded_command(
+                label, argv, timeout, out, command_state, cwd=cwd, env=env, cleanup=cleanup
+            )
         finally:
             used = command_state["retained_bytes"]
 
@@ -354,28 +528,71 @@ def main():
         (out / "contract.original.json").write_bytes(contract_raw)
         admission = json.loads(admission_raw)
         contract = json.loads(contract_raw)
-        required = ["isolated_route", "provider_cost_quota", "build_host_resources", "network_dependency_sources", "exact_run_identity", "separate_runtime_authority"]
-        if admission.get("runtime_admitted") is not True or admission.get("contract_sha256") != sha(contract_raw):
+        required = [
+            "isolated_route",
+            "provider_cost_quota",
+            "build_host_resources",
+            "network_dependency_sources",
+            "exact_run_identity",
+            "separate_runtime_authority",
+        ]
+        if admission.get("runtime_admitted") is not True or admission.get("contract_sha256") != sha(
+            contract_raw
+        ):
             raise ValueError("runtime_admission_or_exact_contract_missing")
         for key in required:
             proof = admission.get("proofs", {}).get(key, {})
-            if proof.get("state") != "PROVED" or not proof.get("evidence_ref") or len(proof.get("evidence_sha256", "")) != 64:
+            if (
+                proof.get("state") != "PROVED"
+                or not proof.get("evidence_ref")
+                or len(proof.get("evidence_sha256", "")) != 64
+            ):
                 raise ValueError("unproven_required_gate:" + key)
         native_run_id = os.environ.get("GITHUB_RUN_ID", "")
         if os.environ.get("GITHUB_RUN_ATTEMPT") != "1" or not native_run_id.isdecimal():
             raise ValueError("actual_native_first_attempt_run_required")
         if admission.get("expected_run_id") not in (None, native_run_id):
             raise ValueError("exact_provider_run_mismatch")
-        if admission.get("run_binding_mode") != "BIND_NATIVE_RUN_ON_SINGLE_ADMITTED_DISPATCH" or admission.get("dispatch_invocations") != 1 or admission.get("dispatch_retry") != 0:
+        if (
+            admission.get("run_binding_mode") != "BIND_NATIVE_RUN_ON_SINGLE_ADMITTED_DISPATCH"
+            or admission.get("dispatch_invocations") != 1
+            or admission.get("dispatch_retry") != 0
+        ):
             raise ValueError("external_single_dispatch_ledger_required")
-        if sha(Path(__file__).read_bytes()) != contract["candidate_files"]["scripts/healthcheck_qualification.py"]["sha256"]:
+        if (
+            sha(Path(__file__).read_bytes())
+            != contract["candidate_files"]["scripts/healthcheck_qualification.py"]["sha256"]
+        ):
             raise ValueError("script_identity_mismatch")
-        write(out / "INTENT.json", {"effect_key": admission["effect_key"], "run_id": native_run_id, "run_attempt": 1, "external_dispatch_ledger": admission["proofs"]["exact_run_identity"], "build": 1, "container_start": 1, "retry": 0, "provider_exactly_once": "NOT_CLAIMED; external owner must issue one journaled dispatch and reconcile unknown without retry"})
+        write(
+            out / "INTENT.json",
+            {
+                "effect_key": admission["effect_key"],
+                "run_id": native_run_id,
+                "run_attempt": 1,
+                "external_dispatch_ledger": admission["proofs"]["exact_run_identity"],
+                "build": 1,
+                "container_start": 1,
+                "retry": 0,
+                "provider_exactly_once": (
+                    "NOT_CLAIMED; external owner must issue one journ"
+                    "aled dispatch and reconcile unknown without retr"
+                    "y"
+                ),
+            },
+        )
         admitted = True
         # Empty Docker config and sanitized CLI env: no credential/remote-daemon forwarding.
         cfg = out / "empty-docker-config"
         cfg.mkdir(mode=0o700)
-        env = {"PATH": os.environ.get("PATH", "/usr/bin:/bin"), "HOME": str(cfg), "DOCKER_CONFIG": str(cfg), "DOCKER_BUILDKIT": "1", "BUILDKIT_PROGRESS": "plain", "LC_ALL": "C"}
+        env = {
+            "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
+            "HOME": str(cfg),
+            "DOCKER_CONFIG": str(cfg),
+            "DOCKER_BUILDKIT": "1",
+            "BUILDKIT_PROGRESS": "plain",
+            "LC_ALL": "C",
+        }
         git, docker = shutil.which("git"), shutil.which("docker")
         if not git or not docker:
             raise ValueError("preinstalled_git_or_docker_missing_no_install")
@@ -383,7 +600,22 @@ def main():
         head = command("source-head", [git, "rev-parse", "HEAD"], 5, args.source).decode().strip()
         if head != BASE or contract["baseline"]["current_PR_head"] != BASE:
             raise ValueError("source_head_drift_no_rebase")
-        original = command("source-archive", [git, "archive", "--format=tar", BASE, "Dockerfile", "requirements-runtime.txt", "LICENSE", "src", ".dockerignore"], 10, args.source)
+        original = command(
+            "source-archive",
+            [
+                git,
+                "archive",
+                "--format=tar",
+                BASE,
+                "Dockerfile",
+                "requirements-runtime.txt",
+                "LICENSE",
+                "src",
+                ".dockerignore",
+            ],
+            10,
+            args.source,
+        )
         if len(original) > 8 * 1024 * 1024:
             raise ValueError("buildcontext_archive_bound")
         context = out / "context"
@@ -395,7 +627,14 @@ def main():
             seen = set()
             for item in members:
                 path = PurePosixPath(item.name)
-                if item.name in seen or path.is_absolute() or ".." in path.parts or "\\" in item.name or not (item.isdir() or item.isreg()) or item.size > 4 * 1024 * 1024:
+                if (
+                    item.name in seen
+                    or path.is_absolute()
+                    or ".." in path.parts
+                    or "\\" in item.name
+                    or not (item.isdir() or item.isreg())
+                    or item.size > 4 * 1024 * 1024
+                ):
                     raise ValueError("unsafe_buildcontext_entry")
                 seen.add(item.name)
             for item in members:
@@ -419,8 +658,20 @@ def main():
         if sha(after) != AFTER:
             raise ValueError("Dockerfile_postimage_mismatch")
         dockerfile.write_bytes(after)
-        hashes = {f.relative_to(context).as_posix(): sha(f.read_bytes()) for f in sorted(context.rglob("*")) if f.is_file()}
-        write(out / "build-context-manifest.json", {"base_source_commit": BASE, "transient_Dockerfile_override_sha256": AFTER, "files": hashes, "pending07": "UNAPPLIED_RETAINED_DISJOINT_NON_BUILD_CONTEXT_PATHS"})
+        hashes = {
+            f.relative_to(context).as_posix(): sha(f.read_bytes())
+            for f in sorted(context.rglob("*"))
+            if f.is_file()
+        }
+        write(
+            out / "build-context-manifest.json",
+            {
+                "base_source_commit": BASE,
+                "transient_Dockerfile_override_sha256": AFTER,
+                "files": hashes,
+                "pending07": "UNAPPLIED_RETAINED_DISJOINT_NON_BUILD_CONTEXT_PATHS",
+            },
+        )
         if time.monotonic() > preflight_deadline:
             raise TimeoutError("source_preflight30s")
         run_key = native_run_id
@@ -431,30 +682,112 @@ def main():
         build_start = time.monotonic()
         boundary = build_start + 990  # Build<=900, then health+cleanup<=90.
         result["build_attempts"] = 1
-        command("build", [docker, "build", "--pull", "--no-cache", "--iidfile", str(out / "new-image.id"), "--tag", tag, str(context)], 900)
+        command(
+            "build",
+            [
+                docker,
+                "build",
+                "--pull",
+                "--no-cache",
+                "--iidfile",
+                str(out / "new-image.id"),
+                "--tag",
+                tag,
+                str(context),
+            ],
+            900,
+        )
         boundary = min(boundary, time.monotonic() + 90)
         image_id = (out / "new-image.id").read_text().strip()
         if not image_id.startswith("sha256:") or len(image_id) != 71:
             raise ValueError("new_image_id_missing")
         result["new_image_id"] = image_id
-        inspect_format = '{"Id":{{json .Id}},"Healthcheck":{{json .Config.Healthcheck.Test}},"Cmd":{{json .Config.Cmd}},"User":{{json .Config.User}},"Layers":{{json .RootFS.Layers}}}'
-        meta_raw = command("image-inspect", [docker, "image", "inspect", "--format", inspect_format, image_id], min(5, boundary - time.monotonic() - 15))
+        inspect_format = (
+            '{"Id":{{json .Id}},"Healthcheck":{{json .Config.'
+            'Healthcheck.Test}},"Cmd":{{json .Config.Cmd}},"U'
+            'ser":{{json .Config.User}},"Layers":{{json .Root'
+            "FS.Layers}}}"
+        )
+        meta_raw = command(
+            "image-inspect",
+            [docker, "image", "inspect", "--format", inspect_format, image_id],
+            min(5, boundary - time.monotonic() - 15),
+        )
         meta = json.loads(meta_raw)
-        if meta["Id"] != image_id or meta["Healthcheck"] != EXPECTED_HEALTH or meta["Cmd"] != EXPECTED_CMD or meta["User"] != "10001:10001":
+        if (
+            meta["Id"] != image_id
+            or meta["Healthcheck"] != EXPECTED_HEALTH
+            or meta["Cmd"] != EXPECTED_CMD
+            or meta["User"] != "10001:10001"
+        ):
             raise ValueError("image_healthcheck_CMD_User_or_digest_mismatch")
         result["image_configuration"] = meta
         result["container_start_attempts"] = 1
         run_attempted = True
-        command("run", [docker, "run", "--detach", "--name", container_name, "--network", "none", "--read-only", "--user", "10001:10001", "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--memory", "512m", "--pids-limit", "128", "--cpus", "1", "--tmpfs", "/tmp:rw,noexec,nosuid,nodev,size=16m,mode=1777", "--tmpfs", "/data:rw,noexec,nosuid,nodev,size=16m,uid=10001,gid=10001,mode=0700", image_id], min(10, boundary - time.monotonic() - 15))
-        resource_format = '{"State":{{json .State.Status}},"Health":{{json .State.Health.Status}},"Image":{{json .Image}},"User":{{json .Config.User}},"Host":{{json .HostConfig}},"Mounts":{{json .Mounts}}}'
+        command(
+            "run",
+            [
+                docker,
+                "run",
+                "--detach",
+                "--name",
+                container_name,
+                "--network",
+                "none",
+                "--read-only",
+                "--user",
+                "10001:10001",
+                "--cap-drop",
+                "ALL",
+                "--security-opt",
+                "no-new-privileges",
+                "--memory",
+                "512m",
+                "--pids-limit",
+                "128",
+                "--cpus",
+                "1",
+                "--tmpfs",
+                "/tmp:rw,noexec,nosuid,nodev,size=16m,mode=1777",
+                "--tmpfs",
+                "/data:rw,noexec,nosuid,nodev,size=16m,uid=10001,gid=10001,mode=0700",
+                image_id,
+            ],
+            min(10, boundary - time.monotonic() - 15),
+        )
+        resource_format = (
+            '{"State":{{json .State.Status}},"Health":{{json '
+            '.State.Health.Status}},"Image":{{json .Image}},"'
+            'User":{{json .Config.User}},"Host":{{json .HostC'
+            'onfig}},"Mounts":{{json .Mounts}}}'
+        )
         healthy = False
         for index in range(15):
             remaining = boundary - time.monotonic() - 15
             if remaining <= 0:
                 raise TimeoutError("health_deadline_cleanup_reserved")
-            state = json.loads(command("health-" + str(index), [docker, "inspect", "--format", resource_format, container_name], min(3, remaining)))
+            state = json.loads(
+                command(
+                    "health-" + str(index),
+                    [docker, "inspect", "--format", resource_format, container_name],
+                    min(3, remaining),
+                )
+            )
             host = state["Host"]
-            if state["Image"] != image_id or state["User"] != "10001:10001" or host["Privileged"] or not host["ReadonlyRootfs"] or host["NetworkMode"] != "none" or host["Memory"] != 536870912 or host["PidsLimit"] != 128 or host["NanoCpus"] != 1000000000 or "ALL" not in host["CapDrop"] or not any(x.startswith("no-new-privileges") for x in host["SecurityOpt"]) or host.get("Binds") or any(x["Type"] != "tmpfs" for x in state["Mounts"]):
+            if (
+                state["Image"] != image_id
+                or state["User"] != "10001:10001"
+                or host["Privileged"]
+                or not host["ReadonlyRootfs"]
+                or host["NetworkMode"] != "none"
+                or host["Memory"] != 536870912
+                or host["PidsLimit"] != 128
+                or host["NanoCpus"] != 1000000000
+                or "ALL" not in host["CapDrop"]
+                or not any(x.startswith("no-new-privileges") for x in host["SecurityOpt"])
+                or host.get("Binds")
+                or any(x["Type"] != "tmpfs" for x in state["Mounts"])
+            ):
                 raise ValueError("effective_container_resource_or_privilege_guard_failed")
             if state["State"] != "running" or state["Health"] == "unhealthy":
                 raise ValueError("container_not_running_or_unhealthy")
@@ -472,34 +805,65 @@ def main():
     finally:
         # Single attempt per owned resource; never restart/build again to repair.
         if result["build_attempts"] and image_id is None:
-            result["partial_build_cleanup"] = "UNKNOWN; no completed owned image identity, no blind global prune/remove"
+            result["partial_build_cleanup"] = (
+                "UNKNOWN; no completed owned image identity, no blind global prune/remove"
+            )
         if admitted and docker is not None and (run_attempted or image_id):
             result["cleanup_attempts"] = 1
-            cleanup_deadline = min(time.monotonic() + 15, boundary) if boundary else time.monotonic() + 15
+            cleanup_deadline = (
+                min(time.monotonic() + 15, boundary) if boundary else time.monotonic() + 15
+            )
             if run_attempted:
                 try:
-                    command("cleanup-container", [docker, "rm", "--force", "--volumes", container_name], min(8, cleanup_deadline - time.monotonic()), cleanup=True)
+                    command(
+                        "cleanup-container",
+                        [docker, "rm", "--force", "--volumes", container_name],
+                        min(8, cleanup_deadline - time.monotonic()),
+                        cleanup=True,
+                    )
                 except Exception as error:
                     cleanup_ok = False
                     result["container_cleanup_error"] = str(error)
             if image_id:
                 try:
-                    command("cleanup-image", [docker, "image", "rm", image_id], cleanup_deadline - time.monotonic(), cleanup=True)
+                    command(
+                        "cleanup-image",
+                        [docker, "image", "rm", image_id],
+                        cleanup_deadline - time.monotonic(),
+                        cleanup=True,
+                    )
                 except Exception as error:
                     cleanup_ok = False
                     result["image_cleanup_error"] = str(error)
             if not cleanup_ok or boundary is not None and time.monotonic() > boundary:
                 result["status"] = "UNKNOWN"
                 result["cleanup_or_late_return"] = "UNKNOWN_OR_DEADLINE_EXCEEDED"
-        if result["status"] == "QUALIFICATION_OBSERVED_PENDING_CLEANUP_AND_POST_RETURN" and cleanup_ok:
-            result["status"] = "TARGET_HEALTHCHECK_OBSERVED_CLEANUP_COMPLETE_EXTERNAL_POST_RETURN_REQUIRED"
+        if (
+            result["status"] == "QUALIFICATION_OBSERVED_PENDING_CLEANUP_AND_POST_RETURN"
+            and cleanup_ok
+        ):
+            result["status"] = (
+                "TARGET_HEALTHCHECK_OBSERVED_CLEANUP_COMPLETE_EXTERNAL_POST_RETURN_REQUIRED"
+            )
         result["first_command_unknown"] = command_state["first_unknown"]
-        result["cleanup_command_errors"] = [r["label"] for r in command_state.get("cleanup_errors", [])]
+        result["cleanup_command_errors"] = [
+            r["label"] for r in command_state.get("cleanup_errors", [])
+        ]
         result["raw_bytes_retained"] = used
         result["retry_count"] = 0
         write(out / "result.json", result)
-        print(json.dumps({k: v for k, v in result.items() if k not in {"calls", "effective_runtime_guards"}}, sort_keys=True))
-    return 0 if result["status"] == "TARGET_HEALTHCHECK_OBSERVED_CLEANUP_COMPLETE_EXTERNAL_POST_RETURN_REQUIRED" else 2
+        print(
+            json.dumps(
+                {k: v for k, v in result.items() if k not in {"calls", "effective_runtime_guards"}},
+                sort_keys=True,
+            )
+        )
+    return (
+        0
+        if result["status"]
+        == ("TARGET_HEALTHCHECK_OBSERVED_CLEANUP_COMPLETE_EXTERNAL_POST_RETURN_REQUIRED")
+        else 2
+    )
 
 
 if __name__ == "__main__":
