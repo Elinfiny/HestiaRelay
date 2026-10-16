@@ -44,6 +44,8 @@ jobs:
           expected = {
               'experiments/runtime_reduction35/consume_once38.py':'951393fde0cf27bc0c4c729ff88573a7c00e121116791070e83ed9b6ceef1fc6',
               'tests/test_runtime_nonce38.py':'f31c2ea89ce80e4245b1f0078da3ac7d115b702ea4489616248cd0d19bfa7bdb',
+              'experiments/runtime_reduction35/bounded_capture40.py':'6edde9581f71ddc49a130d93c8916c38ccd9e2fda60b9c1821b2198547a92258',
+              'tests/test_runtime_capture40.py':'5c0a14375c30bed9d5da02e525b0988c70fd87693a6e27469d08c76c82f82296',
               'Dockerfile':'70cf3bf917b41948071ba0e2627a0c5b0e3dfa2640929ca504cb60b46f36f8e8',
               'requirements-runtime.txt':'ddbb3d65fc0cdc08d2e5bdecb561173b9f58c0945d534b742c5979b070d6fa68',
               'scripts/native_surface_probe.py':'642530112b7fdfc79689d06509be8623b2a25b22874577de10ebffed8383cdfa',
@@ -99,29 +101,24 @@ jobs:
         run: |
           set -euo pipefail
           python - <<'PY'
-          import hashlib, json, os, pathlib, shutil, subprocess, time
+          import hashlib, json, os, pathlib, shutil, subprocess, time, importlib.util
+          spec=importlib.util.spec_from_file_location("capture40","experiments/runtime_reduction35/bounded_capture40.py")
+          capture40=importlib.util.module_from_spec(spec);spec.loader.exec_module(capture40)
           root=pathlib.Path('canary35-evidence');root.mkdir()
           deadline=time.monotonic()+900
           seq=0
+          capture_session=capture40.CaptureSession(deadline,allow_kill=True)
           def call(argv,label,limit=180,cap=16777216):
               global seq
-              assert time.monotonic()<deadline
               seq+=1
-              try:
-                  p=subprocess.run(argv,capture_output=True,timeout=min(limit,deadline-time.monotonic()))
-                  out,err,code=p.stdout,p.stderr,p.returncode
-              except subprocess.TimeoutExpired as e:
-                  out,err,code=e.stdout or b'',e.stderr or b'',None
-              # Original full streams/exit before caps/deadline/conversion. No retry.
+              result=capture_session.run(argv,label,limit=limit,stdout_cap=cap,stderr_cap=cap)
+              out,err,receipt=result['stdout'],result['stderr'],result['receipt']
               base=root/f'{seq:02d}-{label}'
               base.with_suffix('.stdout').write_bytes(out)
               base.with_suffix('.stderr').write_bytes(err)
-              receipt={'label':label,'argv':argv,'exit':code,'stdout_bytes':len(out),
-                       'stderr_bytes':len(err),'stdout_sha256':hashlib.sha256(out).hexdigest(),
-                       'stderr_sha256':hashlib.sha256(err).hexdigest()}
               base.with_suffix('.json').write_text(json.dumps(receipt,sort_keys=True)+'\n')
               print(json.dumps(receipt,sort_keys=True),flush=True)
-              assert code==0 and time.monotonic()<=deadline and len(out)<=cap and len(err)<=cap,label
+              assert receipt['status']=='PASS',label
               return out
           binding=json.loads(pathlib.Path('binding35.json').read_text())
           images={}
@@ -129,7 +126,7 @@ jobs:
               iid=root/(label+'.iid')
               call(['docker','build','--pull=false','--progress=plain','--iidfile',str(iid),
                     '-f',dockerfile,'-t','hestiarelay:'+label+'35','.'],label+'-build',300)
-              image=iid.read_text().strip()
+              image=capture40.bounded_file(root,iid,256).decode().strip()
               assert image.startswith('sha256:') and len(image)==71
               selected=json.loads(call(['docker','image','inspect','--format','{{json .Id}}',image],label+'-image'))
               assert selected==image
@@ -143,26 +140,27 @@ jobs:
               shutil.move(str(qa),str(root/(label+'-qa')))
               packages=call(['docker','run','--rm','--network=none','--read-only','--cap-drop=ALL',
                    '--security-opt=no-new-privileges','--entrypoint','dpkg-query',image,
-                   '-W','-f=${binary:Package}\t${Version}\t${Architecture}\n'],label+'-packages')
+                   '-W','-f=${binary:Package}\t${Version}\t${Architecture}\n'],label+'-packages',cap=2097152)
               (root/(label+'-packages.tsv')).write_bytes(packages)
               if label=='candidate':
                   reduction=call(['docker','run','--rm','--network=none','--read-only','--cap-drop=ALL','--user','0:0',
                       '--security-opt=no-new-privileges','--entrypoint','python',image,'-c',
                       'from pathlib import Path; print(Path("/reduction35-evidence/result.json").read_text())'],
-                      'candidate-reduction-receipt')
+                      'candidate-reduction-receipt',cap=2097152)
                   assert json.loads(reduction)['security_acceptance'] is False
               report=root/(label+'-raw-vulnerabilities.json')
-              call(['/tmp/trivy35/trivy','image','--scanners','vuln','--format','json',
-                    '--exit-code','0','--output',str(report),image],label+'-detector',180)
+              raw=call(['/tmp/trivy35/trivy','image','--scanners','vuln','--format','json',
+                    '--exit-code','0',image],label+'-detector',180,cap=8388608)
+              report.write_bytes(raw)
               # No artifact upload/cache/registry push. Public raw findings go to job logs.
-              raw=report.read_bytes();assert len(raw)<=8388608
+              raw=capture40.bounded_file(root,report,8388608)
               print(label+' RAW_VULNERABILITIES '+raw.decode(),flush=True)
               for public in [root/(label+'-packages.tsv'),root/(label+'-qa/native-surface-observation.json'),
                              root/(label+'-qa/container-qa.json')]:
-                  original=public.read_bytes();assert len(original)<=2097152
+                  original=capture40.bounded_file(root,public,2097152)
                   print(label+' PUBLIC_EVIDENCE '+public.name+' '+original.decode(),flush=True)
           def findings(label):
-              doc=json.loads((root/(label+'-raw-vulnerabilities.json')).read_text())
+              doc=json.loads(capture40.bounded_file(root,root/(label+'-raw-vulnerabilities.json'),8388608))
               return {(v.get('PkgName'),v.get('InstalledVersion'),v['VulnerabilityID'])
                       for result in doc.get('Results',[]) for v in result.get('Vulnerabilities',[]) }
           before,after=findings('baseline'),findings('candidate')
