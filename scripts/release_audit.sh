@@ -26,7 +26,9 @@ python -m pip freeze --all --exclude-editable > "$out/build-requirements.txt"
 build_status=$?
 /tmp/hestia-audit-tools/bin/bandit -q -r src -f json -o "$out/source-static-analysis.json"
 source_status=$?
-npm audit --prefix /tmp/hestiarelay-inspector --json > "$out/npm-advisories.json"
+python scripts/release_inventory.py --npm-audit-binding
+npm_binding_status=$?
+npm audit --prefix tools/inspector --json > "$out/npm-advisories.json"
 npm_status=$?
 trivy image --scanners vuln --format json --output "$out/image-advisories.json" --exit-code 0 hestiarelay:judge
 image_status=$?
@@ -34,5 +36,6 @@ trivy image --format cyclonedx --scanners license --license-full --output "$out/
 sbom_status=$?
 trivy --version --format json > "$out/scanner-version.json"
 set -e
+export HESTIA_NPM_BINDING_STATUS="$npm_binding_status"
 export HESTIA_SCAN_STATUSES="$history_status $artifact_status $python_status $build_status $source_status $npm_status $image_status $sbom_status"
 python scripts/release_inventory.py

@@ -1,7 +1,10 @@
 # Final submission package
 
-Prepared English copy for the Amazon Developer Hackathon 2026. This document is
-the source for the final form; it is not proof that the form was submitted.
+English submission copy retained for the Amazon Developer Hackathon 2026.
+The existing entry was confirmed submitted on September 14, 2026; see the
+[submission receipt](https://github.com/Elinfiny/HestiaRelay/issues/16#issuecomment-5664077580).
+Later editorial changes here are proposals until separately verified in Devpost.
+This document is not a readback of the saved form and does not authorize a second submission.
 
 ## Core fields
 
@@ -105,9 +108,8 @@ feedback. The strongest concise points are:
 - GitHub Actions made the demo reproducible across tests, browser, container and
   cloud-proof packaging, while provider queue incidents required careful state
   reconciliation rather than duplicate retries.
-- AI assistance helped keep implementation and evidence aligned, but generated
-  wording still needed human editorial review and could never grant permission
-  for sensitive actions.
+- Implementation and presentation claims need source and test evidence;
+  planning advice cannot grant permission for sensitive actions.
 
 ## Friction and feature requests
 
@@ -130,15 +132,14 @@ See [JUDGE_EVIDENCE_MAP.md](JUDGE_EVIDENCE_MAP.md) for exact links and limits.
 
 ## Disclosure
 
-Development used AI assistance through ChatGPT/Codex. The public repository
-preserves implementation, review history and reproducible checks. Synthetic
+The public repository preserves implementation, review history and reproducible checks. Synthetic
 English narration uses a documented stock voice; it is not Alexa, a cloned
 voice or the entrant's recorded voice.
 
-## Private entrant checklist
+## Historical private entrant checklist
 
-Complete these in the authenticated Devpost session; never place personal data
-in this repository:
+These declarations were completed for the September 14 submission. Keep this
+checklist as a record; never place personal details in this repository:
 
 - eligibility, age and residence;
 - conflicts, employer permission and team/representation authority;
@@ -146,7 +147,11 @@ in this repository:
 - category selections and required platform terms;
 - correct entrant/contact information.
 
-## Final readback checklist
+## Preserved submission procedure
+
+The one submission and readback below were completed on September 14. Do not
+repeat them. Before an admitted maintenance update, verify its exact fields,
+source, video and security evidence; preserve the existing submission identity.
 
 - Refresh the official rules and the expiring release evidence.
 - Verify repository, license, Quick start and video anonymously.

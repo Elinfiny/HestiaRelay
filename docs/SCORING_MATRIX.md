@@ -29,7 +29,7 @@ work, not mandatory completion gates for this simulation.
 
 | Target | Existing contribution | Limit |
 | --- | --- | --- |
-| Open Source | Public MIT repository created September 12, 2026; [implementation PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), tests, shared MCP/UI design and run instructions; username Elinfiny | Final Devpost fields are not submitted |
+| Open Source | Public MIT repository created September 12, 2026; [implementation PR #3](https://github.com/Elinfiny/HestiaRelay/pull/3), tests, shared MCP/UI design and run instructions; username Elinfiny | Submitted September 14; see the [submission receipt](https://github.com/Elinfiny/HestiaRelay/issues/16#issuecomment-5664077580). Prize eligibility and scoring remain with the organizers. |
 | AWS Builder | Bedrock adapter and one actual Nova Micro Converse call on September 12, 2026, with temporary CodeBuild execution and preserved usage/output | Historical proof; the public video contains no live AWS call; requested promotional award remains unconfirmed |
 
 The [product feedback](PRODUCT_FEEDBACK.md) describes the tools actually used.

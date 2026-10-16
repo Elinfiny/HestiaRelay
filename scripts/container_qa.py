@@ -16,6 +16,7 @@ from tempfile import TemporaryDirectory
 from uuid import uuid4
 
 import httpx2
+from inspector_version import installed_inspector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tests"))
 import browser_qa  # noqa: E402
@@ -26,9 +27,9 @@ from hestiarelay.service import CANONICAL_MESSAGES  # noqa: E402
 OUTPUT = Path("qa-artifacts")
 
 
-def docker(*args, check=True):
+def docker(*args, check=True, timeout=120):
     result = subprocess.run(
-        ["docker", *args], check=False, capture_output=True, text=True, timeout=120
+        ["docker", *args], check=False, capture_output=True, text=True, timeout=timeout
     )
     if check and result.returncode:
         raise RuntimeError(f"Docker {args[0]} failed: {result.stderr[:4000]}")
@@ -42,12 +43,19 @@ def volume():
     try:
         yield name
     finally:
-        docker("volume", "rm", name)
+        primary_error = sys.exception()
+        try:
+            docker("volume", "rm", name)
+        except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+            print("VOLUME_CLEANUP_ERROR=" + type(error).__name__, file=sys.stderr)
+            if primary_error is None:
+                raise
 
 
 @contextmanager
 def container(image, data_volume, label, database="/data/hestiarelay.db"):
     name = "hestia-qa-" + uuid4().hex
+    inspected = None
     try:
         docker(
             "run",
@@ -97,9 +105,100 @@ def container(image, data_volume, label, database="/data/hestiarelay.db"):
         assert docker("exec", name, "id", "-u") == "10001"
         yield url
     finally:
-        (OUTPUT / f"container-{label}.log").write_text(docker("logs", name, check=False))
-        docker("rm", "--force", name, check=False)
-
+        primary_error = sys.exception()
+        cleanup_errors = []
+        if label == "sessions2-3":
+            # One sample of the actual running process after MCP/Inspector, before removal.
+            try:
+                probe = Path(__file__).with_name("native_surface_probe.py").read_bytes()
+                output = docker(
+                    "exec", name, "python", "-c", probe.decode(), timeout=10
+                )
+                assert len(output.encode()) <= 1024 * 1024, (
+                    "Native observation byte limit"
+                )
+                observation = json.loads(output)
+                observation["binding"] = {
+                    "image_id": inspected["Image"] if inspected else "NOT_OBSERVED",
+                    "source_commit": subprocess.check_output(
+                        ["git", "rev-parse", "HEAD"], text=True, timeout=2
+                    ).strip(),
+                    "run_id": os.environ.get("GITHUB_RUN_ID"),
+                    "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
+                    "probe_sha256": hashlib.sha256(probe).hexdigest(),
+                    "source_sha256": {
+                        str(path): hashlib.sha256(path.read_bytes()).hexdigest()
+                        for path in [
+                            Path(__file__),
+                            Path("requirements-runtime.txt"),
+                            Path("requirements-proof.txt"),
+                            Path("tools/inspector/package-lock.json"),
+                        ]
+                    },
+                    "container_label": label,
+                    "primary_qa_error": type(primary_error).__name__
+                    if primary_error
+                    else None,
+                }
+            except (
+                OSError,
+                ValueError,
+                TypeError,
+                KeyError,
+                AssertionError,
+                RuntimeError,
+                subprocess.SubprocessError,
+            ) as error:
+                observation = {
+                    "status": "NOT_OBSERVED_UNKNOWN",
+                    "diagnostic_error_class": type(error).__name__,
+                    "primary_qa_error": type(primary_error).__name__
+                    if primary_error
+                    else None,
+                }
+            try:
+                payload = json.dumps(observation, sort_keys=True, separators=(",", ":"))
+                if len(payload.encode()) > 1024 * 1024:
+                    payload = json.dumps(
+                        {
+                            "status": "TRUNCATED_UNKNOWN",
+                            "reason": "json_byte_limit_after_binding",
+                            "binding": observation.get("binding"),
+                        }
+                    )
+                (OUTPUT / "native-surface-observation.json").write_text(payload + "\n")
+            except OSError as error:
+                cleanup_errors.append(
+                    "native_observation_write:" + type(error).__name__
+                )
+        try:
+            (OUTPUT / f"container-{label}.log").write_text(
+                docker("logs", name, check=False)
+            )
+        except (OSError, subprocess.SubprocessError) as error:
+            cleanup_errors.append("container_logs:" + type(error).__name__)
+        try:
+            docker("rm", "--force", name)
+        except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+            cleanup_errors.append("container_cleanup:" + type(error).__name__)
+        if cleanup_errors:
+            print(
+                "CONTAINER_DIAGNOSTICS="
+                + json.dumps(
+                    {
+                        "label": label,
+                        "primary_qa_error": type(primary_error).__name__
+                        if primary_error
+                        else None,
+                        "diagnostic_cleanup_errors": cleanup_errors,
+                    }
+                ),
+                file=sys.stderr,
+            )
+            if primary_error is None:
+                raise RuntimeError(
+                    "Container diagnostic/cleanup failure; see separate diagnostics"
+                )
 
 def state(url):
     response = httpx2.get(url + "/api/state", trust_env=False)
@@ -108,12 +207,14 @@ def state(url):
 
 
 def inspector(executable, url):
+    installed = installed_inspector(executable)
     results = {}
     with TemporaryDirectory() as auth_store:
         env = os.environ | {
             "MCP_STORAGE_DIR": auth_store,
             "MCP_INSPECTOR_OAUTH_STATE_PATH": str(Path(auth_store) / "oauth.json"),
             "MCP_AUTO_OPEN_ENABLED": "false",
+            "MCP_INSPECTOR_SECRET_STORE": "memory",
         }
         for method in ["initialize", "tools/list", "tools/call"]:
             args = [
@@ -152,7 +253,7 @@ def inspector(executable, url):
     assert {"get_continuity_brief", "decide_sensitive_action", "send_simulator_message"} <= names
     assert not results["tools/call"]["result"].get("isError", False)
     assert "Ana" in json.dumps(results["tools/call"])
-    return {"version": "2.6.0", "protocol": version, "methods": list(results), "status": "PASS"}
+    return {**installed, "protocol": version, "methods": list(results), "status": "PASS"}
 
 
 def main():

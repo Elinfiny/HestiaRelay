@@ -1,8 +1,9 @@
 # What the tools were like to build with
 
-These notes describe work recorded in this public repository. They are prepared
-for the competition feedback field, which has not been submitted. An isolated
-successful run is useful evidence, but it is not a reliability benchmark.
+These dated notes describe work recorded in this public repository. The
+competition submission, including product feedback, was confirmed on
+September 14, 2026; see the [submission receipt](https://github.com/Elinfiny/HestiaRelay/issues/16#issuecomment-5664077580).
+An isolated successful run is useful evidence, but it is not a reliability benchmark.
 The [friction log](FRICTION_LOG.md) contains the reproducible incidents.
 
 ## Amazon services and SDK

@@ -1,6 +1,10 @@
 # HestiaRelay
 
-Prepared submission copy. Devpost fields have not been changed.
+Submission copy retained for reference. The existing Devpost entry was
+confirmed submitted on September 14, 2026; see the
+[submission receipt](https://github.com/Elinfiny/HestiaRelay/issues/16#issuecomment-5664077580).
+Any later difference between this document and the saved entry requires an
+explicit, verified presentation update; this file alone is not a provider readback.
 
 ## Tagline
 
@@ -100,8 +104,7 @@ messaging integration would need its own consent-bound execution adapter.
   HTML/CSS/JavaScript, Amazon Bedrock, boto3, Docker and GitHub Actions.
   The full development-tool feedback and temporary AWS services are listed in
   [product feedback](PRODUCT_FEEDBACK.md).
-- Development used AI assistance through ChatGPT/Codex. The repository preserves
-  the implementation, review history and reproducible checks; generated advice
+- The repository preserves the implementation, review history and reproducible checks; advice
   is never treated as permission to act.
 - [Judge evidence map](JUDGE_EVIDENCE_MAP.md), [friction log](FRICTION_LOG.md),
   [release audit](RELEASE_AUDIT.md), [historical Bedrock proof](evidence/bedrock-20260912.json).

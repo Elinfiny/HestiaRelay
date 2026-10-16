@@ -2,3 +2,7 @@
 # recomputed from source by release_inventory.py. This ignores only this exact
 # historical finding, not the file, a token pattern, future hashes or commits.
 f199dbfe5dc3ebe7aa8d9926eff351bbad8a792f:docs/evidence/release-applicability.json:generic-api-key:10
+
+# Auditor V28 review06: exact historical fictional unsigned JWT/header fixtures only.
+d3f15f3fa4347dc781e43479282c6372d80ddbc0:tests/test_security_dependency_upgrade.py:generic-api-key:27
+d3f15f3fa4347dc781e43479282c6372d80ddbc0:tests/test_security_dependency_upgrade.py:jwt:24
