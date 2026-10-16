@@ -1,22 +1,20 @@
 """One synthetic cleanup-owner scenario; no old test-suite import or native IO."""
+import argparse
 import hashlib
 import http.client
 import importlib.util
 import json
-import math
 import os
 from pathlib import Path
-import re
 import signal
 import socket
 import ssl
 import sys
-import time
 import types
 import unittest
 from unittest.mock import patch
 
-signal.alarm(20)
+HELPER_OVERRIDE = None
 HELPER_SHA256 = 'bcf3fc19fe7e3f24c99adf0b92be7d0301a7ed9306ccd78fd9325d64fab2d066'
 
 
@@ -33,7 +31,9 @@ class NoEnvironment:
 
 class CleanupOwner45(unittest.TestCase):
     def test_connection_owner_cleanup_retains_primary(self):
-        source = Path(sys.argv[1])
+        source = (Path(HELPER_OVERRIDE) if HELPER_OVERRIDE is not None else
+                  Path(__file__).resolve().parents[1] /
+                  'experiments/runtime_reduction35/consume_once44.py')
         raw_source = source.read_bytes()
         self.assertEqual(len(raw_source), 13399)
         self.assertEqual(hashlib.sha256(raw_source).hexdigest(), HELPER_SHA256)
@@ -117,6 +117,10 @@ class CleanupOwner45(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('helper_path', nargs='?')
+    HELPER_OVERRIDE = parser.parse_args(sys.argv[1:]).helper_path
+    signal.alarm(20)
     result = unittest.TextTestRunner(verbosity=2).run(
         unittest.defaultTestLoader.loadTestsFromTestCase(CleanupOwner45))
     raise SystemExit(0 if result.wasSuccessful() else 2)
