@@ -2,3 +2,9 @@
 # recomputed from source by release_inventory.py. This ignores only this exact
 # historical finding, not the file, a token pattern, future hashes or commits.
 f199dbfe5dc3ebe7aa8d9926eff351bbad8a792f:docs/evidence/release-applicability.json:generic-api-key:10
+
+# Exact reviewed public digest constant; never a credential.
+fc2d5a8dd40fbe9a3acdaccb8ce3edc6281c12e7:scripts/release_inventory.py:generic-api-key:46
+# Unsigned alg=none fixtures, fictional subject / generated nested arrays only.
+d3f15f3fa4347dc781e43479282c6372d80ddbc0:tests/test_security_dependency_upgrade.py:jwt:24
+d3f15f3fa4347dc781e43479282c6372d80ddbc0:tests/test_security_dependency_upgrade.py:generic-api-key:27
