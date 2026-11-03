@@ -1,5 +1,22 @@
 # HestiaRelay work state
 
+## Current verification — 3 November 2026
+
+The application source and the accepted narrated film remain unchanged. Security maintenance updates the runtime and validation dependencies, and binds the installed Inspector version to its package and executable hashes.
+
+[CI 41716165127](https://github.com/Elinfiny/HestiaRelay/actions/runs/41716165127) passed all four required jobs at `dd6b28b8792943d229c71ebb1511c023bd4f5075`. The merged tree is `2273d725bba3a1d8947d2006772d2189a9f08fc3`. Its container artifact `13268844668` has SHA-256 `521cea164c241fa08eb7bf6ea144b9fcf31a4eb1cdf48a5881c8a45d98fcd574`.
+
+All eight audit exit codes are zero. Inspector **2.13.0** agrees with the installed lock, package hash and executable hash. Three MCP sessions, container recreation, state backup/restore, browser, TLS and hostile Host/Origin checks passed. The [applicability review](evidence/release-applicability.json), valid through **2026-11-10**, is bound to exact source/dependency hashes and runtime controls. It permits only the fictional-household demonstration with application-created state and verified owner-generated snapshots. Raw scanner findings are retained; public deployment and untrusted database inputs require their own review.
+
+The existing Devpost project and video remain the evaluation entry points. The
+completed contest delivery is preserved; this maintenance adds no AWS execution,
+public service, account mutation, purchase, message or new video publication.
+
+<details>
+<summary>Historical September work-state record</summary>
+
+# HestiaRelay work state
+
 The final submission-preparation operation completed through PR #23. Canonical
 main before this confirmation audit is `1cdde1a89dd99a6c30c00445776d942b3de25198`;
 [post-merge CI 34835178596](https://github.com/Elinfiny/HestiaRelay/actions/runs/34835178596)
@@ -60,3 +77,5 @@ there is no requirement to wait for its expiry to submit.
 
 The observed deadline is **October 23, 2026, 22:00 Bucharest**. Recheck the live
 rules and evidence at submission if they have changed or become stale.
+
+</details>
