@@ -107,6 +107,24 @@ def state(url):
     return response.json()["state"]
 
 
+def inspector_identity(executable):
+    entry = Path(executable).resolve(strict=True)
+    for parent in entry.parents:
+        package = parent / "package.json"
+        if not package.is_file():
+            continue
+        raw = package.read_bytes()
+        metadata = json.loads(raw)
+        if metadata.get("name") == "@modelcontextprotocol/inspector":
+            return {
+                "version": metadata["version"],
+                "package_name": metadata["name"],
+                "package_sha256": hashlib.sha256(raw).hexdigest(),
+                "entry_sha256": hashlib.sha256(entry.read_bytes()).hexdigest(),
+            }
+    raise AssertionError("Inspector package identity unavailable")
+
+
 def inspector(executable, url):
     results = {}
     with TemporaryDirectory() as auth_store:
@@ -152,7 +170,9 @@ def inspector(executable, url):
     assert {"get_continuity_brief", "decide_sensitive_action", "send_simulator_message"} <= names
     assert not results["tools/call"]["result"].get("isError", False)
     assert "Ana" in json.dumps(results["tools/call"])
-    return {"version": "2.6.0", "protocol": version, "methods": list(results), "status": "PASS"}
+    return inspector_identity(executable) | {
+        "protocol": version, "methods": list(results), "status": "PASS"
+    }
 
 
 def main():
