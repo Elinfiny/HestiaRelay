@@ -1,11 +1,11 @@
 {
   "schema": 1,
-  "reviewed": "2026-09-14",
-  "expires": "2026-09-27",
-  "scope": "Only the recorded non-root, read-only fictional-household container; invalid for public deployment or changed source/dependencies. Raw findings remain published.",
+  "reviewed": "2026-11-03",
+  "expires": "2026-11-10",
+  "scope": "Only the recorded non-root read-only fictional-household container with application-created database and owner-verified application-generated recovery snapshots. No arbitrary SQL, uploaded/untrusted database/WAL/changeset, public deployment, or changed source/dependencies. Raw findings retained; scoped reachability decisions are not vendor fixes.",
   "source_sha256": {
-    "Dockerfile": "f59049d6188d6ed4bbd24c162444623b96a83e5eb83528edb3caaf7405958d5c",
-    "requirements-runtime.txt": "a253b60aee48e452d41aca2d251f292b6ed1d6a75398086ed37ea2b18083fbad",
+    "Dockerfile": "e6b9dd3db1ef7ea3deaf5f3ed705e97ee65533ba492b7df8c36f1e5c8e51aba5",
+    "requirements-runtime.txt": "e3899f74d110fc333ff0a550842670357dcb8e437863eefedc75b36ba39559bd",
     "src/hestiarelay/__init__.py": "6f13981c35df4a5fe1ab5f94c59f0939e5725dcd73fea776d4a3aa3532a2e991",
     "src/hestiarelay/access.py": "22f9f84189c9999d1b365c682ce86a096758676ff6019f84b59cf41c38b954a9",
     "src/hestiarelay/aws_probe.py": "5d87fc47ed1348ebe27e5eab5918b674a91ec081f2664f5b9372925053b9f050",
@@ -17,7 +17,9 @@
     "src/hestiarelay/server.py": "532353bdccf292e86aaf02e6e4425e96cabf96bfb5c7a37433bddc08ef7552be",
     "src/hestiarelay/service.py": "c6000fa38932a790cf581220a29f596ba4c3cb2f5a5652d0677fe0bdecb317fd",
     "src/hestiarelay/store.py": "bcf4595b9d75b0b7f7d63c467d27203267fbfae39ab1e514a245914f9db5a781",
-    "src/hestiarelay/web.py": "5d9ac678416ad6fa5e3d9bcafe48a78ce204b73cd8126759c48050c621e929a2"
+    "src/hestiarelay/web.py": "5d9ac678416ad6fa5e3d9bcafe48a78ce204b73cd8126759c48050c621e929a2",
+    "scripts/sqlite_surface.py": "a006d432d64a3eaf9d0e29add14d387d96d26fb6eac77ff6206356c24c39e329",
+    "scripts/release_inventory.py": "48b41a0fbaa98faf737105865b354ad894956e3c4c9bfdb290f76e19a79ad30b"
   },
   "required_surface": {
     "uid": 10001,
@@ -29,7 +31,9 @@
     "lzma_binding_absent": true,
     "privileged_libraries_unloaded": true,
     "capabilities_zero": true,
-    "no_new_privileges": true
+    "no_new_privileges": true,
+    "sqlite_fixed_sql_only": true,
+    "sqlite_no_fts_or_changesets": true
   },
   "findings": {
     "CVE-2026-76642": {
@@ -99,13 +103,6 @@
       "reason": "libacl is not loaded by the service. No ACL pathname function or privileged filesystem operator is exposed; UID 10001, zero capabilities and no-new-privileges are verified.",
       "reference": "https://security-tracker.debian.org/tracker/CVE-2026-54369"
     },
-    "TEMP-1147318-639065": {
-      "packages": {
-        "liblzma5": "5.8.1-1+deb13u1"
-      },
-      "reason": "The optional Python _lzma extension is removed; liblzma is not loaded. There is no XZ upload/extraction/decoder API in the fixed source/dependency scope. Upstream GHSA-5qpq-xqfv-j9pg remains open for the OS package; this is not a vendor fix claim.",
-      "reference": "https://security-tracker.debian.org/tracker/TEMP-1147318-639065"
-    },
     "CVE-2025-69720": {
       "packages": {
         "libncursesw6": "6.5+20250216-2",
@@ -130,6 +127,55 @@
       },
       "reason": "The Perl interpreter entry points are removed. The service is Python and exposes no Perl archive extraction route.",
       "reference": "https://security-tracker.debian.org/tracker/CVE-2026-9538"
+    },
+    "CVE-2026-119371": {
+      "packages": {
+        "libsqlite3-0": "3.46.1-7+deb13u2"
+      },
+      "reason": "Requires attacker-supplied SQL or an untrusted database view. All ten SQL statements are constant and inventoried; there is no SQL/database upload interface. Only application-generated fictional state and verified owner snapshots are in scope.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-119371"
+    },
+    "CVE-2026-119372": {
+      "packages": {
+        "libsqlite3-0": "3.46.1-7+deb13u2"
+      },
+      "reason": "Requires FTS3/FTS4 MATCH/snippet queries. The exact fixed-SQL application has only household_state and no FTS queries; the release gate rejects any new MATCH/VIRTUAL SQL surface.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-119372"
+    },
+    "CVE-2026-119373": {
+      "packages": {
+        "libsqlite3-0": "3.46.1-7+deb13u2"
+      },
+      "reason": "Requires FTS5 detail=none and a prefix MATCH query. The exact application has no virtual table, FTS, or MATCH interface; new such SQL fails the source inventory gate.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-119373"
+    },
+    "CVE-2026-119374": {
+      "packages": {
+        "libsqlite3-0": "3.46.1-7+deb13u2"
+      },
+      "reason": "Requires an untrusted corrupt FTS5 database. No database file upload exists; only application-created household_state and hash-verified owner-generated snapshots are in scope. Untrusted recovery inputs remain excluded.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-119374"
+    },
+    "CVE-2026-119375": {
+      "packages": {
+        "libsqlite3-0": "3.46.1-7+deb13u2"
+      },
+      "reason": "Requires an attacker-provided database/WAL. No database/WAL upload or SQL interface exists. Only application-created fictional state and owner-verified application-generated snapshots are in scope.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-119375"
+    },
+    "CVE-2026-119376": {
+      "packages": {
+        "libsqlite3-0": "3.46.1-7+deb13u2"
+      },
+      "reason": "Requires attacker-provided SQL or an untrusted database view. The ten statements are constant and include no COLLATE operation; uploaded databases and arbitrary SQL are excluded.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-119376"
+    },
+    "CVE-2026-119379": {
+      "packages": {
+        "libsqlite3-0": "3.46.1-7+deb13u2"
+      },
+      "reason": "Requires a supplied SQLite session changeset. The source exposes no changeset API or upload, and the fixed-SQL state store uses a single ordinary household_state table.",
+      "reference": "https://security-tracker.debian.org/tracker/CVE-2026-119379"
     }
   }
 }

@@ -13,7 +13,10 @@ a real MCP server. It runs without AWS credentials. There is no live Alexa+
 connection, and approval never makes a purchase or sends a message.
 
 Built for the **Alexa+ track** of the Amazon Developer Hackathon 2026, with
-**Open Source** and **AWS Builder** mini-challenge entries in preparation.
+**Open Source** and **AWS Builder** mini-challenges listed in the existing
+submitted [project story](https://devpost.com/software/hestiarelay).
+This corrects administrative copy only; the accepted executable, historical tests
+and service boundaries remain unchanged.
 
 ## Core scenario
 

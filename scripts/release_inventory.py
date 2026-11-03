@@ -10,6 +10,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from release_review import review_findings
+from sqlite_surface import inspect_sqlite_surface
 
 OUT = Path("qa-artifacts/release")
 
@@ -161,6 +162,9 @@ print(json.dumps({
             surface_code,
         )
     )
+    sql_surface = inspect_sqlite_surface(Path("src/hestiarelay"))
+    (OUT / "sqlite-surface.json").write_text(json.dumps(sql_surface, indent=2) + "\n")
+    surface.update({key: value for key, value in sql_surface.items() if key != "queries"})
     container_result = json.loads(Path("qa-artifacts/container-qa.json").read_text())
     assert container_result["status"] == "PASS"
     assert container_result["container_backup_restore"] == "PASS"
