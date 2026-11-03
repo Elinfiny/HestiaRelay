@@ -33,8 +33,9 @@ Proof/development dependencies remain in `requirements-proof.txt`; pytest and pi
 are absent from the runtime image. The official Python 3.12.14 Trixie base is
 pinned by version and the content digest observed during the release audit. Each run records that reference and its final image ID; build
 timestamps can still differ, so byte-identical rebuilds are not claimed.
-Inspector 2.6.0 is pinned separately;
-its resolved npm lock is included in the CI artifact.
+Inspector 2.13.0 is pinned separately. Its actual installed version, package and
+executable hashes and resolved npm lock are included in the current CI artifact.
+See [the current verification](WORK_STATE.md) for the exact source and run.
 
 ## Cloud validation evidence
 

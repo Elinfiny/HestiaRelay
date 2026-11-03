@@ -1,3 +1,16 @@
+# Release security audit
+
+## Current verification — 3 November 2026
+
+The application source and the accepted narrated film remain unchanged. Security maintenance updates the runtime and validation dependencies, and binds the installed Inspector version to its package and executable hashes.
+
+[CI 41716165127](https://github.com/Elinfiny/HestiaRelay/actions/runs/41716165127) passed all four required jobs at `dd6b28b8792943d229c71ebb1511c023bd4f5075`. The merged tree is `2273d725bba3a1d8947d2006772d2189a9f08fc3`. Its container artifact `13268844668` has SHA-256 `521cea164c241fa08eb7bf6ea144b9fcf31a4eb1cdf48a5881c8a45d98fcd574`.
+
+All eight audit exit codes are zero. Inspector **2.13.0** agrees with the installed lock, package hash and executable hash. Three MCP sessions, container recreation, state backup/restore, browser, TLS and hostile Host/Origin checks passed. The [applicability review](evidence/release-applicability.json), valid through **2026-11-10**, is bound to exact source/dependency hashes and runtime controls. It permits only the fictional-household demonstration with application-created state and verified owner-generated snapshots. Raw scanner findings are retained; public deployment and untrusted database inputs require their own review.
+
+<details>
+<summary>Historical September audit and original remediation evidence</summary>
+
 # Release audit
 
 Scope: source, full fetched Git history, pinned runtime/proof dependencies,
@@ -155,3 +168,5 @@ recomputed from that file and checked by the release gate. It is not a credentia
 fingerprint. It does not suppress this file, hash patterns, later commits or any
 actual secret. The original redacted finding remains in artifact 10313444442;
 its downloaded archive and report manifest were verified before classification.
+
+</details>

@@ -15,8 +15,9 @@ connection, and approval never makes a purchase or sends a message.
 Built for the **Alexa+ track** of the Amazon Developer Hackathon 2026, with
 **Open Source** and **AWS Builder** mini-challenges listed in the existing
 submitted [project story](https://devpost.com/software/hestiarelay).
-This corrects administrative copy only; the accepted executable, historical tests
-and service boundaries remain unchanged.
+The accepted application source, film and service boundaries remain unchanged.
+The 3 November security maintenance updates dependency pins and verification
+provenance; see the [current work state](docs/WORK_STATE.md).
 
 ## Core scenario
 
